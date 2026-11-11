@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Leader session 4 of 4. Actions that close: why a postmortem is only as good as its follow-through, the two numbers that tell the truth (closure rate and median age of open actions), the counter that does not lie (really done), the auto-close trap, and the one-page follow-through report a leader takes upward.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Actions that close - learn runbooks and postmortems with phoebe">
+<meta property="og:description" content="Leader session 4 of 4. Closed is not done: one owner, the team's tracker, a chase cadence, and a report that puts closed and really done side by side.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/courses/b4-actions-that-close.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Actions that close - learn runbooks and postmortems with phoebe">
+<meta name="twitter:description" content="Leader session 4 of 4. A follow-through report that shows closed and really done side by side, so nobody can win by closing tickets.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Leader session 4 · Actions that close - learn runbooks and postmortems with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-runbooks-postmortems-with-phoebe</a> / Leader session 4 of 4</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Runbooks &amp; Postmortems with Phoebe · Leader session 4 of 4</div>
+    <h1>Actions that close: <span class="accent">closed is not done</span></h1>
+    <p class="sub">A postmortem is a promise with a list attached. The list is where the promise is kept or quietly dropped, and the next incident is where you find out which. Tonight you look at what makes an action close, read the two numbers that tell the truth about a year of follow-through, watch a dashboard get gamed by a rule that closes tickets on their due date, and write the one-page report you take upward.</p>
+    <div class="chip-row">
+      <span class="chip level">🔴 Leader</span>
+      <span class="chip audience">Heads of data or engineering, incident program owners, support and comms leads</span>
+      <span class="chip audience">No code</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-18 · Why actions fail, two numbers, one trap</span>
+      <span class="a3" style="flex:5">18-40 · Build-along: Pellmoor's follow-through report</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where we start</h2>
+    </div>
+    <p class="lede">Three Leader sessions built the front of the system: a docs standard that says which postmortems must exist, a review people come to, and a public note that tells customers what you will change. Every one of those ends in action items. Tonight is about the back of the system, the part nobody presents at the review: whether those actions ever close, and whether closing them meant the work got done. Pellmoor, a same-day online grocer, is constructed and labelled wherever it appears.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+      <span class="pill">★ Build-along = everyone works it through</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> A one-page follow-through report for your team: closed and really done side by side, the median age of open actions, the actions still written as wishes, the repeat incidents traced to an open action, and the one systemic action that needs a leader's authority. With it, the Leader half of Pellmoor's incident docs kit is signed.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers why actions are the point</span>
+      <h2>A postmortem with no follow-through</h2>
+      <span class="tag concept">6 min live</span>
+    </div>
+    <p class="lede">The timeline, the impact numbers and the contributing conditions are all in service of one thing: something changes so the same incident does not come back. An action item is the only part of a postmortem that touches production. If it never closes, the rest was a well-written history lesson.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 326" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The life of one action item, left to right: written in the postmortem, given one owner and a date, filed in the team's tracker, chased on a cadence, done, then verified. A highlighted branch falls off at the first step: a wish with no owner, no date and no definition of done stays in the document and never closes. A side panel maps the five reasons actions fail, from a vendor blog, onto where they fall off: no individual owner, kept in the doc instead of the team's tracker, vague wording, no follow-up cadence, and a systemic problem framed as a technical task.">
+        <defs>
+          <filter id="b4aSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="61" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="b4aHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="b4aAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .b4aH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b4aL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b4aS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .b4aW { font: 800 12px Inter, sans-serif; fill: #FFFFFF; }
+          .b4aN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="b4aH" x="30" y="28">THE LIFE OF ONE ACTION, AND WHERE A WISH FALLS OFF</text>
+
+        <g filter="url(#b4aSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="52" width="120" height="56" rx="10" transform="rotate(-1.2 90 80)" fill="#281E51"/>
+          <rect x="170" y="52" width="120" height="56" rx="10" transform="rotate(0.9 230 80)" fill="#FFFFFF"/>
+          <rect x="310" y="52" width="120" height="56" rx="10" transform="rotate(-0.7 370 80)" fill="#FFFFFF"/>
+          <rect x="450" y="52" width="120" height="56" rx="10" transform="rotate(1.1 510 80)" fill="#FFFFFF"/>
+          <rect x="590" y="52" width="120" height="56" rx="10" transform="rotate(-0.9 650 80)" fill="#EFEDF7"/>
+          <rect x="730" y="52" width="120" height="56" rx="10" transform="rotate(0.8 790 80)" fill="#EFEDF7"/>
+          <path d="M152 80 L166 80" marker-end="url(#b4aAr)"/>
+          <path d="M292 80 L306 80" marker-end="url(#b4aAr)"/>
+          <path d="M432 80 L446 80" marker-end="url(#b4aAr)"/>
+          <path d="M572 80 L586 80" marker-end="url(#b4aAr)"/>
+          <path d="M712 80 L726 80" marker-end="url(#b4aAr)"/>
+
+          <path d="M90 112 L90 166" marker-end="url(#b4aAr)"/>
+          <rect x="30" y="172" width="300" height="60" rx="10" transform="rotate(-1.5 180 202)" fill="#FFE45C"/>
+          <!-- doodle: the wish slides off into the doc's drawer -->
+          <path d="M334 206 C356 208 366 228 370 252" stroke-dasharray="5 6" marker-end="url(#b4aAr)"/>
+          <path d="M350 262 L392 262 L388 276 L354 276 Z" stroke="#281E51"/>
+
+          <rect x="440" y="140" width="410" height="146" rx="10" transform="rotate(0.4 645 213)" fill="#FFFFFF"/>
+        </g>
+
+        <text class="b4aW" x="46" y="84">Written</text>
+        <text class="b4aL" x="186" y="78">Owner + date</text>
+        <text class="b4aS" x="186" y="96">one role, a date</text>
+        <text class="b4aL" x="326" y="78">In the tracker</text>
+        <text class="b4aS" x="326" y="96">the team's own</text>
+        <text class="b4aL" x="466" y="78">Chased</text>
+        <text class="b4aS" x="466" y="96">on a cadence</text>
+        <text class="b4aL" x="606" y="78">Done</text>
+        <text class="b4aS" x="606" y="96">work finished</text>
+        <text class="b4aL" x="746" y="78">Verified</text>
+        <text class="b4aS" x="746" y="96">fix proven</text>
+
+        <text class="b4aH" x="46" y="198">Wish: no owner, no date, no done</text>
+        <text class="b4aL" x="46" y="218">e.g. "improve monitoring"</text>
+        <text class="b4aS" x="300" y="300">stays in the doc</text>
+
+        <text class="b4aH" x="456" y="164">WHERE ACTIONS FALL OFF (vendor view)</text>
+        <text class="b4aS" x="456" y="186">1 · no individual owner: never reaches owner + date</text>
+        <text class="b4aS" x="456" y="206">2 · kept in the doc, not in the team's tracker</text>
+        <text class="b4aS" x="456" y="226">3 · vague wording: nothing says when it is done</text>
+        <text class="b4aS" x="456" y="246">4 · no follow-up cadence: nobody chases</text>
+        <text class="b4aS" x="456" y="266">5 · a systemic problem framed as a technical task</text>
+
+        <text class="b4aN" x="30" y="318">Only the boxes after Written can be counted. A wish has no due date and no done to check against.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - an action earns each box in turn; the highlighted wish never gets past the first one</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>The line every follow-through program hangs on<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Google's SRE workbook, in its chapter on postmortem culture, quotes Ben Treynor Sloss: a postmortem "without subsequent action is indistinguishable from no postmortem" (Google, The Site Reliability Workbook, ch. 10). It is the bluntest statement of why the action list matters more than the prose. A leader cannot read every postmortem. A leader can ask, every month, how many of the actions those postmortems promised are really done.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>One owner, the team's tracker, a reward for closing<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The same chapter describes how Google keeps actions alive. Action items are filed as bugs in a central tracker, so their closure can be monitored like any other work. People are rewarded for closing actions, not just for writing them. And twice a year there are FixIt weeks, time set aside to clear the backlog.</p>
+        <p>The workbook's good example postmortem gives each action a type, a priority, a tracking bug and one owner, and states the preference plainly: better a single owner and several collaborators than a list of owners. Four owners on one action means each of the four can assume one of the others is on it.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Five reasons actions fail, a vendor's list<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>incident.io, a vendor of incident tooling, published a blog post in 2026 on why postmortem action items fail. It names five reasons: no individual owner; actions kept in the postmortem document instead of the team's own tracker; vague wording; no follow-up cadence; and systemic problems framed as technical tasks. The post gives no measured rates, so treat it as a practitioner's checklist, not evidence of how often each one happens.</p>
+        <p>The fifth reason is the one that reaches a leader's desk. "Add a validation step" is a technical task an engineer can close. "Suppliers can push prices with no contract on format" is a systemic problem, and the person who can fix it may sit in procurement, not engineering. Framing it as a ticket guarantees it stays open, or closes with the real problem untouched.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Tracked like any other bug.</strong> Google files postmortem action items as bugs in a central tracker so closure can be monitored, rewards the people who close them, and runs FixIt weeks twice a year to clear what is left. The design choice that matters is the first one: the action lives where the team already plans its work, not in a document nobody reopens. (Google, The Site Reliability Workbook, ch. 10, read at source.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers the two numbers that tell the truth</span>
+      <h2>Closure rate, median age, and really done</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Two numbers summarise a year of follow-through. The closure rate says how many promised actions have closed. The median age of open actions says how long the ones still open have been waiting; a closure rate can look respectable while the open ones rot for half a year. Beside both sits a third counter, really done, which counts only the actions whose work was finished. Tonight you will see why it has to be there.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two panels from Pellmoor's corpus of 46 actions over one year. Left, actions closed: R4 drill rota with nobody chasing, 13 of 46 (28 percent); m3 owners and a weekly chase but no rewrites, 21 of 46 (46 percent), highlighted; R5 the full ladder with a chase every 2 weeks, 44 of 46 (96 percent). Right, repeat incidents traceable to an open action: R4 2 of 2, m3 2 of 2, R5 0 of 2. Chasing more often closed more actions in m3 but did not stop a single repeat. Constructed Pellmoor example.">
+        <defs>
+          <filter id="b4bSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="67" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="b4bHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="b4bAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .b4bH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b4bL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b4bS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .b4bV { font: 800 18px Inter, sans-serif; fill: #1A1338; }
+          .b4bN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="b4bH" x="30" y="28">SAME 46 ACTIONS, THREE WAYS OF RUNNING THE YEAR</text>
+
+        <g filter="url(#b4bSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="40" width="400" height="200" rx="12" transform="rotate(-0.4 230 140)" fill="#FFFFFF"/>
+          <rect x="470" y="40" width="380" height="200" rx="12" transform="rotate(0.4 660 140)" fill="#FFFFFF"/>
+          <rect x="46" y="96" width="73" height="22" rx="4" fill="url(#b4bHc)"/>
+          <rect x="46" y="150" width="119" height="22" rx="4" fill="#FFE45C"/>
+          <rect x="46" y="204" width="249" height="22" rx="4" fill="url(#b4bHc)"/>
+          <circle cx="496" cy="108" r="9" fill="#281E51"/>
+          <circle cx="524" cy="108" r="9" fill="#281E51"/>
+          <circle cx="496" cy="162" r="9" fill="#281E51"/>
+          <circle cx="524" cy="162" r="9" fill="#281E51"/>
+          <circle cx="496" cy="216" r="9" fill="#FFFFFF"/>
+          <circle cx="524" cy="216" r="9" fill="#FFFFFF"/>
+          <!-- doodle: the chase bell -->
+          <path d="M398 156 C398 140 418 140 418 156 L422 160 L394 160 Z M406 164 L410 164" stroke="#281E51"/>
+        </g>
+
+        <text class="b4bH" x="46" y="64">ACTIONS CLOSED, OF 46</text>
+        <text class="b4bL" x="46" y="88">R4 · drill rota, nobody chases</text>
+        <text class="b4bV" x="129" y="116">13 (28%)</text>
+        <text class="b4bL" x="46" y="142">m3 · owners + weekly chase, no rewrites</text>
+        <text class="b4bV" x="175" y="170">21 (46%)</text>
+        <text class="b4bL" x="46" y="196">R5 · full ladder, chase every 2 weeks</text>
+        <text class="b4bV" x="305" y="224">44 (96%)</text>
+
+        <text class="b4bH" x="486" y="64">REPEATS TRACED TO AN OPEN ACTION</text>
+        <text class="b4bL" x="486" y="88">R4</text>
+        <text class="b4bV" x="550" y="114">2 of 2</text>
+        <text class="b4bL" x="486" y="142">m3</text>
+        <text class="b4bV" x="550" y="168">2 of 2</text>
+        <text class="b4bL" x="486" y="196">R5</text>
+        <text class="b4bV" x="550" y="222">0 of 2</text>
+        <text class="b4bS" x="660" y="114">filled = repeat happened</text>
+        <text class="b4bS" x="660" y="222">open = repeat avoided</text>
+
+        <text class="b4bN" x="30" y="264">m3 closed 8 more actions than R4 and stopped no repeat: chasing cannot close what nothing defines as done.</text>
+        <text class="b4bN" x="30" y="284">Constructed Pellmoor example; bench canon at the default simulated drift of 30%.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - a weekly chase on wishes buys a better closure rate and the same two repeat incidents</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Reading R4 against R5<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>At R4, Pellmoor has done everything the Writer track asked of its runbooks: inventory, owners, linter-clean rewrites, change-triggered review and a drill rota. The corpus has not moved at all. The bench prints "Actions closed: 13 of 46 (28%) · really done: 13", a median age of open actions of 24 weeks, and 2 of 2 repeat incidents traceable to an open action. Owners and dates are necessary; on their own they do not close anything.</p>
+        <p>R5 adds one practice, an action chase every 2 weeks. Closed goes to 44 of 46 (96%), really done to 44, the median age of open actions to 5 weeks, and the repeats to 0 of 2. The two still open belong to PM-11, the last postmortem of the year in week 47, too recent to finish. That is a healthy reason for an action to be open; the median age tells you whether the open ones are young or forgotten. Constructed Pellmoor example.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Why chasing a wish does not close it<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Learner move m3 on the bench gives every action an owner and chases every week, but skips the linter-clean rewrites that turn wishes into an owner, a date and a clear definition of done. Closed rises to 21 of 46 (46%). Repeats stay at 2 of 2. The owner of "improve monitoring" can be asked about it every Monday for a year and still have no way to say it is finished, because nothing on the page says what finished looks like. With owners alone (R1), the bench still prints 18 of 46 actions written as wishes; a chase cadence cannot reach any of them.</p>
+        <p>The order matters for a leader: fix the wording first, then chase. A cadence applied to wishes produces meetings, not closures.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>The repeat is the signal.</strong> Among the warning signs of a failing postmortem culture, the SRE workbook lists incidents that repeat. A repeat traced to an action that was written, agreed and left open is the clearest version of that signal a leader will ever get, which is why it belongs on the report as its own line rather than buried in a closure rate. (Google, The Site Reliability Workbook, ch. 10, read at source.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers the Goodhart trap and the report upward</span>
+      <h2>A dashboard that rewards closing tickets</h2>
+      <span class="tag concept">4 min live</span>
+    </div>
+    <p class="lede">Once closure rate goes on a dashboard, people will make it go up, and the cheapest way to make it go up is to close things. A measure that becomes a target stops measuring what it used to; economists call this Goodhart's law. The fix is not a better closure rate. It is a second number beside it that cannot be raised by closing tickets.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 386" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A one-page follow-through report drawn as a paper form. The top block compares two columns, closed and really done, highlighted. Row T2 auto-close at the due date: closed 46 of 46 (100 percent), really done 13. Row R5 chase every 2 weeks: closed 44 of 46 (96 percent), really done 44. Below, four lines: median age of open actions, 5 weeks at R5 while T2 prints 0 weeks; actions with no owner or date, 0 of 46; repeats traced to an open action, 0 of 2 at R5 and 2 of 2 at T2; and one systemic action that needs leadership authority, named with the decision asked for. A signature line sits at the bottom. Constructed Pellmoor example.">
+        <defs>
+          <filter id="b4cSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="71" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="b4cHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="b4cAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .b4cH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b4cL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b4cS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .b4cV { font: 800 18px Inter, sans-serif; fill: #1A1338; }
+          .b4cN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="b4cH" x="30" y="28">THE FOLLOW-THROUGH REPORT, ONE PAGE</text>
+
+        <g filter="url(#b4cSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="44" width="820" height="310" rx="6" transform="rotate(0.3 440 199)" fill="#FFFFFF"/>
+          <rect x="360" y="84" width="220" height="108" rx="6" fill="#EFEDF7"/>
+          <rect x="600" y="84" width="230" height="108" rx="6" fill="#FFE45C"/>
+          <path d="M50 230 L830 230" stroke="#E6E3EF"/>
+          <path d="M50 258 L830 258" stroke="#E6E3EF"/>
+          <path d="M50 286 L830 286" stroke="#E6E3EF"/>
+          <!-- doodle: the signature -->
+          <path d="M600 334 C616 318 628 342 646 326 S676 318 694 330 S720 336 740 324" stroke="#281E51"/>
+        </g>
+
+        <text class="b4cH" x="50" y="70">PELLMOOR · ACTIONS FROM 11 POSTMORTEMS, ONE YEAR</text>
+        <text class="b4cS" x="50" y="104">run</text>
+        <text class="b4cL" x="376" y="104">Closed</text>
+        <text class="b4cH" x="616" y="104">Really done</text>
+
+        <text class="b4cL" x="50" y="140">T2 · auto-close at the due date</text>
+        <text class="b4cV" x="376" y="142">46 of 46 (100%)</text>
+        <text class="b4cH" x="616" y="140">13</text>
+        <text class="b4cL" x="50" y="178">R5 · chase every 2 weeks</text>
+        <text class="b4cV" x="376" y="180">44 of 46 (96%)</text>
+        <text class="b4cH" x="616" y="178">44</text>
+
+        <text class="b4cL" x="50" y="220">Median age of open actions</text>
+        <text class="b4cS" x="460" y="220">5 weeks at R5 (T2 prints 0 weeks)</text>
+        <text class="b4cL" x="50" y="248">Actions with no owner or date (wishes)</text>
+        <text class="b4cS" x="460" y="248">0 of 46</text>
+        <text class="b4cL" x="50" y="276">Repeats traced to an open action</text>
+        <text class="b4cS" x="460" y="276">0 of 2 at R5 (T2: 2 of 2)</text>
+        <text class="b4cL" x="50" y="304">Systemic action needing a leader</text>
+        <text class="b4cS" x="460" y="304">one line, named, with the decision asked for</text>
+
+        <text class="b4cS" x="50" y="334">signed by the leader who takes it upward</text>
+
+        <text class="b4cN" x="30" y="378">Closed alone ranks T2 first. Really done, in the next column, shows T2 finished no more work than R4.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the highlighted column is the one nobody can raise by closing tickets</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The auto-close trap, T2<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Trap T2 on the bench marks every action closed when its due date passes, without the work. It is not a strawman: ticket tools offer it, and a team measured on closure rate will find it. The bench prints "Actions closed: 46 of 46 (100%) · really done: 13". The median age of open actions drops to 0 weeks, because nothing is open any more. Repeats stay at 2 of 2. On a dashboard that shows only closure, T2 is the best-run year Pellmoor has ever had. Constructed Pellmoor example.</p>
+        <p>Really done is the counter that does not lie, because it cannot be moved by changing a ticket's status. It moves only when the work is finished. Put it in the column next to closed, every time.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>What the report must show<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Five lines, one page. Closed and really done side by side, so the gap is visible. The median age of open actions, so slow rot shows even when closure looks fine. The actions with no owner or no date, counted as wishes, so the cause of a stuck list is named. The repeat incidents traced to an open action, so the cost is in the same place as the backlog. And the one systemic action that needs a leader's authority, a budget, a contract or another team's priority, named with the decision you are asking for.</p>
+        <p>The last line is the reason the report goes upward at all. Engineering can close its own tickets. It cannot change a supplier contract.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Trends across the year, not one quarter<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A single report says where you stand. A run of them says whether the program works. Writer session 5 reads Pellmoor's eleven postmortems as one dataset, tagging the conditions behind each; the follow-through report is the natural place to carry the result forward: which conditions keep coming back, and whether the actions aimed at them are the ones that are really done. The danluu index of public postmortems, grouped by kind of failure, is a reminder that the same conditions repeat across companies too: <a href="https://github.com/danluu/post-mortems">danluu/post-mortems ↗</a>.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>A repository, read for trends.</strong> The SRE workbook describes a searchable repository of thousands of postmortems going back to 2009, analysed for trends such as postmortems per month, time to detect and resolve, and blast radius. Follow-through belongs in that same habit: a number tracked over time, not a status checked once at the review. (Google, The Site Reliability Workbook, ch. 10, read at source.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Fill Pellmoor's follow-through report</h2>
+      <span class="tag demo">★ 22 min · everyone works it through</span>
+    </div>
+    <p class="lede">The widget is the corpus side of the bench the Writer track uses: eleven Pellmoor postmortems, 46 actions, one year, computed in your browser. You will read four settings, copy the lines each one prints, and fill the report a leader takes upward. Pellmoor is constructed; your own numbers will differ.</p>
+
+    <div class="rbp-widget" data-mode="corpus" data-rung="r4"></div>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two repeat chains in Pellmoor's corpus. Top: postmortem PM-03 leaves action PM-03.2; if it is still open, PM-09 follows in week 36, pick lists missing again. Bottom: postmortem PM-04 leaves action PM-04.1; if it is still open, PM-11 follows in week 47, wrong prices shown to customers for 3 hours. The two actions are highlighted. At R4 the badges read repeat, still open; at R5 they read repeat avoided, done in time. Constructed Pellmoor example.">
+        <defs>
+          <filter id="b4dSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="73" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="b4dHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="b4dAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .b4dH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b4dL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b4dS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .b4dW { font: 800 12px Inter, sans-serif; fill: #FFFFFF; }
+          .b4dN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="b4dH" x="30" y="28">THE ACTION THAT NEVER CLOSED, AND THE INCIDENT IT LET THROUGH</text>
+
+        <g filter="url(#b4dSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="50" width="200" height="56" rx="10" transform="rotate(-0.8 130 78)" fill="#281E51"/>
+          <rect x="300" y="50" width="240" height="56" rx="10" transform="rotate(1.2 420 78)" fill="#FFE45C"/>
+          <rect x="610" y="50" width="240" height="56" rx="10" transform="rotate(-0.6 730 78)" fill="#FFFFFF"/>
+          <path d="M234 78 L294 78" marker-end="url(#b4dAr)"/>
+          <path d="M544 78 L604 78" stroke-dasharray="6 6" marker-end="url(#b4dAr)"/>
+
+          <rect x="30" y="156" width="200" height="56" rx="10" transform="rotate(0.7 130 184)" fill="#281E51"/>
+          <rect x="300" y="156" width="240" height="56" rx="10" transform="rotate(-1.1 420 184)" fill="#FFE45C"/>
+          <rect x="610" y="156" width="240" height="56" rx="10" transform="rotate(0.6 730 184)" fill="#FFFFFF"/>
+          <path d="M234 184 L294 184" marker-end="url(#b4dAr)"/>
+          <path d="M544 184 L604 184" stroke-dasharray="6 6" marker-end="url(#b4dAr)"/>
+          <!-- doodle: a calendar page between the rows -->
+          <path d="M562 116 L592 116 L592 144 L562 144 Z M562 124 L592 124 M570 112 L570 120 M584 112 L584 120" stroke="#281E51"/>
+        </g>
+
+        <text class="b4dW" x="46" y="74">PM-03</text>
+        <text class="b4dW" x="46" y="92">earlier postmortem</text>
+        <text class="b4dH" x="316" y="74">Action PM-03.2</text>
+        <text class="b4dL" x="316" y="92">open at R4, done at R5</text>
+        <text class="b4dH" x="626" y="74">PM-09 · week 36</text>
+        <text class="b4dS" x="626" y="92">pick lists missing again</text>
+
+        <text class="b4dW" x="46" y="180">PM-04</text>
+        <text class="b4dW" x="46" y="198">earlier postmortem</text>
+        <text class="b4dH" x="316" y="180">Action PM-04.1</text>
+        <text class="b4dL" x="316" y="198">open at R4, done at R5</text>
+        <text class="b4dH" x="626" y="180">PM-11 · week 47</text>
+        <text class="b4dS" x="626" y="198">wrong prices for 3 hours</text>
+
+        <text class="b4dN" x="30" y="242">R4 badge: "repeat: PM-03.2 still open". R5 badge: "repeat avoided: PM-03.2 done in time".</text>
+        <text class="b4dN" x="30" y="264">Dashed arrow: the repeat happens only while the highlighted action is open. Constructed Pellmoor example.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - each repeat runs through one open action; close it in time and the badge flips</figcaption>
+    </figure>
+
+    <div class="steps">
+      <div class="step">
+        <p><strong>Step 1 · Read the year at R4.</strong> The widget opens on R4, drill rota: every runbook practice is on, nobody chases actions. Copy the three corpus lines.</p>
+        <div class="prompt-box good"><span class="label">★ Step 1 · R4, as the widget prints it</span>Actions closed: 13 of 46 (28%) · really done: 13
+Median age of open actions: 24 weeks
+Repeat incidents traceable to an open action: 2 of 2</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 2 · Add the chase.</strong> Click R5, action chase. Copy the three lines, then look at the corpus table: the badges on PM-09 and PM-11 flip.</p>
+        <div class="prompt-box good"><span class="label">★ Step 2 · R5, as the widget prints it</span>Actions closed: 44 of 46 (96%) · really done: 44
+Median age of open actions: 5 weeks
+Repeat incidents traceable to an open action: 0 of 2
+repeat avoided: PM-03.2 done in time
+repeat avoided: PM-04.1 done in time</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 3 · Chase wishes and see what happens.</strong> Set the levers by hand to move m3: Owners ticked; Linter-clean rewrites unticked; Change-triggered review unticked; Action chase set to "every week". The drill rota does not matter for the corpus. Copy the closed line and the repeats line, then write one sentence on why the repeats did not move.</p>
+        <div class="prompt-box good"><span class="label">★ Step 3 · m3, as the widget prints it</span>Actions closed: 21 of 46 (46%)
+Repeat incidents traceable to an open action: 2 of 2
+
+Why: ______________________________________________________________
+(hint: what does the owner of "improve monitoring" check to call it done?)</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 4 · Run the trap.</strong> Click T2, auto-close at the due date. Copy the closed line and the repeats line, and put them next to R5's.</p>
+        <div class="prompt-box good"><span class="label">★ Step 4 · T2, as the widget prints it</span>Actions closed: 46 of 46 (100%) · really done: 13
+Repeat incidents traceable to an open action: 2 of 2</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 5 · Fill the report and sign the kit.</strong> Use the R5 lines for Pellmoor, then fill it again for your own team. Name one systemic action in Pellmoor's corpus that engineering cannot close alone, such as the supplier input behind PM-04 and PM-11.</p>
+        <div class="prompt-box good"><span class="label">★ Step 5 · follow-through report, Pellmoor</span>FOLLOW-THROUGH REPORT · Pellmoor · year to week 52
+Closed:       44 of 46 (96%)      Really done: 44
+Median age of open actions: 5 weeks  (open: 2, both from PM-11, week 47)
+Actions still written as wishes (no owner, date or done): ____ of 46
+Repeat incidents traced to an open action: 0 of 2
+Systemic action needing leadership authority:
+  ____________________________________________ ; decision asked: ____________
+Owner of this report: ____________   Next report: ____________
+
+PELLMOOR INCIDENT DOCS KIT · LEADER HALF
+[ ] Docs standard (Leader session 1)
+[ ] Review ritual (Leader session 2)
+[ ] Public postmortem (Leader session 3)
+[ ] Follow-through report (Leader session 4)
+Signed: ____________   Date: YYYY-MM-DD</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>The Writer half lives on the bench.</strong> The other half of Pellmoor's kit, the library inventory, a rewritten runbook, a drill log, a team postmortem and the cross-incident read, is signed in <a href="a6-the-docs-kit-on-the-bench.html">Writer session 6, the docs kit on the bench</a>, where the whole ladder runs at once.</p>
+    </div>
+  </section>
+
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>After Leader session 4</h2>
+      <span class="tag exercise">30 min</span>
+    </div>
+    <ol>
+      <li><strong>Count your two numbers.</strong> From your last year of postmortems, count actions closed and the median age of the ones still open.</li>
+      <li><strong>Sample ten closed actions</strong> and check how many were really done, not closed by a date, a duplicate or a reorg.</li>
+      <li><strong>Rewrite your three oldest wishes</strong> as one owner, one date and one sentence saying what done looks like, before you chase anyone.</li>
+      <li><strong>Name your one systemic action</strong>, the decision it needs, and the person who can make it; put it on your first follow-through report.</li>
+    </ol>
+  </section>
+
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and Leader session 4 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">1 · On the bench, auto-closing actions at their due date (T2) prints 46 of 46 closed. Why is that not good news?</p>
+      <button class="qopt" type="button">A · The closure rate is above 96%, which is never possible</button>
+      <button class="qopt" type="button">B · The median age of open actions rises to 24 weeks</button>
+      <button class="qopt" type="button">C · Really done stays at 13 and repeats stay at 2 of 2: the tickets closed, the work did not</button>
+      <button class="qopt" type="button">D · Auto-close deletes the postmortems</button>
+      <p class="qwhy">Closed counts a status change. Really done counts finished work, and it does not move when tickets are closed by a rule.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">2 · With owners and a weekly chase but no rewrites (m3), closed rises to 21 of 46 and repeats stay at 2 of 2. Why?</p>
+      <button class="qopt" type="button">A · Wishes have no definition of done, so chasing them cannot close them</button>
+      <button class="qopt" type="button">B · A weekly chase is too frequent and annoys the owners</button>
+      <button class="qopt" type="button">C · The drill rota was switched off</button>
+      <button class="qopt" type="button">D · Owners cannot close actions without a FixIt week</button>
+      <p class="qwhy">Fix the wording first, then chase. A cadence applied to "improve monitoring" produces meetings, not closures.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="3">
+      <p class="qtext">3 · Which set of lines belongs on the follow-through report a leader takes upward?</p>
+      <button class="qopt" type="button">A · Closure rate only, as a single headline number</button>
+      <button class="qopt" type="button">B · The number of postmortems written this year</button>
+      <button class="qopt" type="button">C · The full list of 46 actions with their status</button>
+      <button class="qopt" type="button">D · Closed and really done side by side, median age of open actions, wishes, repeats traced to an open action, and the one systemic action</button>
+      <p class="qwhy">One page, five lines; the last one asks for a decision only a leader can make.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Treynor Sloss on action after a postmortem; single owner; actions as bugs in a central tracker; rewards for closing; FixIt weeks; repeating incidents as a warning sign; repository analysed for trends</span><span class="note">Google, The Site Reliability Workbook (2018), ch. 10 "Postmortem Culture", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Five reasons action items fail</span><span class="note">incident.io, "Why do post-mortem action items fail?", 2026, vendor blog, read at source; vendor view, no rates given</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Closure rate, median age, really done; R4, R5, m3 and T2 on the corpus</span><span class="note">Pellmoor bench corpus, constructed, computed in the browser at the default simulated drift of 30%</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Every fact on this page, and its verification tier, is recorded in the course's source map.</p>
+  </section>
+
+  <section class="cheat" id="cheatsheet">
+    <h3>Leader session 4 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Why actions</b><span>A postmortem with no follow-through is no better than none (Treynor Sloss, SRE workbook).</span></div>
+      <div class="cheat-item"><b>Where they live</b><span>One owner, a date, in the team's own tracker, chased on a cadence.</span></div>
+      <div class="cheat-item"><b>Two numbers</b><span>Closure rate and median age of open actions. Pellmoor R5: 96% closed, 5 weeks.</span></div>
+      <div class="cheat-item"><b>Really done</b><span>The counter that ticket status cannot move. T2: 46 of 46 closed, 13 really done.</span></div>
+      <div class="cheat-item"><b>Wishes first</b><span>Chasing a wish does not close it. m3: 21 of 46 closed, repeats still 2 of 2.</span></div>
+      <div class="cheat-item"><b>The report</b><span>Closed and done side by side, median age, wishes, repeats, one systemic action.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>That completes the Leader half of Pellmoor's kit: a docs standard, a review ritual, a public postmortem and a follow-through report. There is no next Leader session. Go back to the <a href="../index.html">course home</a> to see the whole kit, and to <a href="a6-the-docs-kit-on-the-bench.html">Writer session 6</a> for the Writer half, where the ladder runs from as found to action chase in one sitting.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Leader session 4 of 4 · learn-runbooks-postmortems-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="b3-writing-for-the-customer.html">← Prev: Writing for the customer</a> &nbsp;·&nbsp; <a href="../index.html">Course home →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/rbp-sample.js?v=1"></script>
+<script src="../assets/rbp-live.js?v=1"></script>
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

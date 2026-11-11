@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Writer session 6 of 6. The docs kit on the bench: the linter on a runbook and a postmortem, the whole library ladder from as found to action chase, two traps that look like progress, and Pellmoor's incident docs kit scored.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="The docs kit on the bench - learn runbooks and postmortems with phoebe">
+<meta property="og:description" content="Writer session 6 of 6. Lint the pages, walk the ladder, spring the traps, score the kit.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/courses/a6-the-docs-kit-on-the-bench.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The docs kit on the bench - learn runbooks and postmortems with phoebe">
+<meta name="twitter:description" content="Writer session 6 of 6. From 25 of 38 pages misleading to 2 of 44, and the two buttons that only look like progress.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Writer session 6 · The docs kit on the bench - learn runbooks and postmortems with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-runbooks-postmortems-with-phoebe</a> / Writer session 6 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Runbooks &amp; Postmortems with Phoebe · Writer session 6 of 6</div>
+    <h1>The docs kit on the bench: <span class="accent">score the whole system</span></h1>
+    <p class="sub">Five sessions built the parts: an inventory, a rewritten runbook, a drill log, a team postmortem and a cross-incident read. Tonight they meet on one bench. The linter scores the documents. The library replays one quarter of system changes against Pellmoor's pages and one year of postmortem actions against its repeat incidents, one practice at a time, and two trap buttons show the moves that make a number look better while the next responder is no better off. Pellmoor is constructed; the rule engine is real.</p>
+    <div class="chip-row">
+      <span class="chip level">🔴 Writer</span>
+      <span class="chip audience">On-call engineers, SREs, data engineers and tech writers</span>
+      <span class="chip audience">Bench night, hands-on in the browser</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:3">3-15 · The ladder, the traps, the corpus</span>
+      <span class="a3" style="flex:6">15-40 · Build-along: score Pellmoor's kit</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where we start</h2>
+    </div>
+    <p class="lede">The question across the whole track: of every runbook and postmortem you have, how many would help the next responder, and how many would mislead them? Tonight you answer it for Pellmoor with every practice switched on in turn, and you learn which practice moves which number. The bench computes everything in your browser; a Python copy of the same engine prints the same numbers, value for value.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+      <span class="pill">★ Build-along = everyone builds it</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> Pellmoor's incident docs kit, Writer half, scored: a runbook and a postmortem that each pass the linter, a library ladder that takes the share of misleading pages from 66% to 5%, the corpus result that takes repeat incidents from 2 to 0, and a written account of the two traps your team will be tempted by. Then the same scorecard, filled in for your own library.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers the library ladder</span>
+      <h2>Which practice moves which number</h2>
+      <span class="tag concept">4 min live</span>
+    </div>
+    <p class="lede">Each rung adds one practice to the one before. The big fall is not where most teams expect it. Owners and rewrites help; the drop from 41% to 14% comes when every system change sends the touched pages to their owners, because staleness tracks change. Drills then catch what review missed.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bars for the share of Pellmoor's pages that would mislead at 2 a.m., one per rung: R0 as found 66 percent (25 of 38), R1 inventory and owners 52 percent (23 of 44), R2 linter-clean rewrites 41 percent (18 of 44), R3 change-triggered review 14 percent (6 of 44), R4 drill rota 5 percent (2 of 44), R5 action chase 5 percent (2 of 44). The largest single fall, 41 to 14, is highlighted at change-triggered review.">
+        <defs>
+          <filter id="a6aSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="61" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a6aHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a6aAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a6aH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a6aL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a6aS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a6aB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .a6aN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a6aH" x="30" y="28">SHARE OF PAGES THAT WOULD MISLEAD, RUNG BY RUNG</text>
+
+        <g filter="url(#a6aSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M60 250 L840 250"/>
+          <rect x="80" y="69" width="90" height="181" rx="6" fill="url(#a6aHc)"/>
+          <rect x="210" y="107" width="90" height="143" rx="6" fill="url(#a6aHc)"/>
+          <rect x="340" y="137" width="90" height="113" rx="6" fill="url(#a6aHc)"/>
+          <rect x="470" y="212" width="90" height="38" rx="6" fill="#FFE45C"/>
+          <rect x="600" y="236" width="90" height="14" rx="4" fill="#EFEDF7"/>
+          <rect x="730" y="236" width="90" height="14" rx="4" fill="#EFEDF7"/>
+          <path d="M436 150 Q470 160 486 200" marker-end="url(#a6aAr)"/>
+        </g>
+        <rect x="92" y="78" width="66" height="22" rx="5" fill="#FFFFFF"/>
+        <rect x="222" y="116" width="66" height="22" rx="5" fill="#FFFFFF"/>
+        <rect x="352" y="146" width="66" height="22" rx="5" fill="#FFFFFF"/>
+
+        <text class="a6aH" x="125" y="94" text-anchor="middle">66%</text>
+        <text class="a6aH" x="255" y="132" text-anchor="middle">52%</text>
+        <text class="a6aH" x="385" y="162" text-anchor="middle">41%</text>
+        <text class="a6aH" x="515" y="204" text-anchor="middle">14%</text>
+        <text class="a6aH" x="645" y="228" text-anchor="middle">5%</text>
+        <text class="a6aH" x="775" y="228" text-anchor="middle">5%</text>
+
+        <text class="a6aL" x="125" y="270" text-anchor="middle">R0 as found</text>
+        <text class="a6aL" x="255" y="270" text-anchor="middle">R1 owners</text>
+        <text class="a6aL" x="385" y="270" text-anchor="middle">R2 rewrites</text>
+        <text class="a6aL" x="515" y="270" text-anchor="middle">R3 review</text>
+        <text class="a6aL" x="645" y="270" text-anchor="middle">R4 drills</text>
+        <text class="a6aL" x="775" y="270" text-anchor="middle">R5 chase</text>
+        <text class="a6aS" x="125" y="286" text-anchor="middle">25 of 38</text>
+        <text class="a6aS" x="255" y="286" text-anchor="middle">23 of 44</text>
+        <text class="a6aS" x="385" y="286" text-anchor="middle">18 of 44</text>
+        <text class="a6aB" x="515" y="286" text-anchor="middle">6 of 44</text>
+        <text class="a6aS" x="645" y="286" text-anchor="middle">2 of 44</text>
+        <text class="a6aS" x="775" y="286" text-anchor="middle">2 of 44</text>
+        <text class="a6aB" x="470" y="130">biggest fall</text>
+
+        <text class="a6aN" x="30" y="316">Constructed Pellmoor example, drift simulated at 30% per change; your numbers will differ.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - review on change does the heavy lifting; drills take the residue; the chase moves nothing here because it works on actions, not pages</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Why the rungs fall where they do<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>R1, owners.</strong> Every page gets an owner who reads it once, and the six missing pages get written. A read of a page whose commands have no expected output catches a wrong step 40% of the time in the model; most survive.</p>
+        <p><strong>R2, rewrites.</strong> Owned pages pass the linter, so a read now catches a wrong step 90% of the time, and wishes in the corpus become actions with owners and dates. The share falls to 41%, but the quarter's changes keep landing on pages nobody re-reads.</p>
+        <p><strong>R3, change-triggered review.</strong> A change that touches a page sends it to its owner. Staleness tracks change, so this is the rung that meets the drift where it happens: 6 of 44.</p>
+        <p><strong>R4, drills.</strong> A drill catches every wrong step on the page it runs. A rota of once a quarter for every paged page leaves 2 of 44, both unpaged pages that no drill covers.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>The model's rates, all on the widget<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Drift per change: 30% by default, simulated, movable with the slider. Catch rate when an owner reads or reviews a page: 90% if the page is linter-clean, 40% if not; also simulated, shipped as fixed rolls so every browser prints the same numbers. A drill catches 100%. No public measurement of these rates exists that the bench could borrow, so the bench claims only their ordering: review on change beats a one-off read, a clean page is easier to check than a vague one, and a drill is the only full test.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Update the page when it fires.</strong> The SRE workbook asks on-call engineers to update the playbook with fresh information when its page fires, and notes that playbook details go out of date as fast as production changes. R3 on the bench is that habit made into a rule: the change, not the calendar, triggers the review. (Google, The Site Reliability Workbook, "On-Call", read at source.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers the two traps</span>
+      <h2>Two buttons that only look like progress</h2>
+      <span class="tag concept">4 min live</span>
+    </div>
+    <p class="lede">A bench that can only report better numbers measures nothing. Two trap buttons report a better headline and a worse reality. T1 deletes stale pages: fewer misleading pages, more alerts with nothing behind them. T2 marks actions closed at their due date: closure looks perfect, and both repeat incidents still happen.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two trap panels. T1, delete the stale pages: the share that misleads falls to 10 of 22, 45 percent, while paging alerts with no page rise to 14 of 31. T2, auto-close at the due date: actions closed 46 of 46, 100 percent, while really done stays at 13, and repeat incidents traceable to an open action stay at 2 of 2. In each panel the number that looks good is on top and the number that tells the truth is highlighted below it.">
+        <defs>
+          <filter id="a6bSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="67" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a6bHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a6bAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a6bH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a6bL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a6bS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a6bV { font: 800 18px Inter, sans-serif; fill: #1A1338; }
+          .a6bN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a6bH" x="30" y="28">THE HEADLINE THAT IMPROVES, AND THE LINE THAT DOES NOT</text>
+
+        <g filter="url(#a6bSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="46" width="390" height="226" rx="12" transform="rotate(-0.4 225 159)" fill="#FFFFFF"/>
+          <rect x="460" y="46" width="390" height="226" rx="12" transform="rotate(0.4 655 159)" fill="#FFFFFF"/>
+          <rect x="50" y="90" width="350" height="62" rx="8" fill="#EFEDF7"/>
+          <rect x="50" y="186" width="350" height="62" rx="8" fill="#FFE45C"/>
+          <rect x="480" y="90" width="350" height="62" rx="8" fill="#EFEDF7"/>
+          <rect x="480" y="186" width="350" height="62" rx="8" fill="#FFE45C"/>
+          <path d="M225 156 L225 180" stroke-dasharray="4 5" marker-end="url(#a6bAr)"/>
+          <path d="M655 156 L655 180" stroke-dasharray="4 5" marker-end="url(#a6bAr)"/>
+        </g>
+
+        <text class="a6bH" x="50" y="74">T1 · DELETE THE STALE PAGES</text>
+        <text class="a6bH" x="480" y="74">T2 · AUTO-CLOSE AT THE DUE DATE</text>
+
+        <text class="a6bS" x="66" y="110">looks better: would mislead</text>
+        <text class="a6bV" x="66" y="136">10 of 22 (45%)</text>
+        <text class="a6bS" x="66" y="206">tells the truth: alerts with no page</text>
+        <text class="a6bV" x="66" y="232">14 of 31</text>
+
+        <text class="a6bS" x="496" y="110">looks better: actions closed</text>
+        <text class="a6bV" x="496" y="136">46 of 46 (100%)</text>
+        <text class="a6bS" x="496" y="206">tells the truth: really done, repeats</text>
+        <text class="a6bV" x="496" y="232">13 done · repeats 2 of 2</text>
+
+        <text class="a6bN" x="30" y="300">Constructed Pellmoor example. Every number here is a line the widget prints on that trap.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - report the bottom line of each panel upward, never the top one alone</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>T2 is the one that ships in real dashboards<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Closure rate is easy to count and easy to game: close the ticket when the date passes, or reword the action until it is "done". The SRE workbook quotes Ben Treynor Sloss: a postmortem without subsequent action is indistinguishable from no postmortem. Marking actions closed is not subsequent action. The bench keeps two counters for this reason: closed, and really done. Leader session 4 is about the report that shows both.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>T1 is a real position, not a strawman<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Deleting stale pages has serious defenders: a stale page is trusted, and trust in a wrong step costs more than a blank. Leader session 1 teaches both camps. On the bench the trade is visible: 16 pages deleted, the share falls from 66% to 45%, and 14 of 31 alerts now page a person with nothing behind them. Whether that trade is right depends on how your responders behave on a blank page, which only a drill can tell you.</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers the corpus</span>
+      <h2>Actions are the only rung that stops a repeat</h2>
+      <span class="tag concept">4 min live</span>
+    </div>
+    <p class="lede">The library rungs make pages true; they do nothing for the corpus. Through R4, Pellmoor still closes 13 of 46 actions and both repeat incidents still happen. Only the chase, an owner and a date checked every two weeks, closes the two actions whose absence let PM-09 and PM-11 happen.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A year-long timeline of Pellmoor's pricing feed. Week 14: PM-04, a supplier feed schema change broke validation; its action PM-04.1 is written as a wish with no due date, make validation better. It stays open. Week 47: PM-11, wrong prices shown to customers for 3 hours, the repeat. With owners, rewrites and a chase every two weeks, the action becomes owner plus date and is done in time, and the bench shows the badge repeat avoided.">
+        <defs>
+          <filter id="a6cSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="71" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a6cHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a6cAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a6cH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a6cL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a6cS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a6cB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .a6cW { font: 800 12px Inter, sans-serif; fill: #FFFFFF; }
+          .a6cN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a6cH" x="30" y="28">ONE ACTION, ONE YEAR, TWO ENDINGS</text>
+        <text class="a6cS" x="290" y="28">Constructed Pellmoor example: the pricing feed</text>
+
+        <g filter="url(#a6cSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M60 150 L840 150"/>
+          <path d="M60 144 L60 156 M840 144 L840 156"/>
+          <rect x="120" y="56" width="180" height="60" rx="10" transform="rotate(-1 210 86)" fill="#281E51"/>
+          <rect x="640" y="56" width="190" height="60" rx="10" transform="rotate(1 735 86)" fill="#FFE45C"/>
+          <path d="M212 120 L212 146"/>
+          <path d="M735 120 L735 146"/>
+          <path d="M220 172 Q470 232 720 172" stroke-dasharray="6 6" marker-end="url(#a6cAr)"/>
+          <rect x="120" y="196" width="210" height="44" rx="8" transform="rotate(0.8 225 218)" fill="#FFFFFF"/>
+          <rect x="520" y="230" width="300" height="44" rx="8" transform="rotate(-0.6 670 252)" fill="#EFEDF7"/>
+        </g>
+        <rect x="370" y="162" width="200" height="20" rx="5" fill="#FFFFFF"/>
+
+        <text class="a6cW" x="136" y="82">Week 14 · PM-04</text>
+        <text class="a6cW" x="136" y="100">schema change broke it</text>
+        <text class="a6cH" x="656" y="82">Week 47 · PM-11</text>
+        <text class="a6cL" x="656" y="100">wrong prices, 3 hours</text>
+        <text class="a6cS" x="60" y="140">week 1</text>
+        <text class="a6cS" x="800" y="140">week 52</text>
+
+        <text class="a6cL" x="136" y="216">PM-04.1, as written:</text>
+        <text class="a6cB" x="136" y="232">"Make validation better"</text>
+        <text class="a6cS" x="378" y="176">open all year: repeat at R0-R4</text>
+        <text class="a6cL" x="536" y="250">R5: owner + date + chase</text>
+        <text class="a6cS" x="536" y="266">badge: repeat avoided, done in time</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the dashed arc is a wish travelling through a year untouched; the chase is what breaks it</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>What R5 changes, line by line<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>At R4: actions closed 13 of 46 (28%), median age of open actions 24 weeks, repeat incidents traceable to an open action 2 of 2. At R5: 44 of 46 (96%), 5 weeks, 0 of 2. The two still open belong to the last postmortem of the year, too recent to finish. R2 had already turned every wish into an owner and a date; nothing closed until somebody checked.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Why vendors and Google agree on this one<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Google files postmortem actions as bugs in a central tracker so it can monitor closure, and rewards closing them, not just writing them. A 2026 incident.io post lists five reasons actions fail: no individual owner, kept in the document instead of the team's tracker, vague wording, no follow-up cadence, and systemic problems framed as technical tasks. It gives no measured rates, so quote none. (SRE workbook ch. 10, read at source; incident.io blog, vendor view, read at source.)</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Score Pellmoor's incident docs kit</h2>
+      <span class="tag demo">★ 22 min · everyone builds</span>
+    </div>
+    <p class="lede">The full bench: the Linter tab scores documents with a real rule engine; the Library tab replays the quarter and the year. Work the six steps, copy what the widget prints, then fill the scorecard. The rule engine runs on anything you paste; the library is constructed, so the lesson is which practice moves which number.</p>
+
+    <div class="rbp-widget" data-mode="bench" data-rung="r0" data-sample="s1"></div>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="How the two tabs feed the kit scorecard. The Linter tab scores the rewritten runbook and the team postmortem. The Library tab supplies the ladder, the two traps and the drift test. Both feed the scorecard: documents, library, corpus, traps.">
+        <defs>
+          <filter id="a6dSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="73" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a6dHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a6dAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a6dH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a6dS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a6dN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <g filter="url(#a6dSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="40" width="260" height="76" rx="10" transform="rotate(-0.8 160 78)" fill="#EFEDF7"/>
+          <rect x="30" y="136" width="260" height="76" rx="10" transform="rotate(0.6 160 174)" fill="#EFEDF7"/>
+          <rect x="420" y="60" width="430" height="132" rx="12" transform="rotate(0.4 635 126)" fill="url(#a6dHc)"/>
+          <path d="M294 80 L414 108" marker-end="url(#a6dAr)"/>
+          <path d="M294 172 L414 146" marker-end="url(#a6dAr)"/>
+          <!-- doodle: a tick mark on the scorecard -->
+          <path d="M812 76 L820 86 L836 66" stroke="#281E51"/>
+        </g>
+        <rect x="438" y="78" width="340" height="96" rx="8" fill="#FFFFFF"/>
+
+        <text class="a6dH" x="46" y="66">LINTER TAB</text>
+        <text class="a6dS" x="46" y="88">runbook s1 to s2</text>
+        <text class="a6dS" x="46" y="104">postmortem s3 to s4</text>
+        <text class="a6dH" x="46" y="162">LIBRARY TAB</text>
+        <text class="a6dS" x="46" y="184">R0 to R5, T1, T2</text>
+        <text class="a6dS" x="46" y="200">drift slider at 50%</text>
+        <text class="a6dH" x="454" y="100">KIT SCORECARD, WRITER HALF</text>
+        <text class="a6dS" x="454" y="122">documents: two scores</text>
+        <text class="a6dS" x="454" y="140">library: share at R0 and R5</text>
+        <text class="a6dS" x="454" y="158">corpus and traps: four lines</text>
+        <text class="a6dN" x="30" y="238">A linter score of 100 means the page is checkable, not that it is true; only a drill shows that.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - documents, library, corpus and traps each contribute one row of the scorecard</figcaption>
+    </figure>
+
+    <div class="steps">
+      <div class="step">
+        <p><strong>Step 1 · Lint the runbook before and after.</strong> On the Linter tab, sample RB-07 as found is loaded. Read the summary line, then switch to RB-07 rewritten.</p>
+        <div class="prompt-box good"><span class="label">★ Step 1 · the linter, as it prints</span>RB-07 as found:   Runbook · 0 of 5 rules pass · score 0 · 8 findings
+RB-07 rewritten:  Runbook · 5 of 5 rules pass · score 100 · 0 findings</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 2 · Lint the postmortem before and after.</strong> Load the PM-11 first draft, then the team version. Note which lines the first draft fails on.</p>
+        <div class="prompt-box good"><span class="label">★ Step 2 · the linter, as it prints</span>PM-11 first draft:   Postmortem · 0 of 6 rules pass · score 0 · 11 findings
+PM-11 team version:  Postmortem · 6 of 6 rules pass · score 100 · 0 findings</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 3 · Walk the ladder.</strong> On the Library tab, click R0 to R5 in order and copy each headline.</p>
+        <div class="prompt-box good"><span class="label">★ Step 3 · the ladder, as it prints</span>R0  25 of 38 pages would mislead at 2 a.m. (66%)
+R1  23 of 44 pages would mislead at 2 a.m. (52%)
+R2  18 of 44 pages would mislead at 2 a.m. (41%)
+R3   6 of 44 pages would mislead at 2 a.m. (14%)
+R4   2 of 44 pages would mislead at 2 a.m. (5%)
+R5   2 of 44 pages would mislead at 2 a.m. (5%)</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 4 · Read the corpus at R4 and R5.</strong> Copy the three corpus lines on each, and look at the repeat badges on PM-09 and PM-11 in the table.</p>
+        <div class="prompt-box good"><span class="label">★ Step 4 · R4 against R5</span>R4  Actions closed: 13 of 46 (28%) · really done: 13
+    Median age of open actions: 24 weeks
+    Repeat incidents traceable to an open action: 2 of 2
+R5  Actions closed: 44 of 46 (96%) · really done: 44
+    Median age of open actions: 5 weeks
+    Repeat incidents traceable to an open action: 0 of 2</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 5 · Spring both traps.</strong> Click T1, then T2, and copy the line that looks good and the line that tells the truth.</p>
+        <div class="prompt-box good"><span class="label">★ Step 5 · the traps, as they print</span>T1  10 of 22 pages would mislead at 2 a.m. (45%)
+    Paging alerts with no page: 14 of 31
+T2  Actions closed: 46 of 46 (100%) · really done: 13
+    Repeat incidents traceable to an open action: 2 of 2</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 6 · Stress the ladder, then fill the scorecard.</strong> Click R5, drag the drift slider to 50% and copy the two lines. Then fill the kit scorecard for Pellmoor, and again for your own team.</p>
+        <div class="prompt-box good"><span class="label">★ Step 6 · drift at 50% on R5, then the scorecard</span>2 of 44 pages would mislead at 2 a.m. (5%)
+System changes that broke a step: 29 (simulated drift 50%)
+
+KIT SCORECARD (Writer half)          Pellmoor        yours
+runbook linter score                 0 to 100        ____
+postmortem linter score              0 to 100        ____
+share that would mislead             66% to 5%       ____
+paging alerts with no page           6 to 0          ____
+drill coverage of paged pages        12% to 100%     ____
+repeat incidents from open actions   2 to 0          ____
+trap we will be tempted by           ____________________</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>Score the drill, not the linter.</strong> The linter tells you a page can be checked. It cannot tell you the hostname in step 2 still exists. Put the drill log beside every linter score you report, or the score will be read as "true".</p>
+    </div>
+  </section>
+
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>After the Writer track</h2>
+      <span class="tag exercise">45 min</span>
+    </div>
+    <ol>
+      <li><strong>Lint your five most-paged runbooks.</strong> Paste each into the Linter tab and record the score and the rules that fail.</li>
+      <li><strong>Lint your last postmortem.</strong> Fix every wish in its actions list: one owner role and one date each.</li>
+      <li><strong>Pick your R3.</strong> Name the system change feed (deploys, config pushes, schema changes) that will route touched pages to their owners, and the first system to try it on.</li>
+      <li><strong>Fill the scorecard</strong> for your own library with real counts, and send it to whoever owns the docs standard from Leader session 1.</li>
+    </ol>
+  </section>
+
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and Writer session 6 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · On Pellmoor's ladder, which rung gives the largest single fall in the share of pages that would mislead?</p>
+      <button class="qopt" type="button">A · R1 inventory and owners</button>
+      <button class="qopt" type="button">B · R3 change-triggered review, from 41% to 14%</button>
+      <button class="qopt" type="button">C · R5 action chase</button>
+      <button class="qopt" type="button">D · R2 linter-clean rewrites</button>
+      <p class="qwhy">Staleness tracks change. Review triggered by the change meets drift where it happens, on a page that is now easy to check.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="3">
+      <p class="qtext">2 · T2 marks every action closed at its due date. What does the bench print that gives it away?</p>
+      <button class="qopt" type="button">A · The share of misleading pages rises</button>
+      <button class="qopt" type="button">B · Alerts with no page rise</button>
+      <button class="qopt" type="button">C · Median age of open actions rises</button>
+      <button class="qopt" type="button">D · Closed 46 of 46, really done 13, and repeat incidents still 2 of 2</button>
+      <p class="qwhy">Marking an action closed is not doing it. The bench keeps closed and really done as separate counters for exactly this reason.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · The rewritten RB-07 scores 100 on the linter. What can you still not say about it?</p>
+      <button class="qopt" type="button">A · That its steps are true against the live system today</button>
+      <button class="qopt" type="button">B · That every action has a confirm step</button>
+      <button class="qopt" type="button">C · That it has an owner and a last-verified line</button>
+      <button class="qopt" type="button">D · That its commands have expected output</button>
+      <p class="qwhy">The linter checks shape, not truth. A clean page is easy to check; only a drill checks it.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Playbooks go out of date as fast as production changes; update when the page fires</span><span class="note">Google, The Site Reliability Workbook (2018), "On-Call", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">A postmortem without subsequent action; actions tracked as bugs to closure</span><span class="note">Google, The Site Reliability Workbook (2018), ch. 10 "Postmortem Culture", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Five reasons postmortem actions fail</span><span class="note">incident.io, "Why do post-mortem action items fail?", 2026, vendor blog, read at source; no rates quoted</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Every ladder, trap and linter number on this page</span><span class="note">Constructed Pellmoor example; drift and catch rates simulated; printed by the widget; a Python reference agrees on every value</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Every fact on this page, and its verification tier, is recorded in the course's source map.</p>
+  </section>
+
+  <section class="cheat" id="cheatsheet">
+    <h3>Writer session 6 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>The ladder</b><span>66%, 52%, 41%, 14%, 5%, 5%: owners, rewrites, review on change, drills, chase.</span></div>
+      <div class="cheat-item"><b>Review on change</b><span>The biggest fall, 41% to 14%. Staleness tracks change, not the calendar.</span></div>
+      <div class="cheat-item"><b>Drills take the rest</b><span>R4 leaves 2 of 44, both unpaged pages no drill covers.</span></div>
+      <div class="cheat-item"><b>Only the chase stops repeats</b><span>R5: closed 44 of 46, repeats 0 of 2. R1 to R4 leave the corpus at 13 of 46.</span></div>
+      <div class="cheat-item"><b>T1 and T2</b><span>Deleting pages and auto-closing actions improve a headline and nothing else.</span></div>
+      <div class="cheat-item"><b>Score 100 is not true</b><span>The linter checks shape. Put the drill log beside every score.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>That completes the Writer half of Pellmoor's kit. The Leader track signs the other half: Leader session 1 decides which docs must exist, and Leader session 4 takes the follow-through report upward.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Writer session 6 of 6 · learn-runbooks-postmortems-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="a5-read-eleven-postmortems-as-one.html">← Prev: Read eleven postmortems as one</a> &nbsp;·&nbsp; <a href="../index.html">Course home</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/rbp-sample.js?v=1"></script>
+<script src="../assets/rbp-live.js?v=1"></script>
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

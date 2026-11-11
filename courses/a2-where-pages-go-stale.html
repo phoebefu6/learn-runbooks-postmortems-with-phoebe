@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Writer session 2 of 6. Where pages go stale: every system change is a chance a step stops being true, why a change-triggered review beats a calendar review, and the three linter rules that make a step checkable. Build-along on Pellmoor's RB-07.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Where pages go stale - learn runbooks and postmortems with phoebe">
+<meta property="og:description" content="Writer session 2 of 6. Drift rides on change. Review the pages a change touched, the week it lands, and write steps a reviewer can check.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/courses/a2-where-pages-go-stale.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Where pages go stale - learn runbooks and postmortems with phoebe">
+<meta name="twitter:description" content="Writer session 2 of 6. Staleness follows change, not age. Route the touched pages to their owners, and give every command an expected output.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Writer session 2 · Where pages go stale - learn runbooks and postmortems with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-runbooks-postmortems-with-phoebe</a> / Writer session 2 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Runbooks &amp; Postmortems with Phoebe · Writer session 2 of 6</div>
+    <h1>Where pages go stale: <span class="accent">drift rides on change</span></h1>
+    <p class="sub">A runbook does not rot because it is old. It goes wrong because the system under it moved: a column renamed, a host replaced, a flag flipped. The words on the page stay exactly as they were, so the page still looks fine to everyone who glances at it. Tonight you learn to review pages when the system changes rather than when the calendar says so, and to write steps that let a reviewer see the drift. Then you rewrite one of Pellmoor's runbooks until the linter passes it.</p>
+    <div class="chip-row">
+      <span class="chip level">🟡 Writer</span>
+      <span class="chip audience">On-call engineers, SREs, data engineers and tech writers</span>
+      <span class="chip audience">Hands-on in the browser</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-18 · Drift, review on change, checkable steps</span>
+      <span class="a3" style="flex:5">18-40 · Build-along: rewrite RB-07, then review on change</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where we start</h2>
+    </div>
+    <p class="lede">Writer session 1 ended with a number: after inventory and owners, 23 of Pellmoor's 44 pages would still mislead at 2 a.m. An owner who reads a page once catches some wrong steps, then the quarter's changes keep arriving. Tonight is about those changes: where drift comes from, which review catches it, and why a page with vague steps hides it from even a careful reviewer. Pellmoor's pages and changes are constructed; the rule engine in the widget is real and runs on anything you paste.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+      <span class="pill">★ Build-along = everyone builds it</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> One rewritten runbook: Pellmoor's RB-07, taken from a page that fails every linter rule to one that passes them, one rule at a time. Alongside it, a change-trigger rule for one Pellmoor system, written so a deploy, a config push or a schema change routes the touched pages to their owners the week it lands.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers drift</span>
+      <h2>Every change is a chance a step stops being true</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Google's SRE workbook puts the mechanism in one line: playbook details "go out of date at the same rate as production environment changes" (Google, The Site Reliability Workbook, "On-Call"). Read it as a model, not a slogan. Each change to a system is a draw: most leave its pages alone, some quietly break one step. The page text never moves, which is why drift is invisible from the page.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constructed Pellmoor example. A quarter-long timeline for runbook RB-14, Supplier feed schema changed. Three changes land on the pricing feed: week 3 a new supplier is added, week 7 the price column is renamed, week 10 the feed retry is tuned. The week 7 change breaks step 3 of the page, query the price column, which is highlighted. The page's five steps keep the same words from week 0 to week 13.">
+        <defs>
+          <filter id="a2aSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="41" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a2aHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a2aAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a2aH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a2aL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a2aS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a2aB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .a2aN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a2aH" x="30" y="28">ONE PAGE, THREE CHANGES, ONE QUARTER</text>
+        <text class="a2aS" x="320" y="28">Constructed Pellmoor example: RB-14 Supplier feed schema changed</text>
+
+        <g filter="url(#a2aSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- three changes -->
+          <rect x="170" y="48" width="170" height="50" rx="8" transform="rotate(-1.5 255 73)" fill="#FFFFFF"/>
+          <rect x="420" y="48" width="170" height="50" rx="8" transform="rotate(1.2 505 73)" fill="#EFEDF7"/>
+          <rect x="650" y="48" width="170" height="50" rx="8" transform="rotate(-1 735 73)" fill="#FFFFFF"/>
+          <path d="M255 102 L255 124" marker-end="url(#a2aAr)"/>
+          <path d="M505 102 L505 124" marker-end="url(#a2aAr)"/>
+          <path d="M735 102 L735 124" marker-end="url(#a2aAr)"/>
+          <!-- the system lane -->
+          <rect x="120" y="128" width="720" height="40" rx="8" transform="rotate(-0.3 480 148)" fill="url(#a2aHc)"/>
+          <!-- the break: from the system to step 3 -->
+          <path d="M480 172 L480 222" stroke="#991B1B" stroke-dasharray="5 6" marker-end="url(#a2aAr)"/>
+          <!-- the page -->
+          <rect x="120" y="200" width="720" height="96" rx="10" transform="rotate(0.3 480 248)" fill="#FFFFFF"/>
+          <rect x="134" y="228" width="130" height="40" rx="6" fill="#EFEDF7"/>
+          <rect x="274" y="228" width="130" height="40" rx="6" fill="#EFEDF7"/>
+          <rect x="414" y="228" width="130" height="40" rx="6" fill="#FFE45C"/>
+          <rect x="554" y="228" width="130" height="40" rx="6" fill="#EFEDF7"/>
+          <rect x="694" y="228" width="130" height="40" rx="6" fill="#EFEDF7"/>
+          <!-- doodle: a clock that keeps running -->
+          <circle cx="60" cy="282" r="12" stroke="#281E51"/>
+          <path d="M60 282 L60 274 M60 282 L66 286" stroke="#281E51"/>
+        </g>
+
+        <text class="a2aL" x="184" y="70">week 3 · change 1</text>
+        <text class="a2aS" x="184" y="88">new supplier added</text>
+        <text class="a2aL" x="434" y="70">week 7 · change 2</text>
+        <text class="a2aS" x="434" y="88">price column renamed</text>
+        <text class="a2aL" x="664" y="70">week 10 · change 3</text>
+        <text class="a2aS" x="664" y="88">feed retry tuned</text>
+
+        <text class="a2aH" x="30" y="144">SYSTEM</text>
+        <text class="a2aS" x="30" y="160">pricing feed</text>
+        <text class="a2aS" x="120" y="188">week 0</text>
+        <text class="a2aS" x="840" y="188" text-anchor="end">week 13</text>
+
+        <text class="a2aH" x="30" y="226">PAGE</text>
+        <text class="a2aS" x="30" y="242">RB-14</text>
+        <text class="a2aS" x="134" y="218">same words from week 0 to week 13</text>
+        <text class="a2aS" x="144" y="252">1 open feed log</text>
+        <text class="a2aS" x="284" y="252">2 find bad file</text>
+        <text class="a2aL" x="424" y="252">3 query price col</text>
+        <text class="a2aS" x="564" y="252">4 re-run import</text>
+        <text class="a2aS" x="704" y="252">5 post #pricing</text>
+        <text class="a2aB" x="414" y="286">wrong since week 7</text>
+
+        <text class="a2aN" x="30" y="318">Change 2 renamed a column. Nothing on the page moved, so nothing on the page looked stale.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the page is the same on day 1 and day 90; the system under step 3 is not</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Change, not age<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Ask a team how stale a page is and they look at the last-edited date. That is the wrong clock. A page about a system nobody touched all year can still be true; a page about the pricing feed, which changes whenever a supplier does, can be wrong by Friday. Staleness is a function of the changes that landed on the system since someone last walked the steps, not of the months that passed.</p>
+        <p>The same workbook chapter gives the other half of the habit: when the page fires, the on-call engineer updates the playbook with what they just learned. That keeps the pages that get used close to true. The pages that are rarely used are the ones changes catch, and the ones nobody notices until 2 a.m.</p>
+        <p>So the useful question for any page is: what changed in its system since it was last verified? If the answer is "three deploys and a schema change", the page is a suspect, whatever its date says.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Why nobody publishes a drift rate<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>You might want a number: what share of changes break a runbook step? No public measurement exists that could be borrowed. It depends on how your pages are written, how coupled they are to names that change (hosts, columns, flags) and how big your changes are. Any industry figure would describe somebody else's system.</p>
+        <p>The bench therefore simulates drift. Each change that touches a page breaks one of its steps with a probability set to 30% by default, labelled on the widget and movable with the slider. The catch rates for reviews are simulated too. What the bench claims is only the ordering: review on change beats a one-off read, a checkable page is easier to review than a vague one, and a drill is the only full test. Move the slider and the counts change; the ordering does not.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>The newest responder pays for drift first.</strong> Google's SRE book, in its chapter on bringing new engineers on call, notes that in a fast-changing environment documentation can fall out of date quickly, and that newer engineers lean on it more than seniors, who fill the gaps from memory. A stale page costs the expert a shrug and the newcomer an hour. (Google, Site Reliability Engineering (2016), "Accelerating SREs to On-Call and Beyond", read at source.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers change-triggered vs calendar review</span>
+      <h2>Review on change, not on the calendar</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Most teams that review runbooks at all do it on a calendar: every page, every six months, whether or not anything changed. A change-triggered review works the other way round. When a deploy, a config push or a schema change lands, the pages that describe the touched system go to their owners that week. It reads fewer pages and reads them when they are most likely to be wrong.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constructed Pellmoor example. Two lanes over one quarter. Changes land in weeks 2, 6 and 9. Calendar lane: reviews at week 0 and week 13 only, so a page broken by the week 6 change stays wrong and trusted until week 13, highlighted. Change-triggered lane: an owner review follows each change in the same week.">
+        <defs>
+          <filter id="a2bSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="47" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a2bHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a2bAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a2bH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a2bL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a2bS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a2bB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .a2bN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a2bH" x="30" y="28">TWO WAYS TO REVIEW, ONE QUARTER</text>
+
+        <g filter="url(#a2bSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- changes -->
+          <rect x="252" y="60" width="16" height="16" rx="3" transform="rotate(3 260 68)" fill="#281E51"/>
+          <rect x="452" y="60" width="16" height="16" rx="3" transform="rotate(-3 460 68)" fill="#281E51"/>
+          <rect x="602" y="60" width="16" height="16" rx="3" transform="rotate(2 610 68)" fill="#281E51"/>
+          <!-- calendar lane -->
+          <rect x="150" y="124" width="680" height="60" rx="10" transform="rotate(-0.3 490 154)" fill="#FFFFFF"/>
+          <circle cx="166" cy="146" r="9" fill="#EFEDF7"/>
+          <circle cx="812" cy="146" r="9" fill="#EFEDF7"/>
+          <rect x="462" y="140" width="336" height="12" rx="4" fill="#FFE45C"/>
+          <!-- change-triggered lane -->
+          <rect x="150" y="214" width="680" height="60" rx="10" transform="rotate(0.3 490 244)" fill="#FFFFFF"/>
+          <circle cx="276" cy="236" r="9" fill="#281E51"/>
+          <circle cx="476" cy="236" r="9" fill="#281E51"/>
+          <circle cx="626" cy="236" r="9" fill="#281E51"/>
+          <!-- doodle: a wall calendar beside the calendar lane -->
+          <rect x="112" y="136" width="22" height="20" rx="3" stroke="#281E51"/>
+          <path d="M117 132 L117 140 M129 132 L129 140 M112 143 L134 143" stroke="#281E51"/>
+        </g>
+
+        <text class="a2bH" x="30" y="72">CHANGES</text>
+        <text class="a2bS" x="260" y="98" text-anchor="middle">week 2</text>
+        <text class="a2bS" x="460" y="98" text-anchor="middle">week 6</text>
+        <text class="a2bS" x="610" y="98" text-anchor="middle">week 9</text>
+        <text class="a2bS" x="166" y="116" text-anchor="middle">week 0</text>
+        <text class="a2bS" x="812" y="116" text-anchor="middle">week 13</text>
+
+        <text class="a2bH" x="30" y="150">CALENDAR</text>
+        <text class="a2bS" x="30" y="174">fixed dates</text>
+        <text class="a2bS" x="184" y="150">review every page</text>
+        <text class="a2bB" x="470" y="174">wrong from week 6 to week 13, still trusted</text>
+
+        <text class="a2bH" x="30" y="240">CHANGE-</text>
+        <text class="a2bH" x="30" y="256">TRIGGERED</text>
+        <text class="a2bS" x="276" y="264" text-anchor="middle">owner reviews</text>
+        <text class="a2bS" x="476" y="264" text-anchor="middle">owner reviews</text>
+        <text class="a2bS" x="626" y="264" text-anchor="middle">owner reviews</text>
+
+        <text class="a2bN" x="30" y="306">Calendar: every page on a fixed date. Trigger: only the pages a change touched, the week it lands.</text>
+        <text class="a2bN" x="30" y="328">Constructed Pellmoor example; the weeks are illustrative.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the calendar review is not lazy, it is just looking on the wrong day</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>What the trigger needs<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>A change feed.</strong> Somewhere every deploy, config push and schema change is already recorded: the deploy pipeline, the config repository, the migration log, the supplier onboarding ticket. The trigger reads from there. If a class of change leaves no record, it cannot trigger anything, and that is worth knowing in itself.</p>
+        <p><strong>A page-to-system map.</strong> The inventory you built in Writer session 1 already holds it: every page, the system it describes, the alert bound to it. A change to the pricing feed looks up the pricing feed's pages. Without the map, the trigger can only say "something changed", which is the calendar review again.</p>
+        <p><strong>An owner.</strong> The touched pages go to a named role who walks the changed steps against the changed system and updates the last-verified date. A trigger with no owner on the other end is a notification nobody reads.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>General entries or step-by-step? A live disagreement<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The SRE workbook's on-call chapter records a real split. Some teams keep playbook entries general, describing the system and the diagnosis rather than exact commands, because general entries change slowly and so drift less. Other teams prefer step-by-step entries, with commands and expected output, because a tired reader can follow them without having to reason from first principles. The workbook does not pick a winner; it asks each team to agree a minimal structure.</p>
+        <p>Both sides have a point that bears on tonight. General entries drift less, but when they drift nobody can tell, because there is nothing precise to check. Step-by-step entries drift more, because every hostname and column is a name a change can break, but the drift is visible to a reviewer who runs the step. Change-triggered review leans on the second property; it works best on pages precise enough to be checked. Decide with your team which kind each page is, and review each accordingly.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Constructed Pellmoor example: the ladder's biggest step.</strong> On the bench, Pellmoor's pages are linter-clean and owned at R2, and 18 of 44 still mislead at the end of the quarter. R3 changes one thing: each system change routes its touched pages to their owners. The same changes break the same steps, and the share that misleads falls to 6 of 44. Nothing about the pages improved; the reviews just happened on the right weeks.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers checkable steps</span>
+      <h2>Steps a reviewer can check</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">A change-triggered review only works if the reviewer can tell a broken step from a working one. On a page that says "restart the adapter" and stops, they cannot: the command runs, nothing says what should come back, and the reviewer nods. Three linter rules target exactly the steps that hide drift.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constructed Pellmoor example. Before and after of RB-07 step 2. Before: Restart the payment adapter, the kubectl rollout restart command, and nothing after it, highlighted; the linter fails confirm on line 5 and expected output on line 6. After: the same step and command, then Expected: deployment pay-adapter restarted, then Confirm the error rate falls below 2% within 5 minutes; both rules pass.">
+        <defs>
+          <filter id="a2cSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="53" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a2cHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a2cAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a2cH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a2cL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a2cS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a2cB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .a2cN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a2cH" x="30" y="28">ONE STEP, BEFORE AND AFTER</text>
+        <text class="a2cS" x="250" y="28">Constructed Pellmoor example: RB-07 Checkout payments failing, step 2</text>
+
+        <g filter="url(#a2cSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="48" width="390" height="202" rx="10" transform="rotate(-0.4 225 149)" fill="#FFFFFF" stroke="#991B1B"/>
+          <rect x="460" y="48" width="390" height="202" rx="10" transform="rotate(0.4 655 149)" fill="#EFEDF7"/>
+          <rect x="44" y="150" width="360" height="56" rx="6" transform="rotate(-0.8 224 178)" fill="#FFE45C" stroke-dasharray="6 5"/>
+          <path d="M424 150 L456 150" marker-end="url(#a2cAr)"/>
+          <!-- doodle: a magnifier -->
+          <circle cx="826" cy="272" r="9" stroke="#281E51"/>
+          <path d="M833 279 L842 288" stroke="#281E51"/>
+        </g>
+
+        <text class="a2cH" x="44" y="76">BEFORE · as found (sample s1)</text>
+        <text class="a2cL" x="44" y="106">2. Restart the payment adapter.</text>
+        <text class="a2cS" x="44" y="128">$ kubectl rollout restart deploy/pay-adapter -n checkout</text>
+        <text class="a2cL" x="60" y="174">nothing after the command</text>
+        <text class="a2cS" x="60" y="194">the reader cannot tell it worked</text>
+        <text class="a2cB" x="44" y="234">fails: confirm (line 5), expected (line 6)</text>
+
+        <text class="a2cH" x="474" y="76">AFTER · rewritten (sample s2)</text>
+        <text class="a2cL" x="474" y="106">2. Restart the payment adapter.</text>
+        <text class="a2cS" x="474" y="128">$ kubectl rollout restart deploy/pay-adapter -n checkout</text>
+        <text class="a2cL" x="474" y="160">Expected: deployment &quot;pay-adapter&quot; restarted</text>
+        <text class="a2cL" x="474" y="186">Confirm the error rate falls below 2%</text>
+        <text class="a2cL" x="474" y="204">within 5 minutes.</text>
+        <text class="a2cS" x="474" y="234">passes both rules</text>
+
+        <text class="a2cN" x="30" y="276">The linter checks shape, not truth: the rewrite can pass and still name a renamed deployment.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - two added lines turn a step a reviewer must trust into a step a reviewer can test</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Three rules that make drift visible<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Step needs judgement.</strong> "Check if the error rate looks high", "investigate as appropriate". The step hands the decision to the most tired person in the building, and it hands the reviewer nothing to compare. Name the reading and the threshold.</p>
+        <p><strong>Action with no confirm step.</strong> A restart, a failover, a re-run, with no line saying how to tell it worked. The reader moves on after an action that did nothing; the reviewer cannot tell whether the action still does anything at all.</p>
+        <p><strong>Command with no expected output.</strong> A command with nothing after it cannot be checked, by the reader at 2 a.m. or by the reviewer who should notice that a change made it print something else. The widget shows each rule's full explanation beside its findings.</p>
+        <p>Two more rules apply to every runbook, an owner and last-verified line and UTC timestamps, and you met their reasons in Writer session 1.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Shape, not truth, and why shape still matters<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The linter is a rule engine, not a judge of truth. It reads the shape of a page: are there thresholds, confirm lines, expected outputs, an owner, UTC times. A page can score 100 and still be wrong, because the deployment it names was renamed last week. Only running the step against the system shows that, which is why Writer session 3 is about drills.</p>
+        <p>Shape still matters to drift, and the bench models how. An owner reviewing a linter-clean page catches a broken step 90% of the time; on a page that fails the rules, 40%. Both rates are simulated, shipped as fixed rolls so every browser prints the same numbers, and only their ordering is claimed: a page with expected output is easier to check than one without.</p>
+        <p>For the anatomy of a single good runbook, read <a href="https://phoebefu6.github.io/learn-tech-writing-with-phoebe/courses/93-runbooks.html">Tech Writing, runbooks ↗</a> and <a href="https://phoebefu6.github.io/learn-data-reliability-with-phoebe/courses/b4-runbooks.html">Data Reliability, runbooks ↗</a>. Here the point is narrower: checkable steps are what let a review find drift.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Constructed Pellmoor example: the restart that did nothing.</strong> The payments on-call follows RB-07 as found. Step 2 says restart the adapter; the command returns, and the page says nothing about what should happen next, so they move to step 3. Twenty minutes later they are reading a provider status page that was never the problem. With an expected output and a confirm line, the step would have told them in five minutes that the restart had not helped, and the reviewer after last month's deploy would have seen the same thing.</p>
+    </div>
+  </section>
+
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Rewrite RB-07, then review on change</h2>
+      <span class="tag demo">★ 22 min · everyone builds</span>
+    </div>
+    <p class="lede">The bench opens on the Linter tab with RB-07 as found. You lint it, fix it yourself one rule at a time, compare with Pellmoor's rewrite, then switch to the Library tab to see what rewrites and change-triggered review do across all 44 pages. Copy what the widget prints. Pellmoor is constructed; the rule engine is real, and a score of 100 means checkable, not true.</p>
+
+    <div class="rbp-widget" data-mode="bench" data-rung="r2" data-sample="s1"></div>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 236" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The build-along path. On the Linter tab: sample s1, RB-07 as found, 0 of 5 rules pass with 8 findings; then your own rewrite, one rule at a time, with a score that will differ; then sample s2, RB-07 rewritten, 5 of 5 rules pass with 0 findings. On the Library tab: R2 linter-clean rewrites, 18 of 44 pages would mislead, 41 percent; then R3 change-triggered review, 6 of 44, 14 percent, highlighted.">
+        <defs>
+          <filter id="a2dSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="59" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a2dHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a2dAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a2dH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a2dL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a2dS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a2dN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a2dH" x="30" y="44">LINTER TAB</text>
+        <text class="a2dH" x="540" y="44">LIBRARY TAB</text>
+
+        <g filter="url(#a2dSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="60" width="140" height="80" rx="8" transform="rotate(-1.5 100 100)" fill="#FFFFFF"/>
+          <rect x="200" y="60" width="140" height="80" rx="8" transform="rotate(1.2 270 100)" fill="#EFEDF7"/>
+          <rect x="370" y="60" width="140" height="80" rx="8" transform="rotate(-1 440 100)" fill="#FFFFFF"/>
+          <rect x="540" y="60" width="140" height="80" rx="8" transform="rotate(1 610 100)" fill="url(#a2dHc)"/>
+          <rect x="710" y="60" width="140" height="80" rx="8" transform="rotate(-1.4 780 100)" fill="#FFE45C"/>
+          <path d="M174 100 L196 100" marker-end="url(#a2dAr)"/>
+          <path d="M344 100 L366 100" marker-end="url(#a2dAr)"/>
+          <path d="M514 100 L536 100" marker-end="url(#a2dAr)"/>
+          <path d="M684 100 L706 100" marker-end="url(#a2dAr)"/>
+          <!-- doodle: a pencil for the rewrite -->
+          <path d="M812 176 L842 206 L848 212 L840 210 L810 180 Z" stroke="#281E51"/>
+        </g>
+        <rect x="550" y="72" width="120" height="56" rx="6" fill="#FFFFFF"/>
+
+        <text class="a2dH" x="44" y="86">s1 as found</text>
+        <text class="a2dS" x="44" y="106">0 of 5 rules pass</text>
+        <text class="a2dS" x="44" y="124">8 findings</text>
+
+        <text class="a2dH" x="214" y="86">your rewrite</text>
+        <text class="a2dS" x="214" y="106">one rule at a time</text>
+        <text class="a2dS" x="214" y="124">score will differ</text>
+
+        <text class="a2dH" x="384" y="86">s2 rewritten</text>
+        <text class="a2dS" x="384" y="106">5 of 5 rules pass</text>
+        <text class="a2dS" x="384" y="124">0 findings</text>
+
+        <text class="a2dH" x="560" y="92">R2 rewrites</text>
+        <text class="a2dS" x="560" y="114">18 of 44 (41%)</text>
+
+        <text class="a2dH" x="724" y="86">R3 review</text>
+        <text class="a2dS" x="724" y="104">on change</text>
+        <text class="a2dL" x="724" y="124">6 of 44 (14%)</text>
+
+        <text class="a2dN" x="30" y="174">Steps 1 to 3 make one page checkable. Step 4 shows what checkable pages are worth when</text>
+        <text class="a2dN" x="30" y="194">reviews follow changes. Step 5 writes that trigger for one Pellmoor system.</text>
+        <text class="a2dN" x="30" y="222">A linter score is shape; the library number is what a responder meets at 2 a.m.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - one page made checkable, then the whole library reviewed on the right weeks</figcaption>
+    </figure>
+
+    <div class="steps">
+      <div class="step">
+        <p><strong>Step 1 · Lint RB-07 as found.</strong> The Linter tab opens with sample RB-07 as found. Copy the summary line, then list the failing lines under each rule.</p>
+        <div class="prompt-box good"><span class="label">★ Step 1 · s1, as the linter prints it</span>Runbook · 0 of 5 rules pass · score 0 · 8 findings
+
+Step needs judgement               lines 4, 7, 10
+Action with no confirm step        line 5
+Command with no expected output    lines 6, 9
+No owner or last-verified line     line 1
+Relative or non-UTC timestamp      line 8</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 2 · Fix it yourself, one rule at a time.</strong> Edit the text in the textarea. Start with the rule that hides drift worst, expected output, then confirm, then judgement, then owner and time. Watch the rule list after each edit. Your score will differ as you type; nothing here promises a number until all five pass.</p>
+        <div class="prompt-box good"><span class="label">★ Step 2 · your rewrite order (constructed checklist)</span>1. expected   after each $ command, add "Expected: &lt;what it prints&gt;"
+2. confirm    after each action, add "Confirm &lt;reading&gt; &lt;threshold&gt; within &lt;time&gt;"
+3. judgement  replace "check if / investigate / looks ok" with a named reading and a number
+4. owner      add "Owner: &lt;role&gt;" and "Last verified: YYYY-MM-DD"
+5. time       replace "yesterday" with a condition the reader can check now
+
+rules passing after each fix: __ / __ / __ / __ / __</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 3 · Load Pellmoor's rewrite.</strong> Pick RB-07 rewritten in the sample dropdown and copy the summary. Compare step 2 with yours: did you write an expected output and a confirm line with a number in it?</p>
+        <div class="prompt-box good"><span class="label">★ Step 3 · s2, as the linter prints it</span>Runbook · 5 of 5 rules pass · score 100 · 0 findings
+
+Score 100 means checkable. It does not mean true: only a drill shows that.</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 4 · Switch to the Library tab.</strong> R2 is selected: every page owned and linter-clean. Copy the headline and the drift line, then click R3, change-triggered review, and copy them again. Notice which line moved and which did not.</p>
+        <div class="prompt-box good"><span class="label">★ Step 4 · R2 then R3, as the widget prints it</span>R2:  18 of 44 pages would mislead at 2 a.m. (41%)
+     System changes that broke a step: 20 (simulated drift 30%)
+
+R3:  6 of 44 pages would mislead at 2 a.m. (14%)
+     System changes that broke a step: 20 (simulated drift 30%)</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 5 · Write the change-trigger rule for one Pellmoor system.</strong> Pick the pricing feed, the order pipeline or another system from the inventory, and fill the rule so a tool or a person could run it without asking you.</p>
+        <div class="prompt-box good"><span class="label">★ Step 5 · change-trigger rule (template)</span>System:           ______________________ (e.g. pricing feed)
+Change sources:   deploys from __________; config pushes to __________;
+                  schema changes from __________
+Pages touched:    look up the system in the inventory: RB-__, RB-__, RB-__
+Route to:         the owner of each page, within __ working days of the change
+Review means:     run every step with an expected output against the changed system
+Done when:        steps match, and "Last verified: YYYY-MM-DD" is updated
+If no owner:      escalate to ______________________</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>Put the trigger where the change already is.</strong> A trigger that lives in a separate reminder will be forgotten the first busy week. Attach it to the deploy or the merge itself: a line in the change template that lists the pages it touches, or a bot that posts them to the owners when the change lands.</p>
+    </div>
+  </section>
+
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Before Writer session 3</h2>
+      <span class="tag exercise">30 min</span>
+    </div>
+    <ol>
+      <li><strong>Lint three of your own runbooks.</strong> Paste each into the Linter tab and record the score and which of the three drift rules fail.</li>
+      <li><strong>Rewrite the worst one</strong> until it passes, then note one step where the expected output you wrote may already be wrong.</li>
+      <li><strong>List last month's changes</strong> to one system you own, and mark which of its pages each change should have sent for review.</li>
+      <li><strong>Draft the change-trigger rule</strong> for that system and show it to the person who owns its deploy pipeline.</li>
+    </ol>
+  </section>
+
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and Writer session 2 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · Two runbooks were both last edited a year ago. One describes the pricing feed, which changed weekly; the other a job nobody touched. Which is more likely to be stale, and why?</p>
+      <button class="qopt" type="button">A · Both equally, because staleness depends on the edit date</button>
+      <button class="qopt" type="button">B · The pricing feed page, because each change is a chance a step stops being true</button>
+      <button class="qopt" type="button">C · The untouched job's page, because old systems decay</button>
+      <button class="qopt" type="button">D · Neither, because nobody edited them</button>
+      <p class="qwhy">Playbook details go out of date as fast as production changes. The clock that matters is the changes since the last verification, not the months.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="3">
+      <p class="qtext">2 · A reviewer re-reads a page right after a deploy and passes it. Step 2 is a restart command with nothing after it. Why might they miss that the step drifted?</p>
+      <button class="qopt" type="button">A · Reviewers are not allowed to run commands</button>
+      <button class="qopt" type="button">B · The linter would have caught it automatically</button>
+      <button class="qopt" type="button">C · Restart commands never drift</button>
+      <button class="qopt" type="button">D · With no expected output or confirm line, nothing tells them what the command should now print</button>
+      <p class="qwhy">A step with no expected output gives the reviewer nothing to compare. Checkable steps are what let a review see drift; the linter only checks that the shape is there.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · On the bench, R2 makes every page owned and linter-clean and leaves 18 of 44 misleading. What does R3 add that takes it to 6 of 44?</p>
+      <button class="qopt" type="button">A · Each system change routes its touched pages to their owners for review</button>
+      <button class="qopt" type="button">B · Fewer system changes break a step</button>
+      <button class="qopt" type="button">C · A drill on every paged page</button>
+      <button class="qopt" type="button">D · Deleting the pages that went stale</button>
+      <p class="qwhy">The same 20 changes break steps at both rungs. R3 only changes when reviews happen: on the week a change lands, by the page's owner.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Playbooks go out of date as fast as production changes; on-call updates the page when it fires</span><span class="note">Google, The Site Reliability Workbook (2018), "On-Call", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">General entries that change slowly vs step-by-step entries: teams disagree</span><span class="note">Google, The Site Reliability Workbook (2018), "On-Call", sre.google, read at source; taught as a disagreement</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Documentation falls out of date quickly; newer engineers depend on it more</span><span class="note">Google, Site Reliability Engineering (2016), "Accelerating SREs to On-Call and Beyond", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Single-runbook anatomy as a Diataxis how-to</span><span class="note">Diataxis, "How-to guides", diataxis.fr, read at source; linked via Tech Writing 93, not retaught</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Linter rules, RB-07 samples, R2 and R3 library numbers</span><span class="note">Constructed Pellmoor example; drift and catch rates simulated; computed in the browser by the widget on this page</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Every fact on this page, and its verification tier, is recorded in the course's source map.</p>
+  </section>
+
+  <section class="cheat" id="cheatsheet">
+    <h3>Writer session 2 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Change, not age</b><span>Every system change is a chance a step stops being true. Count changes since last verified.</span></div>
+      <div class="cheat-item"><b>Review on change</b><span>Route the pages a change touched to their owners the week it lands. Calendar reviews look on the wrong day.</span></div>
+      <div class="cheat-item"><b>The trigger needs three things</b><span>A change feed, a page-to-system map from the inventory, and an owner on the other end.</span></div>
+      <div class="cheat-item"><b>Three drift rules</b><span>No step that needs judgement; a confirm after every action; an expected output after every command.</span></div>
+      <div class="cheat-item"><b>Shape, not truth</b><span>Score 100 means checkable. Only running the step, in a drill, shows it is true.</span></div>
+      <div class="cheat-item"><b>Pellmoor's ladder</b><span>R2 rewrites: 18 of 44 mislead. R3 review on change: 6 of 44. Same changes, right weeks.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>A clean, reviewed page is still a claim about the system. Writer session 3 tests the claim: a drill is the only test, a newcomer runs the page against a timer, and every step they cannot finish tells you something the linter never could.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Writer session 2 of 6 · learn-runbooks-postmortems-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="a1-count-what-you-have.html">← Prev: Count what you have</a> &nbsp;·&nbsp; <a href="a3-a-drill-is-the-only-test.html">Next: A drill is the only test →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/rbp-sample.js?v=1"></script>
+<script src="../assets/rbp-live.js?v=1"></script>
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

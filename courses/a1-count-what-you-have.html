@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Writer session 1 of 6. Count what you have: the runbook inventory, the four fields every page owes the library, the four states a page can be in, and the first bench run on Pellmoor's 38 constructed runbooks.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Count what you have - learn runbooks and postmortems with phoebe">
+<meta property="og:description" content="Writer session 1 of 6. An inventory of every runbook: owner, last verified, alert bound, last drilled. Then the share that would mislead at 2 a.m.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/courses/a1-count-what-you-have.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Count what you have - learn runbooks and postmortems with phoebe">
+<meta name="twitter:description" content="Writer session 1 of 6. Four fields, four states, one number: how much of the library would mislead tonight.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Writer session 1 · Count what you have - learn runbooks and postmortems with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-runbooks-postmortems-with-phoebe</a> / Writer session 1 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Runbooks &amp; Postmortems with Phoebe · Writer session 1 of 6</div>
+    <h1>Count what you have: <span class="accent">the library, not the page</span></h1>
+    <p class="sub">Most teams can show you their best runbook. Very few can tell you how many runbooks they have, who owns each one, when anyone last checked it against the system, and which alerts page someone at night with nothing written behind them. Tonight you build that inventory for Pellmoor, a constructed same-day online grocer with 38 runbooks written over three years, and you get the first number the rest of the track works to bring down: the share of pages that would mislead the next responder.</p>
+    <div class="chip-row">
+      <span class="chip level">🟢 Writer</span>
+      <span class="chip audience">On-call engineers, SREs, data engineers and tech writers</span>
+      <span class="chip audience">Hands-on in the browser</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-18 · Four fields, four states, one number</span>
+      <span class="a3" style="flex:5">18-40 · Build-along: inventory Pellmoor</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where we start</h2>
+    </div>
+    <p class="lede">The Writer track is for the people who write, drill and maintain the pages and draft the postmortems. Six sessions: tonight, the inventory; then where pages go stale; why a drill is the only real test; turning an incident record into a team postmortem; reading eleven postmortems as one dataset; and the docs bench, where the whole kit is scored. Pellmoor's runbooks, changes, postmortems and actions are constructed and labelled wherever they appear. The rule engine in the bench is real and runs on any text you paste.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+      <span class="pill">★ Build-along = everyone builds it</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> A library inventory: one row per runbook with its owner, last-verified date, the alert it answers and the date it was last drilled; a count of pages in each of four states; and Pellmoor's baseline, the share of its pages that would mislead at 2 a.m. Every later session moves that number, so you need it written down.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers the inventory</span>
+      <h2>Four fields every page owes the library</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">A runbook on its own is a document. A runbook in a library is a promise: someone owns it, someone checked it against the system on a known date, a known alert sends people to it, and it has been tried by a person who did not write it. Four fields carry that promise. A page missing any of them is a page nobody can vouch for.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A hand-drawn runbook card in the middle with four tags pinned to it. Owner points to a person who answers for the page. Last verified points to the date someone checked the steps against the system. Alert bound points to the paging alert that sends a responder to the page. Last drilled points to a stopwatch for the last time a newcomer ran the page. Constructed Pellmoor example: 15 of 38 pages have no owner and 6 of 31 paging alerts have no page.">
+        <defs>
+          <filter id="a1aSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="11" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a1aHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a1aAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a1aH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a1aL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a1aS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a1aB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .a1aV { font: 800 18px Inter, sans-serif; fill: #1A1338; }
+          .a1aN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a1aH" x="30" y="28">ONE PAGE, FOUR PROMISES</text>
+        <text class="a1aS" x="230" y="28">Constructed Pellmoor example: RB-07 Checkout payments failing</text>
+
+        <g filter="url(#a1aSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="330" y="80" width="220" height="170" rx="10" transform="rotate(-0.6 440 165)" fill="url(#a1aHc)"/>
+          <rect x="40" y="60" width="200" height="74" rx="10" transform="rotate(-1.5 140 97)" fill="#FFFFFF"/>
+          <rect x="40" y="196" width="200" height="74" rx="10" transform="rotate(1.2 140 233)" fill="#FFFFFF"/>
+          <rect x="640" y="60" width="200" height="74" rx="10" transform="rotate(1.4 740 97)" fill="#FFFFFF"/>
+          <rect x="640" y="196" width="200" height="74" rx="10" transform="rotate(-1.1 740 233)" fill="#FFE45C"/>
+          <path d="M244 104 L326 124" marker-end="url(#a1aAr)"/>
+          <path d="M244 228 L326 210" marker-end="url(#a1aAr)"/>
+          <path d="M636 104 L554 124" marker-end="url(#a1aAr)"/>
+          <path d="M636 228 L554 210" marker-end="url(#a1aAr)"/>
+          <!-- doodle: a stopwatch beside the drill tag -->
+          <circle cx="820" cy="292" r="12" stroke="#281E51"/>
+          <path d="M820 280 L820 274 M820 292 L826 286" stroke="#281E51"/>
+        </g>
+
+        <rect x="346" y="98" width="188" height="134" rx="8" fill="#FFFFFF"/>
+        <text class="a1aH" x="358" y="120">RB-07</text>
+        <text class="a1aL" x="358" y="140">Checkout payments failing</text>
+        <text class="a1aS" x="358" y="162">5 numbered steps</text>
+        <text class="a1aS" x="358" y="180">2 commands</text>
+        <text class="a1aS" x="358" y="198">1 provider failover</text>
+        <text class="a1aB" x="358" y="220">is anyone vouching for it?</text>
+
+        <text class="a1aH" x="56" y="86">OWNER</text>
+        <text class="a1aS" x="56" y="106">a named role answers for it</text>
+        <text class="a1aS" x="56" y="122">Pellmoor: 15 pages have none</text>
+
+        <text class="a1aH" x="56" y="222">LAST VERIFIED</text>
+        <text class="a1aS" x="56" y="242">steps checked against the</text>
+        <text class="a1aS" x="56" y="258">system, with a date</text>
+
+        <text class="a1aH" x="656" y="86">ALERT BOUND</text>
+        <text class="a1aS" x="656" y="106">a paging alert links here</text>
+        <text class="a1aS" x="656" y="122">Pellmoor: 6 alerts have none</text>
+
+        <text class="a1aH" x="656" y="222">LAST DRILLED</text>
+        <text class="a1aS" x="656" y="242">a newcomer ran it, timed</text>
+        <text class="a1aB" x="656" y="258">the field most libraries lack</text>
+
+        <text class="a1aN" x="30" y="316">A page missing any of the four is a page nobody can vouch for, however well it is written.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the drill field is highlighted because it is the one that proves the other three</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>The four fields, and why each one<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Owner.</strong> A named role, not a team and not "everyone". When a system change lands, somebody has to be the person the change is routed to. A page with no owner has nobody to route to, so it silently ages.</p>
+        <p><strong>Last verified.</strong> The date someone walked the steps against the live system and found them true. Not the date the page was last edited: an edit to the wording is not a check of the commands.</p>
+        <p><strong>Alert bound.</strong> Which paging alert links to this page. Google's SRE workbook puts the norm plainly: each alert should have a corresponding playbook entry. Binding works both ways. An alert with no page sends a responder into the dark; a page bound to no alert is only found by search, usually by the wrong person.</p>
+        <p><strong>Last drilled.</strong> When someone who did not write the page last ran it, timed, in a drill or a game day. It is the only field that tests the page rather than describing it, which is why Writer session 3 is about nothing else.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>One page, recapped in one card (and where to learn it properly)<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>This track does not reteach how to write a single good runbook; two sibling sessions already do. In short: a runbook is a how-to guide in the Diataxis sense, written for a competent reader with one goal, as a sequence of actions with no digression or teaching; every action is followed by a way to confirm it worked; and it is written for a reader who is tired, new to the system and reading on a phone.</p>
+        <p>For the anatomy, read <a href="https://phoebefu6.github.io/learn-tech-writing-with-phoebe/courses/93-runbooks.html">Tech Writing, runbooks ↗</a>. For one runbook bound to one alert on a data pipeline, read <a href="https://phoebefu6.github.io/learn-data-reliability-with-phoebe/courses/b4-runbooks.html">Data Reliability, runbooks ↗</a>. Sentence craft lives in <a href="https://phoebefu6.github.io/learn-tech-writing-with-phoebe/courses/02-sentences-that-work.html">Tech Writing 02 ↗</a>. Here, the unit is the library.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Google pairs the alert and the page at birth.</strong> The SRE workbook's on-call chapter describes the convention that when an alert is created, a corresponding playbook entry usually is too, and that pages should link to the relevant monitoring consoles. The inventory you build tonight is how you find out whether your team kept that convention, alert by alert. (Google, The Site Reliability Workbook, "On-Call", read at source.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers the four states</span>
+      <h2>True, stale, orphaned, missing</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Once every page has its four fields, every page falls into one of four states. True: the steps match the system and somebody owns it. Stale: a step no longer matches the system. Orphaned: nobody owns it, so nobody will notice when it goes stale. Missing: an alert pages a human and there is no page at all. Stale is the dangerous one, because a stale page is still trusted.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Four hand-drawn panels, one per state. True: a page step and the system box match, joined by a straight line. Stale: the system box has changed from one host to another and the page step still names the old one, highlighted. Orphaned: a page with an arrow to an empty owner circle. Missing: an alert bell with an arrow to a dashed empty outline where a page should be.">
+        <defs>
+          <filter id="a1bSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="17" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a1bHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a1bAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a1bH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a1bL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a1bS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a1bB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .a1bN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a1bH" x="30" y="28">FOUR STATES A PAGE CAN BE IN</text>
+
+        <g filter="url(#a1bSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="24" y="46" width="196" height="240" rx="12" transform="rotate(-0.4 122 166)" fill="#FFFFFF"/>
+          <rect x="242" y="46" width="196" height="240" rx="12" transform="rotate(0.4 340 166)" fill="#FFFFFF"/>
+          <rect x="460" y="46" width="196" height="240" rx="12" transform="rotate(-0.3 558 166)" fill="#FFFFFF"/>
+          <rect x="678" y="46" width="180" height="240" rx="12" transform="rotate(0.3 768 166)" fill="#FFFFFF"/>
+          <!-- true: step and system match -->
+          <rect x="44" y="100" width="156" height="40" rx="6" fill="#EFEDF7"/>
+          <rect x="44" y="190" width="156" height="40" rx="6" fill="url(#a1bHc)"/>
+          <path d="M122 142 L122 186" marker-end="url(#a1bAr)"/>
+          <!-- stale: step names the old host -->
+          <rect x="262" y="100" width="156" height="40" rx="6" fill="#FFE45C"/>
+          <rect x="262" y="190" width="156" height="40" rx="6" fill="url(#a1bHc)"/>
+          <path d="M340 142 L340 186" stroke-dasharray="5 6" marker-end="url(#a1bAr)"/>
+          <!-- orphaned: owner circle empty -->
+          <rect x="480" y="100" width="156" height="40" rx="6" fill="#EFEDF7"/>
+          <circle cx="558" cy="212" r="20" stroke-dasharray="5 5"/>
+          <path d="M558 142 L558 188" marker-end="url(#a1bAr)"/>
+          <!-- missing: bell, dashed empty page -->
+          <path d="M752 108 Q752 92 768 92 Q784 92 784 108 L788 126 L748 126 Z M762 130 Q768 136 774 130"/>
+          <rect x="702" y="186" width="132" height="48" rx="6" stroke-dasharray="6 6" stroke="#991B1B"/>
+          <path d="M768 138 L768 182" marker-end="url(#a1bAr)"/>
+        </g>
+
+        <rect x="54" y="198" width="136" height="24" rx="5" fill="#FFFFFF"/>
+        <rect x="272" y="198" width="136" height="24" rx="5" fill="#FFFFFF"/>
+
+        <text class="a1bH" x="40" y="72">TRUE</text>
+        <text class="a1bS" x="54" y="124">step: ssh pay-02</text>
+        <text class="a1bS" x="62" y="214">system: pay-02</text>
+        <text class="a1bS" x="40" y="258">matches, and owned</text>
+
+        <text class="a1bH" x="258" y="72">STALE</text>
+        <text class="a1bL" x="272" y="124">step: ssh pay-02</text>
+        <text class="a1bS" x="280" y="214">system: pay-07</text>
+        <text class="a1bB" x="258" y="258">still trusted, now wrong</text>
+
+        <text class="a1bH" x="476" y="72">ORPHANED</text>
+        <text class="a1bS" x="490" y="124">page with no owner</text>
+        <text class="a1bS" x="476" y="258">nobody hears of changes</text>
+
+        <text class="a1bH" x="694" y="72">MISSING</text>
+        <text class="a1bS" x="712" y="214">no page at all</text>
+        <text class="a1bS" x="694" y="258">alert pages a human</text>
+
+        <text class="a1bN" x="30" y="316">Orphaned turns into stale with time; missing is the only state an inventory of pages cannot see.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - start the inventory from the alerts, not from the wiki, or the missing pages never show up</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Count from both ends<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Walk the wiki and you find pages: true, stale, orphaned. You never find the missing ones, because they do not exist. So the inventory runs from two ends. From the paging configuration, list every alert that can wake a human and write the page it links to, or "none". From the wiki, list every page and write the alert that sends people to it, or "none".</p>
+        <p>The join gives you three groups: alerts with a page, alerts with no page (missing), and pages no alert reaches. The last group is not automatically junk; a month-end close checklist is not paged. But it is found only by search, and a page found by search is read by whoever searched, not by the person on call.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Is a stale page worse than no page?<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Practitioners disagree, and the disagreement is worth knowing. One camp says a stale page is worse than none, because the reader trusts it and follows a wrong step with confidence. The other says even a partly stale page carries context (which dashboard, which team, what failed last time) that a blank cannot. The SRE workbook records a related split: some teams keep entries general so they change slowly, others insist on step-by-step instructions. The bench has a trap button for the first camp's answer, deleting the stale pages; you will see what it costs in Writer session 6.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Staleness tracks change, not age.</strong> The SRE workbook's on-call chapter says details in playbooks go out of date at the same rate as production changes, and that on-call engineers should update the playbook when its page fires. A page about a system nobody has touched for a year may still be true; a page about a system that ships daily can be wrong by Friday. (Google, The Site Reliability Workbook, "On-Call", read at source.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers the baseline</span>
+      <h2>One number for the whole library</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">An inventory ends in one number a leader can track: of every page, how many would mislead the next responder tonight? A page misleads if any step in it is wrong. On Pellmoor's constructed library the bench answers 25 of 38. That is the baseline every later session works on.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pellmoor's library as found, drawn as four tallies the bench prints. Pages that would mislead at 2 a.m.: 25 of 38, 66 percent, highlighted. Paging alerts with no page: 6 of 31. Pages with no owner: 15. Paged pages drilled this quarter: 3 of 25. Constructed Pellmoor example; the drift rate is simulated.">
+        <defs>
+          <filter id="a1cSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="23" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a1cHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a1cAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a1cH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a1cL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a1cS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a1cV { font: 800 18px Inter, sans-serif; fill: #1A1338; }
+          .a1cN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a1cH" x="30" y="28">PELLMOOR AS FOUND, AS THE BENCH PRINTS IT</text>
+
+        <g filter="url(#a1cSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="260" y="56" width="480" height="30" rx="6" fill="#FFFFFF"/>
+          <rect x="260" y="56" width="316" height="30" rx="6" fill="#FFE45C"/>
+          <rect x="260" y="108" width="480" height="30" rx="6" fill="#FFFFFF"/>
+          <rect x="260" y="108" width="93" height="30" rx="6" fill="url(#a1cHc)"/>
+          <rect x="260" y="160" width="480" height="30" rx="6" fill="#FFFFFF"/>
+          <rect x="260" y="160" width="189" height="30" rx="6" fill="url(#a1cHc)"/>
+          <rect x="260" y="212" width="480" height="30" rx="6" fill="#FFFFFF"/>
+          <rect x="260" y="212" width="58" height="30" rx="6" fill="#EFEDF7"/>
+          <!-- doodle: a moon for 2 a.m. -->
+          <path d="M800 70 Q784 86 800 102 Q776 100 776 86 Q776 72 800 70 Z" stroke="#281E51"/>
+        </g>
+
+        <text class="a1cL" x="240" y="76" text-anchor="end">would mislead at 2 a.m.</text>
+        <text class="a1cL" x="240" y="128" text-anchor="end">paging alerts with no page</text>
+        <text class="a1cL" x="240" y="180" text-anchor="end">pages with no owner</text>
+        <text class="a1cL" x="240" y="232" text-anchor="end">paged pages drilled</text>
+
+        <text class="a1cH" x="588" y="76">25 of 38 (66%)</text>
+        <text class="a1cH" x="366" y="128">6 of 31</text>
+        <text class="a1cH" x="462" y="180">15</text>
+        <text class="a1cH" x="330" y="232">3 of 25</text>
+
+        <text class="a1cN" x="30" y="276">Constructed Pellmoor example, quarter end. Drift per change is simulated at 30%; your numbers will differ.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - two in three pages carry at least one wrong step; that, not the page count, is the library's health</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>How the bench decides a page would mislead<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The library model is small and stated on the widget. Each of 36 system changes in the quarter touches one to three pages of its system. Each touch breaks a step with a probability you can move, the drift rate, set to 30% by default. That rate is simulated; nobody has published a measured rate you could borrow, and yours depends on how often your systems change.</p>
+        <p>Older pages also start the quarter carrying wrong steps: the less recently verified, the more. A page misleads if it ends the quarter with any wrong step. Owners, reviews and drills catch wrong steps at stated rates. Later sessions turn each of those on, one at a time.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Why write pages at all: the reported 3x<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The SRE book's introduction says recording best practice ahead of time in a playbook produces roughly a 3x improvement in mean time to repair, compared with "winging it". Treat it as Google's reported experience, not a measured study: the book gives no method. It is still the right shape of claim for a library: the gain comes from pages that are true when read. A stale page takes the reader confidently in the wrong direction.</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Inventory Pellmoor's library on the bench</h2>
+      <span class="tag demo">★ 22 min · everyone builds</span>
+    </div>
+    <p class="lede">The widget holds Pellmoor's 38 runbooks, its 31 paging alerts and one quarter of system changes. Every number below is computed in your browser when you click. Work the five steps and write down what the widget prints; Pellmoor is constructed, so the lesson is the mechanism, not the counts.</p>
+
+    <div class="rbp-widget" data-mode="library" data-rung="r0"></div>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A hand-drawn map of the library widget. The ladder buttons set the practices. The model reads Pellmoor's pages, alerts and changes, then prints the headline share that would mislead, a stats list, and a grid of page tiles, yellow for a page that would mislead, dashed for no owner, red dashed for an alert with no page.">
+        <defs>
+          <filter id="a1dSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="31" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a1dHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a1dAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a1dH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a1dL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a1dS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a1dN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <g filter="url(#a1dSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="50" width="200" height="120" rx="10" transform="rotate(-0.8 130 110)" fill="#EFEDF7"/>
+          <rect x="320" y="50" width="220" height="120" rx="10" transform="rotate(0.5 430 110)" fill="url(#a1dHc)"/>
+          <rect x="630" y="50" width="220" height="120" rx="10" transform="rotate(-0.5 740 110)" fill="#FFFFFF"/>
+          <path d="M234 110 L314 110" marker-end="url(#a1dAr)"/>
+          <path d="M544 110 L624 110" marker-end="url(#a1dAr)"/>
+          <rect x="650" y="132" width="34" height="18" rx="4" fill="#FFE45C"/>
+          <rect x="692" y="132" width="34" height="18" rx="4" fill="#FFFFFF" stroke-dasharray="4 4"/>
+          <rect x="734" y="132" width="34" height="18" rx="4" fill="#FFFFFF" stroke="#991B1B" stroke-dasharray="4 4"/>
+        </g>
+        <rect x="336" y="74" width="188" height="76" rx="8" fill="#FFFFFF"/>
+
+        <text class="a1dH" x="46" y="76">LADDER</text>
+        <text class="a1dS" x="46" y="98">R0 as found</text>
+        <text class="a1dS" x="46" y="116">R1 inventory + owners</text>
+        <text class="a1dS" x="46" y="134">later: rewrites, review,</text>
+        <text class="a1dS" x="46" y="152">drills, chase</text>
+
+        <text class="a1dH" x="348" y="94">THE MODEL</text>
+        <text class="a1dS" x="348" y="114">38 pages, 31 alerts</text>
+        <text class="a1dS" x="348" y="132">36 changes in a quarter</text>
+
+        <text class="a1dH" x="646" y="76">WHAT IT PRINTS</text>
+        <text class="a1dS" x="646" y="98">headline: share that misleads</text>
+        <text class="a1dS" x="646" y="116">stats, then a tile per page</text>
+
+        <text class="a1dN" x="30" y="206">Tiles: yellow would mislead, dashed border no owner, red dashed an alert with no page.</text>
+        <text class="a1dN" x="30" y="228">Hover any tile for the page title and its state.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the ladder changes practices, the model replays the quarter, the tiles show which pages paid for it</figcaption>
+    </figure>
+
+    <div class="steps">
+      <div class="step">
+        <p><strong>Step 1 · Read the baseline.</strong> With R0 selected, copy the headline and the first three stats lines. This is Pellmoor as found.</p>
+        <div class="prompt-box good"><span class="label">★ Step 1 · R0, as the widget prints it</span>25 of 38 pages would mislead at 2 a.m. (66%)
+Paging alerts with no page: 6 of 31
+Pages with no owner: 15
+Drill coverage: 3 of 25 paged pages drilled this quarter (12%)</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 2 · Find the missing pages.</strong> The six red dashed tiles are alerts that page a human with nothing behind them. Hover each and write its title. Two of the six sit on the pricing feed, the system behind the incident Writer session 4 writes up.</p>
+        <div class="prompt-box good"><span class="label">★ Step 2 · alerts with no page</span>NP-1 Feed row count drop                 (pricing feed)
+NP-2 Payment webhook silent               (order pipeline)
+NP-3 Freezer door open                    (warehouse picking)
+NP-4 Delivery ETA wrong                   (customer app)
+NP-5 Duplicate revenue rows               (finance warehouse)
+NP-6 Feed currency mismatch               (pricing feed)</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 3 · Write five inventory rows.</strong> Hover five tiles, including RB-07 and RB-14, and fill one row each. The widget gives you state and owner; for the other fields, write what your own wiki would need to say.</p>
+        <div class="prompt-box good"><span class="label">★ Step 3 · library inventory, first rows</span>page   | title                       | owner | last verified | alert bound | last drilled | state
+RB-07  | Checkout payments failing   | ____  | ____________  | ___________ | ____________ | ______
+RB-14  | Supplier feed schema changed| ____  | ____________  | ___________ | ____________ | ______
+RB-__  | ___________________________ | ____  | ____________  | ___________ | ____________ | ______</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 4 · Click R1, inventory + owners.</strong> Every page gets a named owner, each owner reads their page once, and the six missing pages get written. Copy the new headline and notice the denominator change.</p>
+        <div class="prompt-box good"><span class="label">★ Step 4 · R1, as the widget prints it</span>23 of 44 pages would mislead at 2 a.m. (52%)
+Paging alerts with no page: 0 of 31
+Pages with no owner: 0</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 5 · Say what R1 did not fix.</strong> Ownership found some wrong steps but not most: 23 pages still mislead. Write one sentence on why a careful read misses wrong steps. Writer session 2 answers it with the linter.</p>
+        <div class="prompt-box good"><span class="label">★ Step 5 · your note</span>R1 cut alerts with no page from 6 to 0 and owners-missing from 15 to 0,
+but 23 of 44 pages still mislead, because ________________________________.</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>Keep the inventory where the pages live.</strong> A spreadsheet beside the wiki is a second source of truth, and it will disagree with the wiki within a month. Put owner, last verified, alert and last drilled at the top of every page, then generate the inventory from the pages.</p>
+    </div>
+  </section>
+
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Before Writer session 2</h2>
+      <span class="tag exercise">30 min</span>
+    </div>
+    <ol>
+      <li><strong>List your paging alerts.</strong> Export every alert that can wake a human, with the page it links to, or "none".</li>
+      <li><strong>List your pages.</strong> Every runbook in the wiki, with the alert that leads to it, or "none".</li>
+      <li><strong>Join the two lists</strong> and count your missing pages and your pages no alert reaches.</li>
+      <li><strong>Add owner and last verified</strong> to ten pages, starting with the ones bound to the alerts that fire most.</li>
+    </ol>
+  </section>
+
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and Writer session 1 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">1 · Your wiki lists 40 runbooks and every one has an owner. Which state can that inventory still not see?</p>
+      <button class="qopt" type="button">A · Stale, because owners never re-read pages</button>
+      <button class="qopt" type="button">B · Orphaned, because owners leave the company</button>
+      <button class="qopt" type="button">C · Missing, because an alert with no page has no wiki entry to list</button>
+      <button class="qopt" type="button">D · True, because nobody can prove a page is true</button>
+      <p class="qwhy">A walk of the wiki only finds pages that exist. Start from the paging configuration to find alerts with nothing behind them.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">2 · Which field is the only one that tests the page rather than describing it?</p>
+      <button class="qopt" type="button">A · Last drilled: someone who did not write it ran it</button>
+      <button class="qopt" type="button">B · Owner: someone is named</button>
+      <button class="qopt" type="button">C · Last edited: the wording changed recently</button>
+      <button class="qopt" type="button">D · Alert bound: the link exists</button>
+      <p class="qwhy">An owner, a date and a link describe the page. A drill runs it against the system with a reader who brings no memory of it.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="3">
+      <p class="qtext">3 · On the bench, R1 gives every page an owner and writes the six missing pages. Why does the share that misleads fall only from 66% to 52%?</p>
+      <button class="qopt" type="button">A · The new pages are all wrong</button>
+      <button class="qopt" type="button">B · Owners are not allowed to edit pages</button>
+      <button class="qopt" type="button">C · The drift rate goes up when owners exist</button>
+      <button class="qopt" type="button">D · A read-through catches only some wrong steps, and changes keep breaking steps all quarter</button>
+      <p class="qwhy">Ownership is necessary, not sufficient. A one-off read misses wrong steps, and the quarter's changes keep arriving after it.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Each alert should have a corresponding playbook entry</span><span class="note">Google, The Site Reliability Workbook (2018), "On-Call", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Playbooks go out of date as fast as production changes</span><span class="note">Google, The Site Reliability Workbook (2018), "On-Call", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">A how-to guide serves a competent user, as a sequence, without teaching</span><span class="note">Diataxis, "How-to guides", diataxis.fr, read at source</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Roughly 3x faster repair with a playbook than without</span><span class="note">Google, Site Reliability Engineering (2016), Introduction, read at source; Google's own experience, no method given</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Pellmoor's 38 pages, 31 alerts, 36 changes and every bench number</span><span class="note">Constructed and labelled; drift rate simulated; printed by the widget on this page</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Every fact on this page, and its verification tier, is recorded in the course's source map.</p>
+  </section>
+
+  <section class="cheat" id="cheatsheet">
+    <h3>Writer session 1 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Four fields</b><span>Owner, last verified, alert bound, last drilled. At the top of every page.</span></div>
+      <div class="cheat-item"><b>Four states</b><span>True, stale, orphaned, missing. Stale is trusted, so it is the dangerous one.</span></div>
+      <div class="cheat-item"><b>Count from both ends</b><span>Alerts to pages finds missing pages; pages to alerts finds pages nobody is sent to.</span></div>
+      <div class="cheat-item"><b>Verified is not edited</b><span>Last verified means the steps were checked against the system, with a date.</span></div>
+      <div class="cheat-item"><b>One number</b><span>Share of pages that would mislead tonight. Pellmoor as found: 25 of 38.</span></div>
+      <div class="cheat-item"><b>Owners are a start</b><span>R1 owners and new pages: 23 of 44 still mislead. A read misses wrong steps.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>You know how much of the library would mislead. Writer session 2 asks where pages go stale: every system change is a chance a step stops being true, and the linter shows why a reviewer misses it on a page whose commands have no expected output.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Writer session 1 of 6 · learn-runbooks-postmortems-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="../index.html">← Course home</a> &nbsp;·&nbsp; <a href="a2-where-pages-go-stale.html">Next: Where pages go stale →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/rbp-sample.js?v=1"></script>
+<script src="../assets/rbp-live.js?v=1"></script>
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

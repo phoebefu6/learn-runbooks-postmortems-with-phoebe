@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Writer session 3 of 6. A drill is the only test: why only running a page with a newcomer proves it, how to time a drill step by step, and a quarterly drill rota for Pellmoor's 31 constructed paged pages.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="A drill is the only test - learn runbooks and postmortems with phoebe">
+<meta property="og:description" content="Writer session 3 of 6. A linter checks shape and a review reads the page. Only a drill runs it against the system with a reader who did not write it.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/courses/a3-a-drill-is-the-only-test.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A drill is the only test - learn runbooks and postmortems with phoebe">
+<meta name="twitter:description" content="Writer session 3 of 6. Run the page, time the reader, fix the page, not the reader. Then a rota that drills every paged page once a quarter.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Writer session 3 · A drill is the only test - learn runbooks and postmortems with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-runbooks-postmortems-with-phoebe</a> / Writer session 3 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Runbooks &amp; Postmortems with Phoebe · Writer session 3 of 6</div>
+    <h1>A drill is the only test: <span class="accent">run the page, time the reader</span></h1>
+    <p class="sub">Last session the linter made Pellmoor's pages checkable and change-triggered review kept most of them true. Both of those read the page. Neither runs it. Tonight you put a page in front of someone who has never seen it, start a clock, and watch where they stop. The first step they cannot finish is the most useful sentence anyone will write about that page this quarter. Then you build the rota that does this for every paged page, and see on the bench what it buys.</p>
+    <div class="chip-row">
+      <span class="chip level">🟡 Writer</span>
+      <span class="chip audience">On-call engineers, SREs, data engineers and tech writers</span>
+      <span class="chip audience">Hands-on in the browser</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-18 · What only a drill catches, timing a newcomer, the rota</span>
+      <span class="a3" style="flex:5">18-40 · Build-along: drill Pellmoor</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where we start</h2>
+    </div>
+    <p class="lede">After Writer session 2, Pellmoor's constructed library sits at R3: every page owned, every page linter-clean, every system change routed to the owner of the pages it touches. The bench says 6 of 44 pages would still mislead at 2 a.m. Those six passed every check that reads. Tonight is about the check that runs: the drill, how to time one honestly, what to do with the step that fails, and how to make drilling a rota rather than a heroic one-off game day.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+      <span class="pill">★ Build-along = everyone builds it</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> A drill log: one row per drill with the date in UTC, the page, the reader, the time each step took, the first step that failed, the fix and the re-drill date. Plus a one-quarter drill rota for Pellmoor's pricing feed pages, and the bench number that shows what a rota adds on top of review.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers why only a drill tests a page</span>
+      <h2>Reading a page is not running it</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">There are three ways to check a runbook. The linter from Writer session 2 checks its shape: every action has a confirm line, every command has an expected output, no step says "check it looks fine". A review has a person read it. A drill has a person who did not write it run it, step by step, against a system. A page can score 100 on the linter and pass a careful review while step 2 names a host that was retired last month. The linter checks shape, not truth, and a reviewer reads with the writer's assumptions. Only the drill puts the page in contact with the system.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 346" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A grid of three checks across and three kinds of wrong step down. The linter catches a vague step but misses a drifted command and a missing permission or dead link. A review catches a vague step if read slowly, sometimes catches a drifted command, and misses missing access because the reviewer's own access works. The drill column, highlighted, catches all three: the reader stalls, the command fails, access is denied.">
+        <defs>
+          <filter id="a3aSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="41" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a3aHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a3aAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a3aH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a3aL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a3aS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a3aB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .a3aN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a3aH" x="30" y="26">THREE CHECKS, THREE KINDS OF WRONG STEP</text>
+
+        <g filter="url(#a3aSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="250" y="40" width="190" height="270" rx="12" transform="rotate(-0.4 345 175)" fill="#FFFFFF"/>
+          <rect x="460" y="40" width="190" height="270" rx="12" transform="rotate(0.4 555 175)" fill="#FFFFFF"/>
+          <rect x="670" y="40" width="190" height="270" rx="12" transform="rotate(-0.3 765 175)" fill="#FFE45C"/>
+          <path d="M30 165 L860 165" stroke="#CBC7DA"/>
+          <path d="M30 235 L860 235" stroke="#CBC7DA"/>
+          <!-- ticks where a check catches -->
+          <path d="M418 126 L423 132 L432 120" stroke="#281E51"/>
+          <path d="M628 126 L633 132 L642 120" stroke="#281E51"/>
+          <path d="M838 126 L843 132 L852 120"/>
+          <path d="M838 196 L843 202 L852 190"/>
+          <path d="M838 266 L843 272 L852 260"/>
+          <!-- doodle: stopwatch over the drill column -->
+          <circle cx="826" cy="58" r="10" stroke="#281E51"/>
+          <path d="M826 48 L826 44 M826 58 L831 53" stroke="#281E51"/>
+        </g>
+
+        <text class="a3aH" x="264" y="66">LINTER</text>
+        <text class="a3aS" x="264" y="84">checks the shape</text>
+        <text class="a3aH" x="474" y="66">REVIEW</text>
+        <text class="a3aS" x="474" y="84">a person reads the page</text>
+        <text class="a3aH" x="684" y="66">DRILL</text>
+        <text class="a3aL" x="684" y="84">a newcomer runs the page</text>
+
+        <text class="a3aH" x="30" y="124">VAGUE STEP</text>
+        <text class="a3aS" x="30" y="144">"check it looks normal"</text>
+        <text class="a3aH" x="30" y="194">DRIFTED COMMAND</text>
+        <text class="a3aS" x="30" y="214">the host moved, the step did not</text>
+        <text class="a3aH" x="30" y="264">MISSING ACCESS, DEAD LINK</text>
+        <text class="a3aS" x="30" y="284">works for the writer only</text>
+
+        <text class="a3aS" x="264" y="134">catches: judgement word</text>
+        <text class="a3aS" x="264" y="204">misses: shape is fine</text>
+        <text class="a3aS" x="264" y="274">misses: link text is fine</text>
+
+        <text class="a3aS" x="474" y="134">catches, if read slowly</text>
+        <text class="a3aS" x="474" y="204">sometimes</text>
+        <text class="a3aS" x="474" y="274">misses: own access works</text>
+
+        <text class="a3aL" x="684" y="134">catches: reader stalls</text>
+        <text class="a3aL" x="684" y="204">catches: command fails</text>
+        <text class="a3aL" x="684" y="274">catches: access denied</text>
+
+        <text class="a3aN" x="30" y="334">Only the drill puts the page in contact with the system, through a reader who brings no memory of it.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the drill column is the only one with a tick in every row</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>What a drill catches that a review cannot<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>The reviewer knows too much.</strong> A reviewer reads "restart the job on the scheduler" and their head fills in which scheduler, because they were there when it moved. A newcomer has nothing to fill in with, so the gap shows. The same goes for the dashboard everyone "just knows" and the step that silently assumes you are already on the bastion host.</p>
+        <p><strong>The reviewer's access works.</strong> A page written by someone with admin rights reads perfectly to another admin. The first time a new on-call engineer runs it, step 4 returns "permission denied" at 2 a.m. Only someone running the page with an ordinary on-call account finds that.</p>
+        <p><strong>The system changed since the read.</strong> A command, a hostname, a dashboard link: all of these are claims about the system, and a read cannot test a claim. Running the step does. That is why the linter score from Writer session 2 is necessary but never enough: it says a page can be checked, and the drill is the check.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Paper drill vs live game day<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Paper drill (tabletop).</strong> The reader walks the page aloud while a facilitator plays the system: "you run that command, here is what comes back". It is cheap, safe and good at finding vague steps and missing context. It cannot find a drifted command, because the facilitator answers from memory, and memory is exactly what drifted.</p>
+        <p><strong>Live drill on a safe system.</strong> The reader runs the real commands against a staging copy, or against an instance diverted from live traffic, with a fault injected. The SRE book's training chapter recommends exactly this for its exercises, in the section titled "Break Real Things, Fix Real Things": realism matters, so borrow an instance that can be taken out of live traffic, or a small staging instance, and break it on purpose. It costs more setup and finds what a tabletop cannot.</p>
+        <p><strong>Live game day.</strong> A real fault on a production system, under control. The most realistic and the most expensive; most teams run it a few times a year for their most critical pages. Pellmoor's one ad hoc game day in week 6 of the constructed quarter drilled 3 pages, which is where the bench's starting drill coverage comes from.</p>
+        <p>Pick per page. A page whose steps are mostly commands needs a live drill; a page that is mostly judgement and escalation can be tested well on paper.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Google trains on-call engineers by re-enacting old incidents.</strong> The SRE book's chapter on bringing engineers onto on-call describes disaster role playing, which it says is commonly called Wheel of Misfortune or Walk the Plank: a game master picks an on-call engineer, presents a scenario often taken from a past outage, and supplies what the system would show while the engineer works the problem. The same chapter notes that newer engineers depend on documentation far more than seniors, who fill the gaps from memory. (Google, Site Reliability Engineering (2016), "Accelerating SREs to On-Call and Beyond", sre.google, read at source.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers timing a newcomer</span>
+      <h2>Start a clock, stay silent, stop at the first failure</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">A drill has a protocol, and the protocol is what makes the result mean something. Pick a reader who has never run the page. Start a clock. The reader reads each step aloud and runs it. The writer stays silent. You mark every step where the reader stops, guesses or asks. The drill ends at the first step that fails, and that step goes in the log. What a failed step teaches is always the same: fix the page, not the reader.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 314" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A timed drill on RB-24 Pick lists not generated, constructed Pellmoor example. Step 1, open the pick-list job status page, took 2 minutes with no pause. Step 2, restart the job on the scheduler named in the page, took 6 minutes and stalled, highlighted, because the scheduler had moved hosts. Step 3, confirm lists appear for the next wave, was not reached. A time bar below shows 2 minutes then 6 minutes, with the clock stopped at 8 minutes.">
+        <defs>
+          <filter id="a3bSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="43" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a3bHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a3bAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a3bH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a3bL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a3bS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a3bB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .a3bN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a3bH" x="30" y="26">ONE DRILL, TIMED: RB-24 PICK LISTS NOT GENERATED</text>
+        <text class="a3bS" x="30" y="46">Constructed Pellmoor example. Reader: a picking engineer who has never run the page. Times are constructed.</text>
+
+        <g filter="url(#a3bSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="66" width="260" height="124" rx="10" transform="rotate(-0.8 160 128)" fill="#EFEDF7"/>
+          <rect x="310" y="66" width="280" height="124" rx="10" transform="rotate(0.6 450 128)" fill="#FFE45C"/>
+          <rect x="610" y="66" width="240" height="124" rx="10" transform="rotate(-0.5 730 128)" fill="#FFFFFF" stroke-dasharray="6 6"/>
+          <path d="M292 128 L306 128" marker-end="url(#a3bAr)"/>
+          <path d="M592 128 L606 128" stroke-dasharray="4 4"/>
+          <!-- the clock bar -->
+          <rect x="30" y="214" width="180" height="22" rx="5" fill="#EFEDF7"/>
+          <rect x="210" y="214" width="540" height="22" rx="5" fill="#FFE45C"/>
+          <!-- doodle: stopwatch at the stop -->
+          <circle cx="842" cy="226" r="12" stroke="#281E51"/>
+          <path d="M842 214 L842 208 M842 226 L848 220" stroke="#281E51"/>
+        </g>
+
+        <text class="a3bH" x="46" y="92">STEP 1 · 2 MIN</text>
+        <text class="a3bL" x="46" y="114">Open the pick-list job</text>
+        <text class="a3bL" x="46" y="132">status page</text>
+        <text class="a3bS" x="46" y="170">read aloud, ran it, no pause</text>
+
+        <text class="a3bH" x="326" y="92">STEP 2 · 6 MIN, STALLED</text>
+        <text class="a3bL" x="326" y="114">Restart the job on the scheduler</text>
+        <text class="a3bL" x="326" y="132">host named in this step</text>
+        <text class="a3bH" x="326" y="160">the scheduler had moved hosts</text>
+        <text class="a3bL" x="326" y="178">reader stopped, then asked</text>
+
+        <text class="a3bH" x="626" y="92">STEP 3 · NOT REACHED</text>
+        <text class="a3bS" x="626" y="114">Confirm lists appear for</text>
+        <text class="a3bS" x="626" y="132">the next picking wave</text>
+        <text class="a3bS" x="626" y="170">drill stops at the first failure</text>
+
+        <text class="a3bS" x="30" y="258">0</text>
+        <text class="a3bS" x="210" y="258" text-anchor="middle">2 min</text>
+        <text class="a3bS" x="750" y="258" text-anchor="middle">8 min: clock stopped</text>
+
+        <text class="a3bN" x="30" y="290">The stall is the finding: rewrite step 2 against the scheduler as it is now, then re-drill. The reader did nothing wrong.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - three quarters of the drill went on one step, and that step is the one the page got wrong</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The drill protocol, and the drill log<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Pick the reader.</strong> Someone on the rota who has never run this page. Not the writer, not the owner, not the person who fixed this alert last month. The newest on-call engineer is the best reader you have.</p>
+        <p><strong>Start the clock and read aloud.</strong> Reading aloud makes every guess audible. "I think this means the second dashboard" is a finding, even if the guess was right.</p>
+        <p><strong>The writer stays silent.</strong> Every hint the writer gives is a step the page is missing, and the hint will not be in the room at 2 a.m. If the reader is truly stuck, they say so, you mark the step, and the drill ends there.</p>
+        <p><strong>Stop at the first failed step.</strong> A step fails when the reader cannot finish it from the page alone: the command errors, the link is dead, access is denied, or they had to ask. Everything after it is untested, so the log says "not reached", not "passed".</p>
+        <p><strong>Write the log row.</strong> Date in UTC, page, reader (a role, not a name), time per step, first failed step, the fix, and a re-drill date. The time per step matters as much as the failure: a step that took six minutes and passed is next quarter's failure.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>A drill tests the reader too, and that is not the point<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The SRE book's training chapter lists, among its anti-patterns, training "strictly through operator procedures, checklists, and playbooks" (Google, Site Reliability Engineering, "Accelerating SREs to On-Call and Beyond"). Its point is that a playbook does not replace understanding the system: an engineer who can only follow steps is lost the moment the steps run out.</p>
+        <p>So a drill always tests two things at once: whether the page is true and complete, and whether the reader understands enough to work when it is not. Keep them apart in the log. The page is the subject of the drill, and the reader is not being graded. When a reader stalls, the first question is always what the page failed to say. A separate question, asked kindly and outside the log, is what the reader needs to learn about the system, and that is a training plan, not a drill finding.</p>
+        <p>Teams that grade readers in drills soon find nobody volunteers to read. Teams that fix pages find the newest engineers asking to be drilled, because it is the fastest way to learn the system with a safety net.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Constructed Pellmoor example: the scheduler that moved.</strong> RB-24 had an owner, passed the linter, and its owner had reviewed it after the last two picking changes. The scheduler migration that broke step 2 was filed against the job platform, not the picking system, so the change-triggered review never routed it to RB-24's owner. The drill found it in six minutes on a Tuesday afternoon. Without the drill, a picking on-call would have found it at the start of the early wave with vans waiting.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers the drill rota</span>
+      <h2>Every paged page, once a quarter</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">One game day drills a handful of pages. A rota drills all of them. After the inventory, Pellmoor has 31 paged pages. Drilling each once a quarter spreads them across 13 weeks: 31 / 13 is about 2.4, so two or three drills a week, each needing one reader and one silent observer. That is a rota a team can keep, and on the bench it takes the library from 14% misleading to 5%.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 404" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A 13-week drill rota grid, weeks across and Pellmoor's five systems down: customer app 7 paged pages, pricing feed 7, order pipeline 8, warehouse picking 5, finance warehouse 4. Each paged page appears once. Weekly totals are 3 in weeks 1, 4, 7, 10 and 13 and 2 in the other eight weeks, 31 in all. Below, R3 prints 6 of 44 pages would mislead, 14 percent, with 3 of 31 paged pages drilled, 10 percent. R4, highlighted, prints 2 of 44, 5 percent, with 31 of 31 drilled, 100 percent. The rota is constructed.">
+        <defs>
+          <filter id="a3cSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="47" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a3cHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a3cAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a3cH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a3cL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a3cS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a3cB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .a3cN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a3cH" x="30" y="26">ONE QUARTER, 31 PAGED PAGES, ONE DRILL EACH</text>
+        <text class="a3cS" x="30" y="46">Constructed Pellmoor rota: 5 weeks of 3 drills and 8 weeks of 2, so 15 + 16 = 31.</text>
+
+        <g filter="url(#a3cSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="166" y="72" width="604" height="178" rx="8" transform="rotate(-0.2 468 161)" fill="#FFFFFF"/>
+          <rect x="172" y="81" width="42" height="24" rx="4" transform="rotate(-1.5 193 93)" fill="#EFEDF7"/>
+          <rect x="310" y="81" width="42" height="24" rx="4" transform="rotate(1.5 331 93)" fill="#EFEDF7"/>
+          <rect x="402" y="81" width="42" height="24" rx="4" transform="rotate(1.5 423 93)" fill="#EFEDF7"/>
+          <rect x="494" y="81" width="42" height="24" rx="4" transform="rotate(-1.5 515 93)" fill="#EFEDF7"/>
+          <rect x="586" y="81" width="42" height="24" rx="4" transform="rotate(-1 607 93)" fill="#EFEDF7"/>
+          <rect x="678" y="81" width="42" height="24" rx="4" transform="rotate(1.5 699 93)" fill="#EFEDF7"/>
+          <rect x="724" y="81" width="42" height="24" rx="4" transform="rotate(1 745 93)" fill="#EFEDF7"/>
+          <rect x="172" y="115" width="42" height="24" rx="4" transform="rotate(1 193 127)" fill="#EFEDF7"/>
+          <rect x="264" y="115" width="42" height="24" rx="4" transform="rotate(1.5 285 127)" fill="#EFEDF7"/>
+          <rect x="356" y="115" width="42" height="24" rx="4" transform="rotate(-1 377 127)" fill="#EFEDF7"/>
+          <rect x="448" y="115" width="42" height="24" rx="4" transform="rotate(1.5 469 127)" fill="#EFEDF7"/>
+          <rect x="540" y="115" width="42" height="24" rx="4" transform="rotate(-1 561 127)" fill="#EFEDF7"/>
+          <rect x="632" y="115" width="42" height="24" rx="4" transform="rotate(1 653 127)" fill="#EFEDF7"/>
+          <rect x="724" y="115" width="42" height="24" rx="4" transform="rotate(-1 745 127)" fill="#EFEDF7"/>
+          <rect x="172" y="149" width="42" height="24" rx="4" transform="rotate(1.5 193 161)" fill="#EFEDF7"/>
+          <rect x="264" y="149" width="42" height="24" rx="4" transform="rotate(-1.5 285 161)" fill="#EFEDF7"/>
+          <rect x="356" y="149" width="42" height="24" rx="4" transform="rotate(-1.5 377 161)" fill="#EFEDF7"/>
+          <rect x="448" y="149" width="42" height="24" rx="4" transform="rotate(1 469 161)" fill="#EFEDF7"/>
+          <rect x="586" y="149" width="42" height="24" rx="4" transform="rotate(1 607 161)" fill="#EFEDF7"/>
+          <rect x="632" y="149" width="42" height="24" rx="4" transform="rotate(1.5 653 161)" fill="#EFEDF7"/>
+          <rect x="678" y="149" width="42" height="24" rx="4" transform="rotate(1.5 699 161)" fill="#EFEDF7"/>
+          <rect x="724" y="149" width="42" height="24" rx="4" transform="rotate(1 745 161)" fill="#EFEDF7"/>
+          <rect x="218" y="183" width="42" height="24" rx="4" transform="rotate(1 239 195)" fill="#EFEDF7"/>
+          <rect x="310" y="183" width="42" height="24" rx="4" transform="rotate(1 331 195)" fill="#EFEDF7"/>
+          <rect x="402" y="183" width="42" height="24" rx="4" transform="rotate(-1.5 423 195)" fill="#EFEDF7"/>
+          <rect x="494" y="183" width="42" height="24" rx="4" transform="rotate(-1.5 515 195)" fill="#EFEDF7"/>
+          <rect x="586" y="183" width="42" height="24" rx="4" transform="rotate(1 607 195)" fill="#EFEDF7"/>
+          <rect x="218" y="217" width="42" height="24" rx="4" transform="rotate(-1.5 239 229)" fill="#EFEDF7"/>
+          <rect x="310" y="217" width="42" height="24" rx="4" transform="rotate(1.5 331 229)" fill="#EFEDF7"/>
+          <rect x="448" y="217" width="42" height="24" rx="4" transform="rotate(1 469 229)" fill="#EFEDF7"/>
+          <rect x="540" y="217" width="42" height="24" rx="4" transform="rotate(1 561 229)" fill="#EFEDF7"/>
+          <rect x="24" y="286" width="412" height="88" rx="10" transform="rotate(-0.5 230 330)" fill="#FFFFFF"/>
+          <rect x="444" y="286" width="416" height="88" rx="10" transform="rotate(0.5 652 330)" fill="#FFE45C"/>
+          <!-- doodle: a calendar page -->
+          <rect x="818" y="14" width="30" height="28" rx="3" transform="rotate(3 833 28)" stroke="#281E51"/>
+          <path d="M818 22 L848 22 M826 10 L826 18 M840 10 L840 18" stroke="#281E51"/>
+        </g>
+
+        <text class="a3cS" x="193" y="66" text-anchor="middle">W1</text>
+        <text class="a3cS" x="239" y="66" text-anchor="middle">W2</text>
+        <text class="a3cS" x="285" y="66" text-anchor="middle">W3</text>
+        <text class="a3cS" x="331" y="66" text-anchor="middle">W4</text>
+        <text class="a3cS" x="377" y="66" text-anchor="middle">W5</text>
+        <text class="a3cS" x="423" y="66" text-anchor="middle">W6</text>
+        <text class="a3cS" x="469" y="66" text-anchor="middle">W7</text>
+        <text class="a3cS" x="515" y="66" text-anchor="middle">W8</text>
+        <text class="a3cS" x="561" y="66" text-anchor="middle">W9</text>
+        <text class="a3cS" x="607" y="66" text-anchor="middle">W10</text>
+        <text class="a3cS" x="653" y="66" text-anchor="middle">W11</text>
+        <text class="a3cS" x="699" y="66" text-anchor="middle">W12</text>
+        <text class="a3cS" x="745" y="66" text-anchor="middle">W13</text>
+
+        <text class="a3cL" x="30" y="97">customer app (7)</text>
+        <text class="a3cL" x="30" y="131">pricing feed (7)</text>
+        <text class="a3cL" x="30" y="165">orders (8)</text>
+        <text class="a3cL" x="30" y="199">picking (5)</text>
+        <text class="a3cL" x="30" y="233">finance (4)</text>
+
+        <text class="a3cS" x="193" y="97" text-anchor="middle">RB-01</text>
+        <text class="a3cS" x="331" y="97" text-anchor="middle">RB-02</text>
+        <text class="a3cS" x="423" y="97" text-anchor="middle">RB-04</text>
+        <text class="a3cS" x="515" y="97" text-anchor="middle">RB-05</text>
+        <text class="a3cS" x="607" y="97" text-anchor="middle">RB-06</text>
+        <text class="a3cS" x="699" y="97" text-anchor="middle">RB-07</text>
+        <text class="a3cS" x="745" y="97" text-anchor="middle">NP-4</text>
+        <text class="a3cS" x="193" y="131" text-anchor="middle">RB-09</text>
+        <text class="a3cS" x="285" y="131" text-anchor="middle">RB-10</text>
+        <text class="a3cS" x="377" y="131" text-anchor="middle">RB-11</text>
+        <text class="a3cS" x="469" y="131" text-anchor="middle">RB-12</text>
+        <text class="a3cS" x="561" y="131" text-anchor="middle">RB-14</text>
+        <text class="a3cS" x="653" y="131" text-anchor="middle">NP-1</text>
+        <text class="a3cS" x="745" y="131" text-anchor="middle">NP-6</text>
+        <text class="a3cS" x="193" y="165" text-anchor="middle">RB-16</text>
+        <text class="a3cS" x="285" y="165" text-anchor="middle">RB-17</text>
+        <text class="a3cS" x="377" y="165" text-anchor="middle">RB-18</text>
+        <text class="a3cS" x="469" y="165" text-anchor="middle">RB-19</text>
+        <text class="a3cS" x="607" y="165" text-anchor="middle">RB-20</text>
+        <text class="a3cS" x="653" y="165" text-anchor="middle">RB-21</text>
+        <text class="a3cS" x="699" y="165" text-anchor="middle">RB-23</text>
+        <text class="a3cS" x="745" y="165" text-anchor="middle">NP-2</text>
+        <text class="a3cS" x="239" y="199" text-anchor="middle">RB-24</text>
+        <text class="a3cS" x="331" y="199" text-anchor="middle">RB-25</text>
+        <text class="a3cS" x="423" y="199" text-anchor="middle">RB-26</text>
+        <text class="a3cS" x="515" y="199" text-anchor="middle">RB-28</text>
+        <text class="a3cS" x="607" y="199" text-anchor="middle">NP-3</text>
+        <text class="a3cS" x="239" y="233" text-anchor="middle">RB-32</text>
+        <text class="a3cS" x="331" y="233" text-anchor="middle">RB-33</text>
+        <text class="a3cS" x="469" y="233" text-anchor="middle">RB-38</text>
+        <text class="a3cS" x="561" y="233" text-anchor="middle">NP-5</text>
+
+        <text class="a3cL" x="30" y="270">drills that week</text>
+        <text class="a3cH" x="193" y="270" text-anchor="middle">3</text>
+        <text class="a3cH" x="239" y="270" text-anchor="middle">2</text>
+        <text class="a3cH" x="285" y="270" text-anchor="middle">2</text>
+        <text class="a3cH" x="331" y="270" text-anchor="middle">3</text>
+        <text class="a3cH" x="377" y="270" text-anchor="middle">2</text>
+        <text class="a3cH" x="423" y="270" text-anchor="middle">2</text>
+        <text class="a3cH" x="469" y="270" text-anchor="middle">3</text>
+        <text class="a3cH" x="515" y="270" text-anchor="middle">2</text>
+        <text class="a3cH" x="561" y="270" text-anchor="middle">2</text>
+        <text class="a3cH" x="607" y="270" text-anchor="middle">3</text>
+        <text class="a3cH" x="653" y="270" text-anchor="middle">2</text>
+        <text class="a3cH" x="699" y="270" text-anchor="middle">2</text>
+        <text class="a3cH" x="745" y="270" text-anchor="middle">3</text>
+
+        <text class="a3cH" x="38" y="308">R3 · CHANGE-TRIGGERED REVIEW, NO ROTA</text>
+        <text class="a3cL" x="38" y="328">6 of 44 pages would mislead at 2 a.m. (14%)</text>
+        <text class="a3cS" x="38" y="346">Drill coverage: 3 of 31 paged pages</text>
+        <text class="a3cS" x="38" y="362">drilled this quarter (10%)</text>
+
+        <text class="a3cH" x="458" y="308">R4 · THE SAME, PLUS THIS ROTA</text>
+        <text class="a3cL" x="458" y="328">2 of 44 pages would mislead at 2 a.m. (5%)</text>
+        <text class="a3cL" x="458" y="346">Drill coverage: 31 of 31 paged pages</text>
+        <text class="a3cL" x="458" y="362">drilled this quarter (100%)</text>
+
+        <text class="a3cN" x="30" y="396">The 2 still misleading at R4 are RB-27 and RB-37: unpaged pages, so no paged-page rota reaches them.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - two or three drills a week is enough to cover every paged page once a quarter</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Building the rota<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Start from the inventory, not the wiki.</strong> The rota covers paged pages: every page a paging alert sends a human to. On Pellmoor that is 31, the 25 that were bound when the inventory started plus the 6 written for alerts that had no page. Unpaged pages, such as a month-end close checklist, are not on this rota; they need their own, slower plan.</p>
+        <p><strong>Spread, do not batch.</strong> 31 pages over 13 weeks is about 2.4 a week. A grid with weeks across and systems down shows at a glance when one system is drilled three weeks running and another not at all. Spread each system across the quarter so a big change in week 5 is followed by a drill a few weeks later.</p>
+        <p><strong>Pair the rota with the on-call roster.</strong> The newest person on next week's roster reads; the page owner observes in silence and fixes. A failed drill earns a re-drill date in the same quarter, which is why the rota leaves slack weeks with only two slots.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Drilling harder does not replace review<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A natural question: if a drill catches every wrong step, why not skip change-triggered review and drill more often? The bench answers it. With owners and rewrites but no change-triggered review, and a drill every 4 weeks instead of once a quarter, Pellmoor ends at "6 of 44 pages would mislead at 2 a.m. (14%)", the same as review with no rota at all, and well above review plus a quarterly drill.</p>
+        <p>The reason is timing. A drill is a snapshot: it finds what is wrong on the day it runs. A change that breaks a step the week after the drill stays broken until the next one. Review on change catches most breaks close to when they happen; the drill then catches what review missed, including the breaks that were never routed to the right owner. They do different jobs, and the cheaper one, review, does most of the lifting. The workbook's on-call chapter makes the same pairing from the other side: playbook details go out of date as fast as production changes, so the page has to be touched when the system is.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Why a true page is worth the effort: the reported 3x.</strong> The SRE book's introduction reports that writing best practice down ahead of time in a playbook gave roughly a 3x improvement in mean time to repair compared with improvising. That is Google's own reported experience; the book gives no method, so treat it as a practitioner's report, not a measured effect. Notice the condition hidden in it: the gain comes from pages that are true when read, and the drill is how you know. (Google, Site Reliability Engineering (2016), Introduction, sre.google, read at source; reported experience.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Drill Pellmoor's library on the bench</h2>
+      <span class="tag demo">★ 22 min · everyone builds</span>
+    </div>
+    <p class="lede">The widget opens at R3, where Writer session 2 left Pellmoor's constructed library. You will add the drill rota, find the two pages it cannot reach, then try the tempting shortcut of drilling harder instead of reviewing. Every number is computed in your browser; the drift rate is simulated at 30%. Finish by writing Pellmoor's first drill log row and a rota for one system.</p>
+
+    <div class="rbp-widget" data-mode="library" data-rung="r3"></div>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The drill log loop in four steps. A newcomer runs the page aloud with the clock on and the writer silent. The drill stops at the first failed step, noting every stall. The log row records date in UTC, page, reader, time per step and fix. The owner fixes the page, highlighted, not the reader. An arrow returns from the fix to the start, labelled re-drill on the date in the log.">
+        <defs>
+          <filter id="a3dSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="53" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a3dHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a3dAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a3dH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a3dL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a3dS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a3dN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a3dH" x="30" y="26">THE DRILL LOG LOOP</text>
+
+        <g filter="url(#a3dSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="56" width="180" height="88" rx="10" transform="rotate(-1.2 120 100)" fill="#EFEDF7"/>
+          <rect x="245" y="56" width="180" height="88" rx="10" transform="rotate(1 335 100)" fill="#FFFFFF"/>
+          <rect x="460" y="56" width="180" height="88" rx="10" transform="rotate(-0.8 550 100)" fill="#FFFFFF"/>
+          <rect x="675" y="56" width="180" height="88" rx="10" transform="rotate(1.3 765 100)" fill="#FFE45C"/>
+          <path d="M214 100 L240 100" marker-end="url(#a3dAr)"/>
+          <path d="M429 100 L455 100" marker-end="url(#a3dAr)"/>
+          <path d="M644 100 L670 100" marker-end="url(#a3dAr)"/>
+          <path d="M765 150 L765 186 L120 186 L120 152" marker-end="url(#a3dAr)"/>
+          <!-- doodle: stopwatch -->
+          <circle cx="836" cy="24" r="11" stroke="#281E51"/>
+          <path d="M836 13 L836 8 M836 24 L842 18" stroke="#281E51"/>
+        </g>
+
+        <text class="a3dH" x="44" y="82">1 · NEWCOMER RUNS IT</text>
+        <text class="a3dS" x="44" y="104">reads aloud, clock on</text>
+        <text class="a3dS" x="44" y="122">writer silent</text>
+
+        <text class="a3dH" x="259" y="82">2 · FIRST FAILED STEP</text>
+        <text class="a3dS" x="259" y="104">stop the drill there</text>
+        <text class="a3dS" x="259" y="122">note every stall</text>
+
+        <text class="a3dH" x="474" y="82">3 · LOG THE ROW</text>
+        <text class="a3dS" x="474" y="104">date UTC, page, reader,</text>
+        <text class="a3dS" x="474" y="122">time per step, fix</text>
+
+        <text class="a3dH" x="689" y="82">4 · FIX THE PAGE</text>
+        <text class="a3dL" x="689" y="104">owner rewrites it</text>
+        <text class="a3dL" x="689" y="122">not the reader</text>
+
+        <text class="a3dS" x="440" y="208" text-anchor="middle">re-drill on the date in the log</text>
+
+        <text class="a3dN" x="30" y="240">A drill that fails is a drill that worked: the log turns a stall into a dated fix.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the loop closes on the page, and the re-drill date proves the fix</figcaption>
+    </figure>
+
+    <div class="steps">
+      <div class="step">
+        <p><strong>Step 1 · Read R3.</strong> With R3 selected, copy the headline, the drill coverage and the changes line. Every page is owned, clean and reviewed on change, and six still mislead.</p>
+        <div class="prompt-box good"><span class="label">★ Step 1 · R3, as the widget prints it</span>6 of 44 pages would mislead at 2 a.m. (14%)
+Drill coverage: 3 of 31 paged pages drilled this quarter (10%)
+System changes that broke a step: 20 (simulated drift 30%)</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 2 · Click R4, drill rota.</strong> The drill rota select now reads "once a quarter": every paged page is drilled once in the 13 weeks. Copy the headline and the drill coverage.</p>
+        <div class="prompt-box good"><span class="label">★ Step 2 · R4, as the widget prints it</span>2 of 44 pages would mislead at 2 a.m. (5%)
+Drill coverage: 31 of 31 paged pages drilled this quarter (100%)</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 3 · Find the two pages no drill reached.</strong> Two tiles are still yellow at R4. Hover each, write its title, and say in one line why the rota missed it.</p>
+        <div class="prompt-box good"><span class="label">★ Step 3 · still misleading at R4</span>RB-27 Stock count mismatch        (warehouse picking)
+RB-37 Month-end close checklist   (finance warehouse)
+
+Why no drill reached them: ____________________________________
+(hint: which pages does the rota cover?)</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 4 · Try drilling harder instead of reviewing.</strong> Set the levers by hand: keep owners and linter-clean rewrites ticked, untick change-triggered review, and set the drill rota to "every 4 weeks". Copy the headline and compare it with Steps 1 and 2.</p>
+        <div class="prompt-box good"><span class="label">★ Step 4 · drill every 4 weeks, no change-triggered review</span>6 of 44 pages would mislead at 2 a.m. (14%)
+
+Compared with R4 (review + quarterly rota): ___________________
+One sentence on why: a drill is a snapshot, so ________________</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 5 · Write the drill log and a rota.</strong> Fill Pellmoor's first drill log row from the RB-24 drill in Part 2, then a one-quarter rota for the seven paged pricing feed pages. Both are constructed; the pricing rota below is one drill every other week, 7 drills in weeks 1 to 13.</p>
+        <div class="prompt-box good"><span class="label">★ Step 5 · drill log and pricing feed rota (constructed)</span>DRILL LOG
+date (UTC) | page  | reader             | time per step        | first failed step | fix                         | re-drill
+2026-__-__ | RB-24 | picking on-call,   | 1: 2 min, 2: 6 min,  | step 2: scheduler | rewrite step 2 against the  | 2026-__-__
+           |       | never ran the page | 3: not reached       | had moved hosts   | current scheduler; owner    |
+
+PRICING FEED ROTA, ONE QUARTER (7 paged pages, constructed)
+W1  RB-09 Supplier price feed late       reader: ________  observer: owner
+W3  RB-10 Price feed rejected by validator
+W5  RB-11 Price change above 30 percent
+W7  RB-12 Promotion prices not applied
+W9  RB-14 Supplier feed schema changed
+W11 NP-1  Feed row count drop
+W13 NP-6  Feed currency mismatch
+Slack weeks (W2, W4, ...) take re-drills of any page that failed.</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>Put the last drilled date on the page.</strong> The drill log is the record; the page carries the result. A "last drilled: 2026-__-__, by a first-time reader" line at the top of every paged page is the fourth inventory field from Writer session 1, now filled with evidence.</p>
+    </div>
+  </section>
+
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Before Writer session 4</h2>
+      <span class="tag exercise">30 min</span>
+    </div>
+    <ol>
+      <li><strong>Run one drill.</strong> Pick a paged page bound to an alert that fires often, and a reader who has never run it. Clock on, writer silent, stop at the first failed step.</li>
+      <li><strong>Write the log row.</strong> Date in UTC, page, reader as a role, time per step, first failed step, fix, re-drill date.</li>
+      <li><strong>Fix the page, then re-drill.</strong> Rewrite the failed step against the system as it is now, and book the re-drill with a different reader.</li>
+      <li><strong>Draft your rota.</strong> Count your paged pages, divide by 13, and lay them out on a weeks-by-systems grid with slack weeks for re-drills.</li>
+    </ol>
+  </section>
+
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and Writer session 3 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · A page scores 100 on the linter and its owner reviewed it last week. Which wrong step can only a drill catch?</p>
+      <button class="qopt" type="button">A · A step that says "check it looks normal"</button>
+      <button class="qopt" type="button">B · A command whose host was moved after the review, run by an account without admin rights</button>
+      <button class="qopt" type="button">C · An action with no confirm line</button>
+      <button class="qopt" type="button">D · A command with no expected output</button>
+      <p class="qwhy">The linter catches vague steps and missing confirm or expected lines. A drifted host and a missing permission are claims about the system; only running the step tests them.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="3">
+      <p class="qtext">2 · Why does the writer stay silent during a drill?</p>
+      <button class="qopt" type="button">A · So the reader feels the pressure of a real incident</button>
+      <button class="qopt" type="button">B · So the drill finishes faster</button>
+      <button class="qopt" type="button">C · Because the writer is being graded on the page</button>
+      <button class="qopt" type="button">D · Because every hint is a step the page is missing, and the hint will not be there at 2 a.m.</button>
+      <p class="qwhy">The drill tests the page. A hint fills a gap the page should fill, and hides it from the log.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · With a quarterly rota, R4 still leaves 2 of 44 pages that would mislead. Why?</p>
+      <button class="qopt" type="button">A · The rota covers paged pages, and RB-27 and RB-37 are unpaged, so no drill reaches them</button>
+      <button class="qopt" type="button">B · Drills miss some wrong steps</button>
+      <button class="qopt" type="button">C · The two pages failed the linter</button>
+      <button class="qopt" type="button">D · Their owners were never assigned</button>
+      <p class="qwhy">On the bench a drill catches every wrong step on the page it runs. Coverage is of paged pages only, so unpaged pages need their own plan.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Disaster role playing, called Wheel of Misfortune or Walk the Plank; realistic staging or diverted instances for training</span><span class="note">Google, Site Reliability Engineering (2016), "Accelerating SREs to On-Call and Beyond", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Training strictly through playbooks is an anti-pattern; newer engineers depend more on documentation</span><span class="note">Google, Site Reliability Engineering (2016), "Accelerating SREs to On-Call and Beyond", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Playbooks go out of date as fast as production changes</span><span class="note">Google, The Site Reliability Workbook (2018), "On-Call", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Roughly 3x faster repair with a playbook than without</span><span class="note">Google, Site Reliability Engineering (2016), Introduction, sre.google, read at source; Google's own reported experience, no method given</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Pellmoor's 31 paged pages, the RB-24 drill, the rota and every bench number</span><span class="note">Constructed and labelled; drift rate simulated; printed by the widget on this page</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Every fact on this page, and its verification tier, is recorded in the course's source map.</p>
+  </section>
+
+  <section class="cheat" id="cheatsheet">
+    <h3>Writer session 3 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Three checks</b><span>Linter checks shape, review reads the page, a drill runs it. Only the drill tests truth.</span></div>
+      <div class="cheat-item"><b>The protocol</b><span>New reader, clock on, read aloud, writer silent, stop at the first failed step.</span></div>
+      <div class="cheat-item"><b>Fix the page</b><span>A stall is a page finding. The reader is not graded; their learning is a separate plan.</span></div>
+      <div class="cheat-item"><b>The drill log</b><span>Date UTC, page, reader, time per step, first failed step, fix, re-drill date.</span></div>
+      <div class="cheat-item"><b>The rota</b><span>Paged pages / 13 weeks. Pellmoor: 31 / 13, about 2.4, so two or three a week.</span></div>
+      <div class="cheat-item"><b>Review plus drill</b><span>R3 14%, R4 5%. Drilling every 4 weeks with no review stays at 14%.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>The library is drilled; now the incidents. Writer session 4 starts from the close-out record an incident leaves behind and turns it into a team postmortem: a UTC timeline, impact as numbers, contributing conditions and actions with one owner and a date.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Writer session 3 of 6 · learn-runbooks-postmortems-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="a2-where-pages-go-stale.html">← Prev: Where pages go stale</a> &nbsp;·&nbsp; <a href="a4-from-record-to-write-up.html">Next: From record to write-up →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/rbp-sample.js?v=1"></script>
+<script src="../assets/rbp-live.js?v=1"></script>
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

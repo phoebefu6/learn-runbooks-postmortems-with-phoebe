@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Runbooks and postmortems as a system, by Phoebe Fu. Six Writer sessions on the runbook inventory, drift, drills, the team postmortem, reading many postmortems as one and a docs bench; four Leader sessions on which docs must exist, the review, the public postmortem and actions that close.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Learn Runbooks &amp; Postmortems with Phoebe">
+<meta property="og:description" content="The page you read at 2 a.m., and the write-up that stops it happening again. Keep a whole library of runbooks true, and write postmortems your team, your executives and your customers can each act on.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Learn Runbooks &amp; Postmortems with Phoebe">
+<meta name="twitter:description" content="Two tracks: Writers keep the library true; Leaders decide what must exist and chase actions to done.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Learn Runbooks &amp; Postmortems with Phoebe</title>
+<link rel="stylesheet" href="assets/style.css?v=1">
+<style>
+
+  .stats-row { display: flex; gap: 2.4rem; margin-top: 1.5rem; flex-wrap: wrap; }
+  .stat b { display: block; font-size: 2.1rem; font-weight: 800; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: .72rem; opacity: 1; text-transform: uppercase; letter-spacing: .09em; font-weight: 600; }
+
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .course-card {
+    border: 1px solid var(--hairline);
+    border-top: 4px solid var(--diff, var(--indigo));
+    border-radius: var(--radius);
+    padding: 1.2rem 1.3rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    text-decoration: none;
+    color: var(--ink);
+    background: #fff;
+    transition: box-shadow .15s ease, border-color .15s ease, transform .15s ease;
+    position: relative;
+  }
+  .course-card:hover { border-color: var(--indigo-soft); border-top-color: var(--diff, var(--indigo)); box-shadow: 0 8px 28px rgba(var(--shadow-rgb),.16); transform: translateY(-3px); }
+  .course-card .cicon { font-size: 1.7rem; line-height: 1; }
+  .course-card .cnum { font-size: .72rem; font-weight: 700; color: var(--indigo); text-transform: uppercase; letter-spacing: .1em; }
+  .course-card h3 { font-size: 1.05rem; font-weight: 800; line-height: 1.3; }
+  .course-card p { font-size: .85rem; color: var(--muted); flex: 1; }
+  .course-card .meta { display: flex; gap: .4rem; flex-wrap: wrap; }
+
+  .diff-legend { display: flex; gap: 1rem; margin-top: 1.6rem; font-size: .74rem; color: var(--muted); font-weight: 600; flex-wrap: wrap; }
+  .diff-legend i { display: inline-block; width: .85rem; height: .35rem; border-radius: 999px; margin-right: .35rem; vertical-align: middle; }
+
+  .paths { margin-top: 2.6rem; }
+  .paths h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: .3rem; }
+  .paths .plede { color: var(--muted); font-size: .92rem; margin-bottom: .8rem; }
+  .path { display: flex; gap: .55rem; align-items: center; padding: .75rem 0; border-bottom: .5px solid var(--hairline); flex-wrap: wrap; }
+  .path:last-child { border-bottom: none; }
+  .path b { min-width: 15.5rem; font-size: .9rem; }
+  .path .pstep { background: var(--indigo-50); color: var(--indigo-deep); border-radius: 999px; padding: .16rem .68rem; font-weight: 700; font-size: .8rem; text-decoration: none; transition: all .12s ease; }
+  .path .pstep:hover { background: var(--indigo); color: #fff; }
+  .path .parr { color: var(--muted); font-weight: 700; }
+
+  .mm-section { margin-top: 1.6rem; }
+  .mm-section h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: .2rem; }
+  .mm-section .mm-lede { color: var(--muted); font-size: .92rem; margin-bottom: .4rem; }
+  .mm-wrap { border: 1px solid var(--hairline); border-radius: var(--radius); background: linear-gradient(180deg,#fff,var(--indigo-50)); padding: .6rem; overflow-x: auto; }
+  .mm-svg { width: 100%; height: auto; display: block; max-width: 60rem; margin: 0 auto; min-width: 34rem; }
+  .mm-link { cursor: pointer; text-decoration: none; }
+  .mm-node rect { transition: opacity .15s ease, filter .15s ease; }
+  .mm-node text { pointer-events: none; }
+  .mm-link:hover .mm-node rect { filter: brightness(1.06); }
+  .mm-edge { transition: opacity .15s ease; }
+
+  .not-this { border: 1px solid var(--hairline); border-left: 4px solid var(--clay); border-radius: var(--radius); background: #fff; padding: 1.1rem 1.3rem; margin-top: 1.2rem; }
+  .not-this h3 { font-size: .95rem; font-weight: 800; margin-bottom: .5rem; }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn with Phoebe · Docs &amp; Operations</div>
+    <h1>Learn <span class="accent">Runbooks &amp; Postmortems</span> with Phoebe</h1>
+    <p class="sub">The page you read at 2 a.m., and the write-up that stops it happening again. Most teams can show you their best runbook and their best postmortem. These ten sessions are about the rest: a whole library of runbooks that drifts every time a system changes, and a year of postmortems whose actions quietly expire. Of every runbook and postmortem you have, how many would help the next responder, and how many would mislead them? Six Writer sessions are for the people who write, drill and maintain the pages and draft the write-ups. Four Leader sessions are for the people who decide what must exist, run the review, own the public postmortem and chase actions to done.</p>
+    <div class="stats-row">
+      <div class="stat"><b data-count="10">10</b><span>sessions, two tracks</span></div>
+      <div class="stat"><b data-count="38">38</b><span>runbooks in the library</span></div>
+      <div class="stat"><b data-count="11">11</b><span>postmortems in the corpus</span></div>
+      <div class="stat"><b data-count="46">46</b><span>actions tracked to done</span></div>
+      <div class="stat"><b data-count="9">9</b><span>linter rules, explained</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section">
+    <div class="paths" style="margin-top:0">
+      <h2>Writer track ✍️ <span style="font-size:.85rem;font-weight:600;color:var(--muted)">· six sessions, hands-on in the browser</span></h2>
+      <p class="plede">For on-call engineers, SREs, data and analytics engineers and tech writers. Inventory a library, watch it drift, drill it, write the team postmortem, read a year of postmortems as one, and score the whole kit on the docs bench. The bench's rule engine is real and runs on any runbook or postmortem you paste.</p>
+    </div>
+    <div class="course-grid">
+{{CARDS_A}}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="paths" style="margin-top:0">
+      <h2>Leader track 🧭 <span style="font-size:.85rem;font-weight:600;color:var(--muted)">· four sessions, no code</span></h2>
+      <p class="plede">For heads of data or engineering, incident program owners and support or comms leads. Decide which docs must exist, run a review people come to, write for the customer, and take a follow-through report upward that shows closed and really done side by side.</p>
+    </div>
+    <div class="course-grid">
+{{CARDS_B}}
+    </div>
+    <div class="diff-legend">
+      <span><i style="background:#34D399"></i>foundations</span>
+      <span><i style="background:#FBBF24"></i>core</span>
+      <span><i style="background:#FB923C"></i>stretch</span>
+      <span><i style="background:#F87171"></i>bench night and capstone</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="paths" style="margin-top:0">
+      <h2>Your passport 🎫</h2>
+      <p class="plede">Clear all three quiz questions in a session and it gets stamped. Ten stamps means you can count a library, keep it true as systems change, prove it with drills, write a postmortem three readers can act on, and show which actions really closed. Stamps live in this browser only.</p>
+    </div>
+    <div class="pp-strip"></div>
+  </section>
+
+  <section class="section">
+    <div class="not-this">
+      <h3>What this is not, so you land in the right place 🧭</h3>
+      <table class="clean">
+        <tr><th>If your question is</th><th>Go here instead</th></tr>
+        <tr><td>How do I write one good runbook for one alert on a data pipeline?</td><td><a href="https://phoebefu6.github.io/learn-data-reliability-with-phoebe/">Data Reliability ↗</a></td></tr>
+        <tr><td>What is the anatomy of a runbook as a how-to guide, and how do I write clear sentences?</td><td><a href="https://phoebefu6.github.io/learn-tech-writing-with-phoebe/">Tech Writing ↗</a></td></tr>
+        <tr><td>How do we run the incident itself, from declaration to close-out?</td><td><a href="https://phoebefu6.github.io/learn-data-incident-response-with-phoebe/">Incident Response for Data Teams ↗</a></td></tr>
+        <tr><td>What do we do in the first hour of a security incident?</td><td><a href="https://phoebefu6.github.io/learn-cyber-security-with-phoebe/">Cyber Security ↗</a></td></tr>
+        <tr><td>How do I draw a timeline or a flow as a diagram in code?</td><td><a href="https://phoebefu6.github.io/learn-mermaid-with-phoebe/">Mermaid ↗</a></td></tr>
+        <tr><td><strong>Is our whole library of runbooks true, and do our postmortems change anything?</strong></td><td><strong>you are in the right place</strong></td></tr>
+      </table>
+      <p style="margin-top:.7rem;font-size:.86rem;color:var(--muted)"><strong>Incident docs as a system.</strong> Pellmoor is constructed; the rule engine is real; public practice comes from Google's SRE books, PagerDuty's postmortem guide and Google Cloud's writing on shared postmortems, read at source.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="paths">
+      <h2>Choose your path 🗺️</h2>
+      <p class="plede">Three doors into the same conviction: a document is only as good as the last time someone proved it true, and an action is only real when it is done.</p>
+      <div class="path"><b>✍️ I keep the pages true</b>
+        <a class="pstep" href="courses/a1-count-what-you-have.html">A1</a><span class="parr">→</span><a class="pstep" href="courses/a2-where-pages-go-stale.html">A2</a><span class="parr">→</span><a class="pstep" href="courses/a3-a-drill-is-the-only-test.html">A3</a><span class="parr">→</span><a class="pstep" href="courses/a6-the-docs-kit-on-the-bench.html">A6</a>
+        <span style="font-size:.82rem;color:var(--muted)">the inventory, the drift, the drill, the bench</span>
+      </div>
+      <div class="path"><b>📝 I write the postmortems</b>
+        <a class="pstep" href="courses/a4-from-record-to-write-up.html">A4</a><span class="parr">→</span><a class="pstep" href="courses/a5-read-eleven-postmortems-as-one.html">A5</a><span class="parr">→</span><a class="pstep" href="courses/b3-writing-for-the-customer.html">B3</a><span class="parr">→</span><a class="pstep" href="courses/b4-actions-that-close.html">B4</a>
+        <span style="font-size:.82rem;color:var(--muted)">the write-up, the corpus, the customer, the actions</span>
+      </div>
+      <div class="path"><b>🧭 I run the incident program</b>
+        <a class="pstep" href="courses/b1-which-docs-must-exist.html">B1</a><span class="parr">→</span><a class="pstep" href="courses/b2-the-review-people-come-to.html">B2</a><span class="parr">→</span><a class="pstep" href="courses/a1-count-what-you-have.html">A1</a><span class="parr">→</span><a class="pstep" href="courses/b4-actions-that-close.html">B4</a>
+        <span style="font-size:.82rem;color:var(--muted)">the standard, the review, the count, the follow-through</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="paths" style="margin-top:0">
+      <h2>What is honest here 🧾</h2>
+      <p class="plede">The running company is constructed and says so on every page. Public practice is cited with how it was checked. Where practitioners disagree, the page teaches both sides.</p>
+    </div>
+    <table class="clean">
+      <tr><th>Claim</th><th>Status</th></tr>
+      <tr><td>Pellmoor, its 38 runbooks, system changes, 11 postmortems and 46 actions</td><td><strong>Constructed,</strong> and labelled each time</td></tr>
+      <tr><td>The linter's nine rules and every score it prints</td><td><strong>Computed in your browser</strong> on any text you paste; each rule is tested against a passing and a failing sample</td></tr>
+      <tr><td>The library's drift rate per system change and the catch rates of a read, a review and a drill</td><td><strong>Simulated,</strong> labelled on the widget; the bench claims only their ordering</td></tr>
+      <tr><td>Every bench number</td><td><strong>Computed in your browser;</strong> an independent Python copy of the engine prints the same values</td></tr>
+      <tr><td>Google SRE books, PagerDuty's postmortem guide, Google Cloud on shared postmortems, Diataxis</td><td><strong>Read at source,</strong> paraphrased, dated</td></tr>
+      <tr><td>Stale page against no page; apology against explanation; the reported 3x faster repair with a playbook</td><td><strong>Contested or reported,</strong> and taught as such</td></tr>
+    </table>
+  </section>
+
+  <section class="section mm-section">
+    <h2>The knowledge map 🧠</h2>
+    <p class="mm-lede">Both tracks at a glance - hover a session to spotlight its concepts, click any node to jump in.</p>
+    <div class="mm-wrap"><div id="mindmap"></div></div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>learn-runbooks-postmortems-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span>Neighbours on the shelf: <a href="https://phoebefu6.github.io/learn-data-reliability-with-phoebe/">Data Reliability ↗</a> &nbsp;·&nbsp; <a href="https://phoebefu6.github.io/learn-tech-writing-with-phoebe/">Tech Writing ↗</a> &nbsp;·&nbsp; <a href="https://phoebefu6.github.io/learn-data-incident-response-with-phoebe/">Incident Response ↗</a></span>
+  </footer>
+
+</main>
+
+<script>
+window.MINDMAP_DATA = {{MINDMAP}};
+</script>
+<script src="assets/mindmap.js?v=1"></script>
+<script src="assets/app.js?v=1"></script>
+</body>
+</html>

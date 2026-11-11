@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Leader session 1 of 4. Which docs must exist: a docs standard with three rules (every paging alert has a page, every incident above a severity line gets a postmortem, one owner each), the deadlines real teams set, and the disagreement over whether a stale page is worse than none.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Which docs must exist - learn runbooks and postmortems with phoebe">
+<meta property="og:description" content="Leader session 1 of 4. Three rules, one severity line, one owner per document, and what deleting stale pages really costs.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/courses/b1-which-docs-must-exist.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Which docs must exist - learn runbooks and postmortems with phoebe">
+<meta name="twitter:description" content="Leader session 1 of 4. A docs standard you can check against the library, not a wish list.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Leader session 1 · Which docs must exist - learn runbooks and postmortems with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-runbooks-postmortems-with-phoebe</a> / Leader session 1 of 4</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Runbooks &amp; Postmortems with Phoebe · Leader session 1 of 4</div>
+    <h1>Which docs must exist: <span class="accent">a standard, not a wish list</span></h1>
+    <p class="sub">"We should document more" is a wish. A docs standard is three rules you can check against the library on any Monday: every alert that can wake a person links to a page; every incident above a severity line gets a postmortem, by a deadline; every page and every postmortem has one named owner. Tonight you write Pellmoor's standard, check it on the bench, and face the argument every docs owner meets sooner or later: is a stale page worse than no page at all?</p>
+    <div class="chip-row">
+      <span class="chip level">🟢 Leader</span>
+      <span class="chip audience">Heads of data or engineering, incident program owners, support and comms leads</span>
+      <span class="chip audience">No code</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-18 · Three rules, one line, one disagreement</span>
+      <span class="a3" style="flex:5">18-40 · Build-along: Pellmoor's docs standard</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where we start</h2>
+    </div>
+    <p class="lede">The Leader track is for the people who decide which docs must exist, run the review, own the public write-up and chase the actions until they are done. Four sessions: tonight, the docs standard; then the review people actually come to; writing for the customer; and actions that close. You will not write runbooks here. You will decide what the library must contain, and read the bench the Writer track builds to see whether it does. Pellmoor, a same-day online grocer, is constructed and labelled wherever it appears.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+      <span class="pill">★ Build-along = everyone works it through</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> A one-page docs standard for your team: the alert-to-page rule, your severity line for postmortems with a deadline for each severity, the ownership rule, and a written position on stale pages that you can defend to the people who disagree. Every later Leader session hangs off this page.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers the docs standard</span>
+      <h2>Three rules you can check on a Monday</h2>
+      <span class="tag concept">6 min live</span>
+    </div>
+    <p class="lede">A standard earns the name when a person who was not in the room can check it. Each of the three rules below can be checked with a query or a count, which is why they survive. "Keep documentation up to date" cannot, which is why it never does.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two hand-drawn decision paths. Top: an alert fires and can wake a person; does it link to a page? Yes, the page has an owner. No, the gap is a missing page and the standard is broken. Bottom: an incident is declared with a severity; is it at or above the line? Yes, a postmortem is due with one owner and a deadline: PagerDuty's own policy is 3 calendar days for Sev-1 and 5 business days for Sev-2. Below the line, no postmortem is required, though the team may write one.">
+        <defs>
+          <filter id="b1aSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="41" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="b1aHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="b1aAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .b1aH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b1aL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b1aS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .b1aB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .b1aW { font: 800 12px Inter, sans-serif; fill: #FFFFFF; }
+          .b1aN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="b1aH" x="30" y="28">RULE 1 AND RULE 2, AS PATHS A CHECKER CAN WALK</text>
+
+        <g filter="url(#b1aSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="56" width="180" height="56" rx="10" transform="rotate(-0.8 120 84)" fill="#281E51"/>
+          <rect x="290" y="56" width="200" height="56" rx="10" transform="rotate(0.6 390 84)" fill="#FFFFFF"/>
+          <rect x="580" y="44" width="260" height="38" rx="8" transform="rotate(-0.4 710 63)" fill="#EFEDF7"/>
+          <rect x="580" y="96" width="260" height="38" rx="8" transform="rotate(0.4 710 115)" fill="#FFE45C"/>
+          <path d="M214 84 L284 84" marker-end="url(#b1aAr)"/>
+          <path d="M494 76 L574 64" marker-end="url(#b1aAr)"/>
+          <path d="M494 94 L574 112" marker-end="url(#b1aAr)"/>
+
+          <rect x="30" y="190" width="180" height="56" rx="10" transform="rotate(0.7 120 218)" fill="#281E51"/>
+          <rect x="290" y="190" width="200" height="56" rx="10" transform="rotate(-0.5 390 218)" fill="#FFFFFF"/>
+          <rect x="580" y="172" width="260" height="56" rx="8" transform="rotate(0.4 710 200)" fill="#EFEDF7"/>
+          <rect x="580" y="242" width="260" height="38" rx="8" transform="rotate(-0.4 710 261)" fill="#FFFFFF"/>
+          <path d="M214 218 L284 218" marker-end="url(#b1aAr)"/>
+          <path d="M494 208 L574 198" marker-end="url(#b1aAr)"/>
+          <path d="M494 230 L574 256" marker-end="url(#b1aAr)"/>
+          <!-- doodle: a ruler under the severity line -->
+          <path d="M300 268 L480 268 M320 262 L320 274 M360 262 L360 274 M400 262 L400 274 M440 262 L440 274" stroke="#281E51"/>
+        </g>
+
+        <text class="b1aW" x="46" y="80">Alert can wake</text>
+        <text class="b1aW" x="46" y="98">a person</text>
+        <text class="b1aL" x="306" y="80">Links to a page</text>
+        <text class="b1aS" x="306" y="98">checked by a query</text>
+        <text class="b1aL" x="594" y="68">yes: page with one owner</text>
+        <text class="b1aH" x="594" y="120">no: missing page, standard broken</text>
+
+        <text class="b1aW" x="46" y="214">Incident declared</text>
+        <text class="b1aW" x="46" y="232">with a severity</text>
+        <text class="b1aL" x="306" y="214">At or above the line?</text>
+        <text class="b1aS" x="306" y="232">the line is a team choice</text>
+        <text class="b1aL" x="594" y="194">yes: postmortem, one owner,</text>
+        <text class="b1aS" x="594" y="214">PagerDuty: 3 days Sev-1, 5 days Sev-2</text>
+        <text class="b1aS" x="594" y="266">below: optional, team decides</text>
+
+        <text class="b1aN" x="30" y="318">Rule 3, one named owner per page and per postmortem, sits on every yes branch above.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - a rule is a path a checker can walk; the highlighted branch is the one the library inventory counts</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Rule 1 · every paging alert has a page<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>If an alert can wake a person, it links to a page. Google's SRE workbook states the norm as each alert having a corresponding playbook entry, created with the alert. The check is a join between the paging configuration and the wiki; Writer session 1 runs it. The count of alerts with no page goes on the leader's dashboard and should read zero.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Rule 2 · a severity line for postmortems, with deadlines<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Above the line, a postmortem is required; below it, optional. The SRE book lists the kinds of event that should trigger one: user-visible downtime or degradation past a threshold, data loss of any kind, an on-call intervention such as a rollback, a resolution time past a threshold, and a monitoring failure, which usually means a person found the incident by hand.</p>
+        <p>PagerDuty publishes its own internal policy: a postmortem for every major incident (Sev-1 and Sev-2), completed within 3 calendar days for a Sev-1 and 5 business days for a Sev-2. Those are one company's numbers, not a standard; the point is that a deadline exists and is written down.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Rule 3 · one owner, not a team<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>PagerDuty's guide has the incident commander pick one responder to own the postmortem, so nobody assumes somebody else has it; the writing is still collaborative. The SRE workbook makes the same call for action items: better a single owner and several collaborators than four owners. The rule applies to pages too: one named role per page, recorded at the top of the page.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>A deadline is part of the standard.</strong> The SRE workbook's worked example sets a bad postmortem, published four months after the outage, beside a good one, written and circulated less than a week after the incident closed, and notes that prompt postmortems tend to be more accurate. A standard with no deadline produces the first kind. (Google, The Site Reliability Workbook, ch. 10, read at source.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers the stale page argument</span>
+      <h2>Is a stale page worse than none?</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Sooner or later someone proposes the clean-up: delete every page nobody has verified in a year. It is a real position, held by experienced people, and it is not settled. The bench can show you what it buys and what it costs on Pellmoor's library, so the argument happens on numbers.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A two-sided before and after for the trap that deletes every page not verified in a year. As found: 25 of 38 pages mislead, 66 percent, and 6 of 31 paging alerts have no page. After the deletion: 10 of 22 pages mislead, 45 percent, which looks better, but 14 of 31 alerts now page a person with no page behind them. 16 pages were deleted. Constructed Pellmoor example.">
+        <defs>
+          <filter id="b1bSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="43" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="b1bHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="b1bAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .b1bH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b1bL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b1bS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .b1bV { font: 800 18px Inter, sans-serif; fill: #1A1338; }
+          .b1bN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="b1bH" x="30" y="28">THE DELETE-STALE TRAP: ONE NUMBER FALLS, ANOTHER RISES</text>
+
+        <g filter="url(#b1bSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="50" width="360" height="190" rx="12" transform="rotate(-0.5 210 145)" fill="#FFFFFF"/>
+          <rect x="490" y="50" width="360" height="190" rx="12" transform="rotate(0.5 670 145)" fill="#FFFFFF"/>
+          <path d="M396 145 L484 145" marker-end="url(#b1bAr)"/>
+          <rect x="50" y="96" width="320" height="52" rx="8" fill="#EFEDF7"/>
+          <rect x="50" y="166" width="320" height="52" rx="8" fill="#EFEDF7"/>
+          <rect x="510" y="96" width="320" height="52" rx="8" fill="#EFEDF7"/>
+          <rect x="510" y="166" width="320" height="52" rx="8" fill="#FFE45C"/>
+          <!-- doodle: a bin over the arrow -->
+          <path d="M428 112 L452 112 L448 134 L432 134 Z M424 112 L456 112 M436 106 L444 106" stroke="#281E51"/>
+        </g>
+
+        <text class="b1bH" x="50" y="80">AS FOUND (R0)</text>
+        <text class="b1bH" x="510" y="80">DELETE THE STALE PAGES (T1)</text>
+
+        <text class="b1bS" x="66" y="116">pages that would mislead</text>
+        <text class="b1bV" x="66" y="140">25 of 38 (66%)</text>
+        <text class="b1bS" x="66" y="186">paging alerts with no page</text>
+        <text class="b1bV" x="66" y="210">6 of 31</text>
+
+        <text class="b1bS" x="526" y="116">pages that would mislead</text>
+        <text class="b1bV" x="526" y="140">10 of 22 (45%)</text>
+        <text class="b1bS" x="526" y="186">paging alerts with no page</text>
+        <text class="b1bV" x="526" y="210">14 of 31</text>
+
+        <text class="b1bN" x="30" y="272">Deleted 16 pages. The share looks better; 14 of 31 alerts now wake a person with nothing to read.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the clean-up trades a misleading page for a blank one, and the bench counts both</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Both camps, in their own terms<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Delete it.</strong> A stale page is trusted. A responder follows a wrong step with confidence, at the worst hour, and the page made the incident longer. No page at least makes the responder think and escalate.</p>
+        <p><strong>Keep it, flagged.</strong> A partly stale page still says which dashboard, which team, what failed last time. A blank page gives the responder nothing. Better to mark it unverified at the top and route it to an owner.</p>
+        <p>The SRE workbook records a related split without settling it: some teams keep entries general so they change slowly, others want step-by-step instructions, and it asks each team to agree the minimal structure its pages must have. Your standard should state which camp it is in, and why, in one sentence.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>A third answer: a banner instead of a bin<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Some teams split the difference: a page past its verification window shows a banner ("not verified since ...; steps may be wrong; escalate if a step fails") and is routed to its owner. The banner keeps the context and removes the false confidence. The bench does not model the banner; whether it works depends on whether the 2 a.m. reader reads it, which is a question for a drill (Writer session 3).</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>The old view and the new view.</strong> PagerDuty's guide to blameless postmortems cites Sidney Dekker's distinction between an old view of human error and a new view that treats it as a symptom of a systemic problem. A responder misled by a stale page is the textbook case: the error is in the library, not in the person. (PagerDuty postmortem guide, read at source; Dekker's book, reported.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers what the standard is checked against</span>
+      <h2>A standard you can read off the bench</h2>
+      <span class="tag concept">4 min live</span>
+    </div>
+    <p class="lede">A leader does not read 38 runbooks. A leader reads four numbers every month: alerts with no page, pages with no owner, the share of pages that would mislead, and postmortems overdue against their deadline. The first three come straight off the Writer track's bench; the fourth comes from your incident tracker.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The three rules of the docs standard on the left, each wired to the bench line that checks it on the right. Every paging alert has a page: Paging alerts with no page, 6 of 31 as found, 0 of 31 after inventory and owners. One owner per page: Pages with no owner, 15 as found, 0 after. The outcome the rules serve: pages that would mislead, 66 percent as found, 52 percent after. Constructed Pellmoor example.">
+        <defs>
+          <filter id="b1cSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="47" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="b1cHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="b1cAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .b1cH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b1cL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b1cS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .b1cN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="b1cH" x="30" y="28">EACH RULE WIRED TO THE LINE THAT CHECKS IT</text>
+        <text class="b1cS" x="560" y="28">R0 as found, then R1 inventory + owners</text>
+
+        <g filter="url(#b1cSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="50" width="260" height="50" rx="8" transform="rotate(-0.6 160 75)" fill="#EFEDF7"/>
+          <rect x="30" y="120" width="260" height="50" rx="8" transform="rotate(0.5 160 145)" fill="#EFEDF7"/>
+          <rect x="30" y="190" width="260" height="50" rx="8" transform="rotate(-0.4 160 215)" fill="#FFFFFF"/>
+          <rect x="440" y="50" width="410" height="50" rx="8" transform="rotate(0.4 645 75)" fill="#FFFFFF"/>
+          <rect x="440" y="120" width="410" height="50" rx="8" transform="rotate(-0.4 645 145)" fill="#FFFFFF"/>
+          <rect x="440" y="190" width="410" height="50" rx="8" transform="rotate(0.3 645 215)" fill="#FFE45C"/>
+          <path d="M294 75 L434 75" marker-end="url(#b1cAr)"/>
+          <path d="M294 145 L434 145" marker-end="url(#b1cAr)"/>
+          <path d="M294 215 L434 215" stroke-dasharray="6 6" marker-end="url(#b1cAr)"/>
+        </g>
+
+        <text class="b1cL" x="46" y="80">Every paging alert has a page</text>
+        <text class="b1cL" x="46" y="150">One owner per page</text>
+        <text class="b1cL" x="46" y="220">The outcome both serve</text>
+
+        <text class="b1cL" x="456" y="80">Paging alerts with no page: 6, then 0 of 31</text>
+        <text class="b1cL" x="456" y="150">Pages with no owner: 15, then 0</text>
+        <text class="b1cH" x="456" y="220">Would mislead: 66%, then 52%</text>
+
+        <text class="b1cN" x="30" y="266">The rules can be met in full while half the library still misleads; the outcome needs the Writer track's work.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - meeting the rules is cheap and checkable; moving the outcome is the expensive part</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Rules versus outcome<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Inventory and owners (R1 on the bench) meet rule 1 and rule 3 completely on Pellmoor: alerts with no page go from 6 to 0 of 31, pages with no owner from 15 to 0. The outcome moves less: 23 of 44 pages still mislead (52%). That gap is the honest message to take upward. A standard buys accountability; it does not by itself make pages true. Writer sessions 2 and 3 do that with rewrites, change-triggered review and drills.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Security incidents and regulated docs<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Security incidents carry docs obligations of their own, often with external clocks. The first hour of a security incident, and what must be written down during it, is taught in <a href="https://phoebefu6.github.io/learn-cyber-security-with-phoebe/courses/a6-first-hour.html">Cyber Security, the first hour ↗</a>. Your docs standard should point at that playbook rather than duplicate it.</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Write Pellmoor's docs standard, then check it</h2>
+      <span class="tag demo">★ 22 min · everyone works it through</span>
+    </div>
+    <p class="lede">The widget is the same library bench the Writer track uses, computed in your browser. You will not change any pages. You will read three settings, compare them, and write the standard Pellmoor's leadership would sign. Pellmoor is constructed; your numbers will differ.</p>
+
+    <div class="rbp-widget" data-mode="library" data-rung="r0"></div>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three readings on the bench, left to right: R0 as found, T1 delete the stale pages, R1 inventory and owners. Each feeds one clause of the standard you write: the alert rule, the stale-page position and the ownership rule.">
+        <defs>
+          <filter id="b1dSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="53" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="b1dHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="b1dAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .b1dH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b1dS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .b1dN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <g filter="url(#b1dSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="40" width="230" height="70" rx="10" transform="rotate(-0.8 145 75)" fill="#FFFFFF"/>
+          <rect x="325" y="40" width="230" height="70" rx="10" transform="rotate(0.6 440 75)" fill="#FFE45C"/>
+          <rect x="620" y="40" width="230" height="70" rx="10" transform="rotate(-0.5 735 75)" fill="#FFFFFF"/>
+          <rect x="30" y="150" width="820" height="50" rx="10" transform="rotate(0.2 440 175)" fill="url(#b1dHc)"/>
+          <path d="M145 114 L145 144" marker-end="url(#b1dAr)"/>
+          <path d="M440 114 L440 144" marker-end="url(#b1dAr)"/>
+          <path d="M735 114 L735 144" marker-end="url(#b1dAr)"/>
+        </g>
+        <rect x="300" y="160" width="280" height="30" rx="6" fill="#FFFFFF"/>
+
+        <text class="b1dH" x="46" y="68">R0 · AS FOUND</text>
+        <text class="b1dS" x="46" y="90">how far from the standard</text>
+        <text class="b1dH" x="341" y="68">T1 · DELETE STALE</text>
+        <text class="b1dS" x="341" y="90">the clean-up, both sides</text>
+        <text class="b1dH" x="636" y="68">R1 · INVENTORY + OWNERS</text>
+        <text class="b1dS" x="636" y="90">rules met, outcome moved</text>
+        <text class="b1dH" x="318" y="180">PELLMOOR'S DOCS STANDARD</text>
+        <text class="b1dN" x="30" y="226">One clause per reading: the alert rule, the stale-page position, the ownership rule.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - three readings, three clauses; the trap reading is the one that settles your stale-page sentence</figcaption>
+    </figure>
+
+    <div class="steps">
+      <div class="step">
+        <p><strong>Step 1 · Read how far Pellmoor is from the standard.</strong> With R0 selected, copy four lines.</p>
+        <div class="prompt-box good"><span class="label">★ Step 1 · R0, as the widget prints it</span>25 of 38 pages would mislead at 2 a.m. (66%)
+Paging alerts with no page: 6 of 31
+Pages with no owner: 15
+Drill coverage: 3 of 25 paged pages drilled this quarter (12%)</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 2 · Run the clean-up proposal.</strong> Click T1, delete the stale pages. Copy what improves and what gets worse.</p>
+        <div class="prompt-box good"><span class="label">★ Step 2 · T1, as the widget prints it</span>10 of 22 pages would mislead at 2 a.m. (45%)
+Paging alerts with no page: 14 of 31
+Pages deleted by the trap: 16</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 3 · Run the standard's first two rules.</strong> Click R1, inventory and owners. Copy the headline and the two rule lines.</p>
+        <div class="prompt-box good"><span class="label">★ Step 3 · R1, as the widget prints it</span>23 of 44 pages would mislead at 2 a.m. (52%)
+Paging alerts with no page: 0 of 31
+Pages with no owner: 0</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 4 · Write the standard.</strong> Fill the template for Pellmoor, then for your own team. Keep each clause checkable by someone who was not in the room.</p>
+        <div class="prompt-box good"><span class="label">★ Step 4 · docs standard</span>1. Every alert that can wake a person links to a page. Checked: monthly join of alerts to pages. Target: 0 unpaged.
+2. Every incident at severity ____ or above gets a postmortem.
+   Deadline: Sev-1 within ____ ; Sev-2 within ____ . One named owner, picked by the incident lead.
+3. Every page and every postmortem names one owner role, and a page shows "Last verified: YYYY-MM-DD".
+4. Stale pages: we ____ (delete / keep with a banner / keep and route to owner), because ______________.
+5. Reported monthly: alerts with no page, pages with no owner, share that would mislead, postmortems overdue.</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 5 · Defend clause 4.</strong> Write the strongest sentence the other camp would say, and your answer to it, using the T1 numbers.</p>
+        <div class="prompt-box good"><span class="label">★ Step 5 · the other camp, answered</span>They would say: ____________________________________________.
+We answer: on Pellmoor, deleting the 16 stale pages cut the share from 66% to 45%
+but left 14 of 31 alerts with nothing to read, so ____________________________.</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>Publish the standard where the pages live.</strong> A standard filed in a policy folder is read once. A standard linked from the top of the runbook index, with this month's four numbers beside it, is read every time someone looks for a page.</p>
+    </div>
+  </section>
+
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Before Leader session 2</h2>
+      <span class="tag exercise">30 min</span>
+    </div>
+    <ol>
+      <li><strong>Draw your severity line.</strong> List your last ten incidents with their severity and mark which ones got a postmortem, and how many days later.</li>
+      <li><strong>Ask for the join.</strong> Ask whoever owns paging for the count of alerts that can wake a person and link to no page.</li>
+      <li><strong>Name one owner</strong> for the five pages behind your noisiest alerts, and put the name on each page.</li>
+      <li><strong>Write your stale-page sentence</strong> and show it to the person on your team most likely to disagree.</li>
+    </ol>
+  </section>
+
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and Leader session 1 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · Which of these is a docs standard rather than a wish?</p>
+      <button class="qopt" type="button">A · Keep our runbooks up to date</button>
+      <button class="qopt" type="button">B · Every alert that can wake a person links to a page; counted monthly, target zero unpaged</button>
+      <button class="qopt" type="button">C · Engineers should write more documentation</button>
+      <button class="qopt" type="button">D · Postmortems should be thorough and blameless</button>
+      <p class="qwhy">A standard is checkable by someone who was not in the room: a rule, a check and a target.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="3">
+      <p class="qtext">2 · On the bench, deleting every page not verified in a year cuts the share that misleads from 66% to 45%. What does the same run also print?</p>
+      <button class="qopt" type="button">A · Pages with no owner rise to 38</button>
+      <button class="qopt" type="button">B · Repeat incidents rise to 4</button>
+      <button class="qopt" type="button">C · Nothing else changes</button>
+      <button class="qopt" type="button">D · Paging alerts with no page rise from 6 to 14 of 31</button>
+      <p class="qwhy">The clean-up trades misleading pages for blank ones. Whether that trade is right is the open argument; the bench makes both sides visible.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · Why does the postmortem owner have to be one person rather than the team?</p>
+      <button class="qopt" type="button">A · With a team as owner, everyone can assume someone else is doing it</button>
+      <button class="qopt" type="button">B · One person must write every word alone</button>
+      <button class="qopt" type="button">C · The owner is the person who caused the incident</button>
+      <button class="qopt" type="button">D · Tools allow only one name per field</button>
+      <p class="qwhy">PagerDuty names one owner to avoid the bystander effect; the writing stays collaborative, and the owner is not the person blamed.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Events that should trigger a postmortem</span><span class="note">Google, Site Reliability Engineering (2016), ch. 15 "Postmortem Culture", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Sev-1 and Sev-2 postmortems; 3 calendar days and 5 business days; one owner</span><span class="note">PagerDuty, Postmortem guide (Apache 2.0), docs.pagerduty.com, read at source 2026-11-11; one company's internal policy</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Each alert has a playbook entry; general versus step-by-step entries</span><span class="note">Google, The Site Reliability Workbook (2018), "On-Call", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Published four months late versus within a week; single owner</span><span class="note">Google, The Site Reliability Workbook (2018), ch. 10 "Postmortem Culture", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Old view and new view of human error</span><span class="note">Dekker, The Field Guide to Understanding Human Error, book, reported; cited on the PagerDuty guide, read at source</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Stale page versus no page</span><span class="note">Contested practitioner positions, taught as a disagreement; bench numbers constructed (Pellmoor)</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Every fact on this page, and its verification tier, is recorded in the course's source map.</p>
+  </section>
+
+  <section class="cheat" id="cheatsheet">
+    <h3>Leader session 1 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Rule 1</b><span>Every alert that can wake a person links to a page. Target: zero unpaged.</span></div>
+      <div class="cheat-item"><b>Rule 2</b><span>A severity line for postmortems, with a written deadline per severity.</span></div>
+      <div class="cheat-item"><b>Rule 3</b><span>One owner role per page and per postmortem; the writing stays shared.</span></div>
+      <div class="cheat-item"><b>Checkable</b><span>A rule someone outside the room can verify with a count is a standard.</span></div>
+      <div class="cheat-item"><b>Stale vs none</b><span>Contested. Pellmoor T1: 66% to 45% misleading, 6 to 14 alerts with no page.</span></div>
+      <div class="cheat-item"><b>Rules vs outcome</b><span>R1 meets rules 1 and 3, yet 23 of 44 pages still mislead.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>You have a standard that says which postmortems must exist. Leader session 2 is about the room they are read in: a review people actually come to, who reads what before it, and the reading club that learns from other companies' incidents.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Leader session 1 of 4 · learn-runbooks-postmortems-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="../index.html">← Course home</a> &nbsp;·&nbsp; <a href="b2-the-review-people-come-to.html">Next: The review that people come to →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/rbp-sample.js?v=1"></script>
+<script src="../assets/rbp-live.js?v=1"></script>
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

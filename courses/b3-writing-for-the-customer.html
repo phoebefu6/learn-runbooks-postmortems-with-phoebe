@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Leader session 3 of 4. Writing for the customer: one incident written for three readers (team, executive, customer), what to redact and what to keep from a shared postmortem, when an incident report can go out, and the open argument over apology versus explanation.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Writing for the customer - learn runbooks and postmortems with phoebe">
+<meta property="og:description" content="Leader session 3 of 4. One incident, three readers: redact people and internal systems, keep the why, and decide how early to apologise.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/courses/b3-writing-for-the-customer.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Writing for the customer - learn runbooks and postmortems with phoebe">
+<meta name="twitter:description" content="Leader session 3 of 4. The same incident cut three ways, and the public note judged by its readers, not by a linter.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Leader session 3 · Writing for the customer - learn runbooks and postmortems with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-runbooks-postmortems-with-phoebe</a> / Leader session 3 of 4</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Runbooks &amp; Postmortems with Phoebe · Leader session 3 of 4</div>
+    <h1>Writing for the customer: <span class="accent">one incident, three readers</span></h1>
+    <p class="sub">The review approved an external message, or sent it back. Tonight you write it. The same incident goes to three readers who want different things: the team wants everything, the executive wants the impact, the cost and the decision, and the customer wants to know what happened to them, what you are doing about it and how to reach you. You cut all three from one team postmortem, learn what to redact and what to leave close to as-is, and face the argument nobody has settled: apologise first, or explain first?</p>
+    <div class="chip-row">
+      <span class="chip level">🟠 Leader</span>
+      <span class="chip audience">Heads of data or engineering, incident program owners, support and comms leads</span>
+      <span class="chip audience">No code</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-18 · Three readers, redaction, timing</span>
+      <span class="a3" style="flex:5">18-40 · Build-along: Pellmoor's public note</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where we start</h2>
+    </div>
+    <p class="lede">You arrive with a docs standard (Leader session 1) and a review people come to (Leader session 2). That review has an agenda item most teams skip: the external message. Tonight's incident is PM-11 at Pellmoor, a same-day online grocer: wrong prices shown to customers for 3 hours after a supplier file arrived in the wrong unit. The team version of that postmortem already exists and passes every linter rule. Your job is to turn it into the two documents people outside the team will read. Constructed Pellmoor example throughout.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+      <span class="pill">★ Build-along = everyone works it through</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> A public postmortem for Pellmoor's pricing incident, cut from the team version line by line, plus a five-line executive version, a marked-up copy showing what you kept, reworded and redacted, and your team's written choice on whether the apology or the explanation comes first.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers three readers of one incident</span>
+      <h2>Same facts, three documents</h2>
+      <span class="tag concept">6 min live</span>
+    </div>
+    <p class="lede">One incident does not get one write-up. It gets as many as it has readers, and each reader needs a different cut of the same facts. Writing one document for all three produces a page the team finds thin, the executive finds long and the customer finds full of names they do not know.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 364" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One incident, PM-11, wrong prices shown to customers for 3 hours, splits into three documents. Team version keeps the full UTC timeline, impact as numbers, contributing conditions, actions with owner and date, and internal names. Executive version keeps impact and cost, the why in one line, the decision needed, actions with owners and dates, and the next update. Customer note, highlighted, keeps what happened in their terms, when in UTC, who was affected, what was done and will be done with dates, the apology and explanation, and how to reach the company. Constructed Pellmoor example.">
+        <defs>
+          <filter id="b3aSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="71" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="b3aHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="b3aAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .b3aH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b3aL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b3aS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .b3aW { font: 800 12px Inter, sans-serif; fill: #FFFFFF; }
+          .b3aN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="b3aH" x="30" y="28">ONE INCIDENT, CUT THREE WAYS</text>
+
+        <g filter="url(#b3aSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="320" y="44" width="240" height="56" rx="10" transform="rotate(-0.6 440 72)" fill="#281E51"/>
+          <rect x="30" y="150" width="250" height="170" rx="10" transform="rotate(-0.5 155 235)" fill="#FFFFFF"/>
+          <rect x="315" y="150" width="250" height="170" rx="10" transform="rotate(0.4 440 235)" fill="#EFEDF7"/>
+          <rect x="600" y="150" width="250" height="170" rx="10" transform="rotate(-0.4 725 235)" fill="#FFE45C"/>
+          <path d="M400 104 L170 144" marker-end="url(#b3aAr)"/>
+          <path d="M440 104 L440 144" marker-end="url(#b3aAr)"/>
+          <path d="M480 104 L710 144" marker-end="url(#b3aAr)"/>
+          <!-- doodle: an envelope, the note that leaves the building -->
+          <path d="M610 52 L660 52 L660 84 L610 84 Z M610 52 L635 70 L660 52" stroke="#281E51"/>
+        </g>
+
+        <text class="b3aW" x="336" y="68">PM-11 · wrong prices shown</text>
+        <text class="b3aW" x="336" y="86">to customers for 3 hours</text>
+
+        <text class="b3aH" x="46" y="176">TEAM VERSION</text>
+        <text class="b3aS" x="46" y="200">full timeline, in UTC</text>
+        <text class="b3aS" x="46" y="220">impact as numbers</text>
+        <text class="b3aS" x="46" y="240">contributing conditions</text>
+        <text class="b3aS" x="46" y="260">actions: one owner, one date</text>
+        <text class="b3aS" x="46" y="280">internal systems and runbooks</text>
+        <text class="b3aS" x="46" y="300">reader: the people who fix it</text>
+
+        <text class="b3aH" x="331" y="176">EXECUTIVE VERSION</text>
+        <text class="b3aS" x="331" y="200">impact and cost</text>
+        <text class="b3aS" x="331" y="220">why, in one line</text>
+        <text class="b3aS" x="331" y="240">the decision needed</text>
+        <text class="b3aS" x="331" y="260">actions with owners and dates</text>
+        <text class="b3aS" x="331" y="280">when the next update comes</text>
+        <text class="b3aS" x="331" y="300">reader: the person who decides</text>
+
+        <text class="b3aH" x="616" y="176">CUSTOMER NOTE</text>
+        <text class="b3aL" x="616" y="200">what happened, in their terms</text>
+        <text class="b3aL" x="616" y="220">when, in UTC</text>
+        <text class="b3aL" x="616" y="240">who was affected</text>
+        <text class="b3aL" x="616" y="260">what we did and will do, dated</text>
+        <text class="b3aL" x="616" y="280">apology and explanation</text>
+        <text class="b3aL" x="616" y="300">how to reach us</text>
+
+        <text class="b3aN" x="30" y="346">Constructed Pellmoor example. The facts do not change between versions; what each reader is shown does.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - three readers, three cuts; the customer note is the one that leaves the building</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>The team version · everything<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The team version is the base all others are cut from: a UTC timeline, impact as numbers, the contributing conditions, and actions with one owner and one date each. Writer session 4 builds it from the incident record, and the linter checks its shape. It names internal systems, runbooks and roles, because its readers fix those things. Its rules for what a postmortem may conclude are taught in <a href="https://phoebefu6.github.io/learn-data-reliability-with-phoebe/courses/a4-postmortems.html">Data Reliability, postmortems ↗</a>; not repeated here.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The executive version · impact, cost, decision<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The executive reads five lines and acts on one of them. Impact and cost come first, in numbers. The why is one sentence with no system names. Then the decision you need from them, stated as a question they can answer yes or no. Then the actions with owners and dates, and when they will hear next. If there is no decision needed, say so: that is also information. The most common failure is an executive version that is the team version with the timeline deleted, which buries the one line they needed.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The customer note · their terms, not yours<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The customer did not see a validator, a feed or a schema. They saw a wrong price, maybe paid it, maybe got a refund. The note tells them what happened in the words they would use, when it happened in UTC, who was affected, what you have done and will do with dates, and how to reach a person. It carries an apology, an explanation, or both, in an order your team chooses (Part 3). It does not carry internal names, other customers or a blow-by-blow timeline.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>The bigger the hit, the more they want to read.</strong> Google's Customer Reliability Engineering team argues that sharing postmortems with customers can be good for both sides, and that the more of a customer's error budget an incident consumed, the more detail that customer wants. A short note may be right for a blip; an incident that ate a month's budget earns a full shared postmortem. (Hilton and Stockman, "Fearless shared postmortems", Google Cloud blog, 2017, read at source.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers what to say and what to redact</span>
+      <h2>Redact people and systems, keep the why</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Redaction is not a vague "make it external". It is a line-by-line pass with three marks: keep, reword, redact. People and internal names come out. The reasoning, including the parts that are uncomfortable, stays close to how the team wrote it, because that is the part the customer is reading for.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Seven lines of the PM-11 team version on the left, each marked keep, reword or redact, with the customer note line it becomes on the right. The owner line is redacted; the note ends with a contact instead. The supplier file line is reworded to a price file in the wrong unit. The validator line is reworded to our checks looked at the layout, not the prices. The impact figures, 3 hours, 1,140 products, 2,310 orders placed and 412 refunded, are kept if the note chooses to, labelled constructed. The missing price-jump alert is kept close to as-is and highlighted. The runbook line is redacted as an internal document. The outlier check action is reworded to a dated promise. Constructed marking.">
+        <defs>
+          <filter id="b3bSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="73" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="b3bHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="b3bAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .b3bH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b3bL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b3bS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .b3bW { font: 800 12px Inter, sans-serif; fill: #FFFFFF; }
+          .b3bN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="b3bH" x="30" y="28">THE TEAM VERSION, MARKED LINE BY LINE</text>
+        <text class="b3bS" x="30" y="56">PM-11 team version (s4)</text>
+        <text class="b3bS" x="428" y="56" text-anchor="middle">mark</text>
+        <text class="b3bS" x="510" y="56">customer note</text>
+
+        <g filter="url(#b3bSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="70" width="340" height="50" rx="8" transform="rotate(-0.4 200 95)" fill="#FFFFFF"/>
+          <rect x="388" y="83" width="80" height="24" rx="12" fill="#281E51"/>
+          <path d="M472 95 L504 95" marker-end="url(#b3bAr)"/>
+          <rect x="510" y="70" width="340" height="50" rx="8" transform="rotate(0.3 680 95)" fill="#FFFFFF"/>
+
+          <rect x="30" y="130" width="340" height="50" rx="8" transform="rotate(0.3 200 155)" fill="#FFFFFF"/>
+          <rect x="388" y="143" width="80" height="24" rx="12" fill="#FFFFFF"/>
+          <path d="M472 155 L504 155" marker-end="url(#b3bAr)"/>
+          <rect x="510" y="130" width="340" height="50" rx="8" transform="rotate(-0.3 680 155)" fill="#EFEDF7"/>
+
+          <rect x="30" y="190" width="340" height="50" rx="8" transform="rotate(-0.3 200 215)" fill="#FFFFFF"/>
+          <rect x="388" y="203" width="80" height="24" rx="12" fill="#FFFFFF"/>
+          <path d="M472 215 L504 215" marker-end="url(#b3bAr)"/>
+          <rect x="510" y="190" width="340" height="50" rx="8" transform="rotate(0.4 680 215)" fill="#EFEDF7"/>
+
+          <rect x="30" y="250" width="340" height="50" rx="8" transform="rotate(0.4 200 275)" fill="#FFFFFF"/>
+          <rect x="388" y="263" width="80" height="24" rx="12" fill="#EFEDF7"/>
+          <path d="M472 275 L504 275" marker-end="url(#b3bAr)"/>
+          <rect x="510" y="250" width="340" height="50" rx="8" transform="rotate(-0.4 680 275)" fill="#EFEDF7"/>
+
+          <rect x="30" y="310" width="340" height="50" rx="8" transform="rotate(-0.4 200 335)" fill="#FFFFFF"/>
+          <rect x="388" y="323" width="80" height="24" rx="12" fill="#EFEDF7"/>
+          <path d="M472 335 L504 335" marker-end="url(#b3bAr)"/>
+          <rect x="510" y="310" width="340" height="50" rx="8" transform="rotate(0.3 680 335)" fill="#FFE45C"/>
+
+          <rect x="30" y="370" width="340" height="50" rx="8" transform="rotate(0.3 200 395)" fill="#FFFFFF"/>
+          <rect x="388" y="383" width="80" height="24" rx="12" fill="#281E51"/>
+          <path d="M472 395 L504 395" marker-end="url(#b3bAr)"/>
+          <rect x="510" y="370" width="340" height="50" rx="8" transform="rotate(-0.3 680 395)" fill="#FFFFFF"/>
+
+          <rect x="30" y="430" width="340" height="50" rx="8" transform="rotate(-0.3 200 455)" fill="#FFFFFF"/>
+          <rect x="388" y="443" width="80" height="24" rx="12" fill="#FFFFFF"/>
+          <path d="M472 455 L504 455" marker-end="url(#b3bAr)"/>
+          <rect x="510" y="430" width="340" height="50" rx="8" transform="rotate(0.4 680 455)" fill="#EFEDF7"/>
+
+          <!-- doodle: a marker pen, the hand doing the marking -->
+          <path d="M790 34 L840 16 L846 26 L796 44 Z M790 34 L784 46 L796 44" stroke="#281E51"/>
+        </g>
+
+        <text class="b3bS" x="44" y="91">Owner: pricing lead</text>
+        <text class="b3bS" x="44" y="108">Last updated: 2026-11-04</text>
+        <text class="b3bW" x="428" y="99" text-anchor="middle">REDACT</text>
+        <text class="b3bS" x="524" y="91">(internal owner left out; the note ends</text>
+        <text class="b3bS" x="524" y="108">with how to reach a person)</text>
+
+        <text class="b3bS" x="44" y="151">08:55 UTC supplier file arrives with</text>
+        <text class="b3bS" x="44" y="168">prices in cents, not pounds.</text>
+        <text class="b3bH" x="428" y="159" text-anchor="middle">REWORD</text>
+        <text class="b3bS" x="524" y="151">A supplier sent us a price file with</text>
+        <text class="b3bS" x="524" y="168">prices in the wrong unit.</text>
+
+        <text class="b3bS" x="44" y="211">09:40 UTC feed accepted; the validator</text>
+        <text class="b3bS" x="44" y="228">checks the schema, not the values.</text>
+        <text class="b3bH" x="428" y="219" text-anchor="middle">REWORD</text>
+        <text class="b3bS" x="524" y="211">Our checks looked at the file's layout,</text>
+        <text class="b3bS" x="524" y="228">not at the prices in it.</text>
+
+        <text class="b3bS" x="44" y="271">3 hours of wrong prices on 1,140 products;</text>
+        <text class="b3bS" x="44" y="288">2,310 orders placed; 412 orders refunded.</text>
+        <text class="b3bH" x="428" y="279" text-anchor="middle">KEEP</text>
+        <text class="b3bS" x="524" y="271">Same figures, if your note keeps them</text>
+        <text class="b3bS" x="524" y="288">(constructed Pellmoor figures)</text>
+
+        <text class="b3bS" x="44" y="331">No alert watched for a price jump</text>
+        <text class="b3bS" x="44" y="348">against the last feed.</text>
+        <text class="b3bH" x="428" y="339" text-anchor="middle">KEEP</text>
+        <text class="b3bL" x="524" y="331">Nothing warned us when prices jumped</text>
+        <text class="b3bL" x="524" y="348">against the previous file.</text>
+
+        <text class="b3bS" x="44" y="391">The runbook for feed rejection had no</text>
+        <text class="b3bS" x="44" y="408">step for a feed that passes.</text>
+        <text class="b3bW" x="428" y="399" text-anchor="middle">REDACT</text>
+        <text class="b3bS" x="524" y="399">(internal document; left out)</text>
+
+        <text class="b3bS" x="44" y="451">Add an outlier check against the last accepted</text>
+        <text class="b3bS" x="44" y="468">feed. Owner: pricing lead. Due: 2026-11-25</text>
+        <text class="b3bH" x="428" y="459" text-anchor="middle">REWORD</text>
+        <text class="b3bS" x="524" y="451">By 25 November 2026 we will compare each</text>
+        <text class="b3bS" x="524" y="468">price file with the last one we accepted.</text>
+
+        <text class="b3bN" x="30" y="502">Constructed marking. People and internal systems go; the why stays close to how the team wrote it.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - redaction is a mark on every line; the highlighted line is the uncomfortable why, kept nearly as written</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>What comes out, what stays<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Google's CRE team gives a short list. Redact the names of people and use the role instead ("a network engineer"). Redact internal system names. Redact other customers' details, calling them Customer A and Customer B if they must appear. On graphs, keep the time axis and drop the absolute quantities, or switch to percentages.</p>
+        <p>Then the part teams get wrong: keep the "why did it happen" and "where we got lucky" sections close to as-is. Sanding the reasoning down until it says nothing is the fastest way to lose the customer's trust. For background, write the least detail that still explains the incident. On PM-11 that means the customer learns a price file arrived in the wrong unit and nothing checked the prices; they do not learn the validator's name or the runbook number.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Legal and comms review · who signs, in what order<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A constructed sign-off order, shown so you can adapt it; this is a process sketch, not legal advice, and your own legal team sets the real rules:</p>
+        <ol>
+          <li>The postmortem owner drafts the public note from the reviewed team version, with the marked-up copy beside it.</li>
+          <li>The incident lead checks every fact against the team version: no number, time or action may appear that the team version does not support.</li>
+          <li>The comms or support lead reads it as a customer would: plain words, no internal names, a working contact.</li>
+          <li>Legal reviews last among the editors, because their changes are the ones most likely to move the apology and the explanation.</li>
+          <li>One named executive approves publication, and support gets the final text before customers do.</li>
+        </ol>
+        <p>Write the order down in your docs standard (Leader session 1), so the second public note does not rediscover it under pressure.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Graphs keep their clock, lose their scale.</strong> The CRE post's advice on charts is a neat example of the general rule: the customer needs to see when things went wrong and how far, so the time axis stays, while the absolute quantities, which reveal internal scale, are dropped or turned into percentages. (Hilton and Stockman, "Fearless shared postmortems", Google Cloud blog, 2017, read at source.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers apology versus explanation, and timing</span>
+      <h2>Sorry first, or why first?</h2>
+      <span class="tag concept">4 min live</span>
+    </div>
+    <p class="lede">Two decisions shape every customer note: what goes first, and when it goes out. The second has guidance you can follow. The first does not: experienced people disagree, and the honest move is to show your team both positions and choose on purpose.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 296" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A timeline from incident open to a shared postmortem. A status update goes out during the incident. An incident report can go out once the author is confident in the cause. The review meeting, highlighted, approves the external message. A shared postmortem goes out after the internal one has been reviewed. Below, a two-way arrow marks the trade-off: earlier is faster and less complete, later is slower and more complete. CRE: a shareable version costs about 10 percent extra work plus review once practised.">
+        <defs>
+          <filter id="b3cSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="79" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="b3cHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="b3cAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .b3cH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b3cL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b3cS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .b3cN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="b3cH" x="30" y="28">FROM INCIDENT OPEN TO A SHARED POSTMORTEM</text>
+
+        <g filter="url(#b3cSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="40" y="56" width="160" height="58" rx="10" transform="rotate(-0.8 120 85)" fill="#FFFFFF"/>
+          <rect x="250" y="56" width="170" height="58" rx="10" transform="rotate(0.6 335 85)" fill="#FFFFFF"/>
+          <rect x="460" y="56" width="200" height="58" rx="10" transform="rotate(-0.5 560 85)" fill="#FFE45C"/>
+          <rect x="690" y="56" width="160" height="58" rx="10" transform="rotate(0.7 770 85)" fill="#EFEDF7"/>
+          <path d="M40 150 L840 150" marker-end="url(#b3cAr)"/>
+          <path d="M120 118 L120 146"/>
+          <path d="M335 118 L335 146"/>
+          <path d="M560 118 L560 146"/>
+          <path d="M770 118 L770 146"/>
+          <path d="M440 222 L66 222" marker-end="url(#b3cAr)"/>
+          <path d="M440 222 L814 222" marker-end="url(#b3cAr)"/>
+          <!-- doodle: a small clock at the start of the line -->
+          <path d="M836 28 m-12 0 a12 12 0 1 0 24 0 a12 12 0 1 0 -24 0 M836 28 L836 20 M836 28 L842 31" stroke="#281E51"/>
+        </g>
+
+        <text class="b3cH" x="56" y="80">Status update</text>
+        <text class="b3cS" x="56" y="100">during the incident</text>
+        <text class="b3cH" x="266" y="80">Incident report</text>
+        <text class="b3cS" x="266" y="100">once the cause is clear</text>
+        <text class="b3cH" x="476" y="80">Review meeting</text>
+        <text class="b3cL" x="476" y="100">external note approved</text>
+        <text class="b3cH" x="706" y="80">Shared postmortem</text>
+        <text class="b3cS" x="706" y="100">after internal review</text>
+
+        <text class="b3cS" x="120" y="172" text-anchor="middle">incident open</text>
+        <text class="b3cS" x="335" y="172" text-anchor="middle">cause known</text>
+        <text class="b3cS" x="560" y="172" text-anchor="middle">internal version reviewed</text>
+        <text class="b3cS" x="770" y="172" text-anchor="middle">shareable version</text>
+
+        <text class="b3cL" x="440" y="208" text-anchor="middle">speed versus completeness</text>
+        <text class="b3cS" x="66" y="244">earlier: faster, less complete</text>
+        <text class="b3cS" x="814" y="244" text-anchor="end">later: slower, more complete</text>
+
+        <text class="b3cN" x="30" y="278">CRE: once practised, a shareable version costs about 10% extra work plus review.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - each stop on the line is a different document; the review meeting is where the external note gets its yes</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The apology argument, both camps<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Apologise first, and early.</strong> Some practitioners advise an explicit apology in the first lines, before any explanation: the customer was hurt, and an explanation that arrives before the apology reads as an excuse.</p>
+        <p><strong>Explain first.</strong> Others put what happened and what you are doing about it first, with the apology after: customers want to know whether it will happen again, and an apology with no remediation behind it reads as empty.</p>
+        <p><strong>And a third pull.</strong> Legal review often pulls toward saying less of both. The CRE post on shared postmortems does not discuss apologies at all. Vendor and comms blogs disagree with each other (reported). No measured study settles it. Your team's job is to choose an order on purpose, write the reason in one sentence, and keep it until a reader tells you otherwise.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>When each document can go out<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>CRE separates two documents. An incident report can be written as soon as the author is confident in the cause. A shared postmortem waits for the internal one, so the public version is cut from something the team has already argued over. With automation and practice, CRE puts a shareable version at about 10% extra work plus review.</p>
+        <p>PagerDuty builds the external message into the postmortem meeting itself: after the owner walks through causes, timeline and actions, the customer liaison summarises customer impact and the external message is reviewed and approved in the room. Leader session 2 designed that meeting; this is the agenda item it hands to you.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>What the timing trade-off costs<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Going early buys trust and costs accuracy: an incident report written before the internal review may state a cause the review later revises. Going late buys accuracy and costs trust: customers fill a silence with their own story. A common pattern is both: a short dated incident report once the cause is clear, saying a fuller write-up will follow, then the shared postmortem after review. Security incidents carry external clocks of their own; see <a href="https://phoebefu6.github.io/learn-cyber-security-with-phoebe/courses/a6-first-hour.html">Cyber Security, the first hour ↗</a>.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>The external message has a seat at the review.</strong> PagerDuty's postmortem guide puts the customer liaison on the meeting agenda: they summarise the customer impact, and the external message is reviewed and approved before people leave. The note is not written after the meeting by whoever has time; it is a decision the meeting makes. (PagerDuty, Postmortem guide (Apache 2.0), docs.pagerduty.com, read at source 2026-11-11.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Cut Pellmoor's public note from the team version</h2>
+      <span class="tag demo">★ 22 min · everyone works it through</span>
+    </div>
+    <p class="lede">The widget is the linter from the Writer track, loaded with PM-11's team version. You will use it twice: once to confirm the base is sound, and once to see what a rule engine says about a note written for customers. The rule engine is real; Pellmoor and its figures are constructed.</p>
+
+    <div class="rbp-widget" data-mode="linter" data-rung="r0" data-sample="s4"></div>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 326" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The six postmortem rules of the linter held against a customer note. No owner or last-verified line misfits, highlighted: the note gives a contact, not an internal owner. Relative or non-UTC timestamp fits. Blame language or a named person fits. Counterfactual should have fits. Action without owner and date half fits: keep the date, drop the owner name. Impact with no number fits if the note keeps its numbers. Below: a clean score says the shape is right; whether the note is right is for its readers.">
+        <defs>
+          <filter id="b3dSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="83" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="b3dHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="b3dAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .b3dH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b3dL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b3dS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .b3dW { font: 800 12px Inter, sans-serif; fill: #FFFFFF; }
+          .b3dN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="b3dH" x="30" y="28">SIX POSTMORTEM RULES, HELD AGAINST A CUSTOMER NOTE</text>
+
+        <g filter="url(#b3dSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="50" width="400" height="48" rx="8" transform="rotate(-0.4 230 74)" fill="#FFE45C"/>
+          <rect x="450" y="50" width="400" height="48" rx="8" transform="rotate(0.4 650 74)" fill="#FFFFFF"/>
+          <rect x="30" y="110" width="400" height="48" rx="8" transform="rotate(0.3 230 134)" fill="#FFFFFF"/>
+          <rect x="450" y="110" width="400" height="48" rx="8" transform="rotate(-0.3 650 134)" fill="#FFFFFF"/>
+          <rect x="30" y="170" width="400" height="48" rx="8" transform="rotate(-0.3 230 194)" fill="#FFFFFF" stroke-dasharray="6 6"/>
+          <rect x="450" y="170" width="400" height="48" rx="8" transform="rotate(0.3 650 194)" fill="#FFFFFF"/>
+          <rect x="30" y="240" width="820" height="44" rx="10" transform="rotate(0.2 440 262)" fill="#281E51"/>
+          <!-- doodle: a reader's eye beside the title -->
+          <path d="M800 22 Q822 8 844 22 Q822 36 800 22 Z M822 22 m-4 0 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0" stroke="#281E51"/>
+        </g>
+
+        <text class="b3dL" x="46" y="70">No owner or last-verified line</text>
+        <text class="b3dL" x="46" y="88">misfits: the note gives a contact, not an owner</text>
+        <text class="b3dL" x="466" y="70">Relative or non-UTC timestamp</text>
+        <text class="b3dS" x="466" y="88">fits: readers in other zones need UTC</text>
+
+        <text class="b3dL" x="46" y="130">Blame language or a named person</text>
+        <text class="b3dS" x="46" y="148">fits, and matters more in public</text>
+        <text class="b3dL" x="466" y="130">Counterfactual ("should have")</text>
+        <text class="b3dS" x="466" y="148">fits: say what happened, not what did not</text>
+
+        <text class="b3dL" x="46" y="190">Action without owner and date</text>
+        <text class="b3dS" x="46" y="208">half fits: keep the date, drop the owner name</text>
+        <text class="b3dL" x="466" y="190">Impact with no number</text>
+        <text class="b3dS" x="466" y="208">fits if your note keeps its numbers</text>
+
+        <text class="b3dW" x="50" y="267">A clean score says the shape is right. Whether the note is right is for its readers to judge.</text>
+
+        <text class="b3dN" x="30" y="310">Rule names as the linter prints them. A note with no Impact, Timeline or Actions heading is read as a runbook.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the linter was built for the team version; on a customer note, one rule misfits and one half fits</figcaption>
+    </figure>
+
+    <div class="steps">
+      <div class="step">
+        <p><strong>Step 1 · Lint the team version.</strong> The widget opens on s4, PM-11's team version. Copy the result line. This is the base the public note is cut from. The score checks shape, not truth: a postmortem can pass every rule and still have the cause wrong.</p>
+        <div class="prompt-box good"><span class="label">★ Step 1 · s4, as the widget prints it</span>Postmortem · 6 of 6 rules pass · score 100 · 0 findings</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 2 · Mark every line for the customer.</strong> Copy s4 from the widget's text box and put one mark on each line: keep, reword or redact. Compare yours with the figure in Part 2, which is one constructed marking, not the answer.</p>
+        <div class="prompt-box good"><span class="label">★ Step 2 · marking sheet (constructed)</span>Owner: pricing lead                                   [keep / reword / redact]
+Last updated: 2026-11-04                              [keep / reword / redact]
+08:55 UTC supplier file arrives, cents not pounds     [keep / reword / redact]
+09:40 UTC feed accepted; validator checks schema      [keep / reword / redact]
+12:40 UTC prices restored from last accepted feed     [keep / reword / redact]
+Impact: 3 hours, 1,140 products, 2,310 orders, 412 refunded   [keep / reword / redact]
+Validator compared columns, never values              [keep / reword / redact]
+No alert watched for a price jump                     [keep / reword / redact]
+Runbook had no step for a feed that passes            [keep / reword / redact]
+Action: outlier check, pricing lead, 2026-11-25       [keep / reword / redact]
+Action: page on price jumps, pricing on-call, 2026-11-18   [keep / reword / redact]
+Action: drill RB-11 with a newcomer, 2026-12-09       [keep / reword / redact]</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 3 · Write the executive version.</strong> Five lines, filled from s4. The figures are constructed Pellmoor figures; the refund total is not in s4, so leave it blank rather than invent it.</p>
+        <div class="prompt-box good"><span class="label">★ Step 3 · executive version, five lines</span>1. Impact: wrong prices on 1,140 products for 3 hours on 2026-10-28; 2,310 orders placed, 412 refunded. Refund cost: ____ .
+2. Why: a supplier file arrived in the wrong unit and nothing checked the prices, only the format.
+3. Decision needed: ______________________________ (yes or no).
+4. Actions: outlier check, pricing lead, 2026-11-25; page on price jumps, pricing on-call, 2026-11-18; drill RB-11, pricing lead, 2026-12-09.
+5. Next update: ____ , and the public note goes out on ____ once the review approves it.</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 4 · Write Pellmoor's public note.</strong> Fill the template. Keep the s4 figures only if your note chooses to, and label them constructed in class. Put the apology sentence and the explanation sentence in the order your team chose in Part 3.</p>
+        <div class="prompt-box good"><span class="label">★ Step 4 · public note (constructed Pellmoor example)</span># Wrong prices in the Pellmoor app, 28 October 2026
+
+What happened: ________________________________________ (in the customer's words, no internal names)
+When: from 09:40 UTC to 12:40 UTC on 28 October 2026.
+Who was affected: ______ (optional, constructed: 1,140 products; 2,310 orders placed; 412 orders refunded)
+
+[Sentence A, apology]: ________________________________________
+[Sentence B, explanation]: ____________________________________
+(Your order: A then B, or B then A. Reason: __________________ )
+
+What we have done: prices restored at 12:40 UTC; affected orders refunded the difference.
+What we will do: by 18 November 2026 ____________ ; by 25 November 2026 ____________ .
+Questions: ____________ (a contact a customer can actually reach)</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 5 · Paste your note into the linter and read it critically.</strong> Replace the text in the widget with your public note. Note which rules fire and whether they should. The owner rule will ask for an "Owner:" line a customer note should not carry. If your note has Impact or Actions headings, dated promises with no named owner read as wishes. If it has no Impact, Timeline or Actions heading at all, the linter treats it as a runbook. None of that makes the note wrong. A public note is judged by its readers, not by the linter.</p>
+        <div class="prompt-box good"><span class="label">★ Step 5 · what the linter said, and what you think</span>Rules that fired: ______________________________________
+Fired and should be fixed: ____________________________
+Fired but does not fit a customer note (and why): ______
+Read as: postmortem / runbook (circle one)
+Who will read it before it ships: support lead, ____ , ____</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>Keep the marked-up copy.</strong> File the s4 marking beside the public note. When legal or comms asks why a line was cut or kept, the answer is already written, and the next incident's note starts from your marks instead of a blank page.</p>
+    </div>
+  </section>
+
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Before Leader session 4</h2>
+      <span class="tag exercise">30 min</span>
+    </div>
+    <ol>
+      <li><strong>Find your last customer-facing incident note</strong> and mark every line keep, reword or redact against your own team postmortem. Count the internal names that slipped through.</li>
+      <li><strong>Write the five-line executive version</strong> of one recent incident and send it to the executive it was for. Ask which line they would have acted on.</li>
+      <li><strong>Settle your apology order on paper.</strong> Write one sentence: which comes first in your notes, and why. Show it to your comms or support lead and to whoever does legal review.</li>
+      <li><strong>Write down the sign-off order</strong> for a public note at your company, naming roles, and add it to your docs standard from Leader session 1.</li>
+    </ol>
+  </section>
+
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and Leader session 3 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">1 · Turning the team postmortem into a shared one, which of these does Google's CRE team advise you to keep close to as-is?</p>
+      <button class="qopt" type="button">A · The names of the engineers involved, for accountability</button>
+      <button class="qopt" type="button">B · Internal system names, so the customer can follow the timeline</button>
+      <button class="qopt" type="button">C · The "why did it happen" and "where we got lucky" sections</button>
+      <button class="qopt" type="button">D · Absolute quantities on every graph</button>
+      <p class="qwhy">People become roles, internal systems and other customers come out, and graphs keep the time axis while dropping absolute quantities. The reasoning stays close to how the team wrote it.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="3">
+      <p class="qtext">2 · When can each external document go out, on the CRE timing?</p>
+      <button class="qopt" type="button">A · Nothing goes out until legal has reviewed a full shared postmortem</button>
+      <button class="qopt" type="button">B · The shared postmortem goes first; the incident report follows</button>
+      <button class="qopt" type="button">C · Both go out the moment the incident is resolved</button>
+      <button class="qopt" type="button">D · An incident report once the author is confident in the cause; a shared postmortem after the internal one</button>
+      <p class="qwhy">The incident report is fast and narrower; the shared postmortem is cut from an internal version that has already been reviewed. CRE puts the shareable version at about 10% extra work plus review, once practised.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">3 · Which statement about apology versus explanation is accurate?</p>
+      <button class="qopt" type="button">A · The CRE post settles it: always apologise in the first sentence</button>
+      <button class="qopt" type="button">B · Practitioners disagree on the order and legal review often pulls toward less; the team chooses on purpose</button>
+      <button class="qopt" type="button">C · Measured studies show explanation first always wins</button>
+      <button class="qopt" type="button">D · An apology should never appear in a public note</button>
+      <p class="qwhy">The CRE post does not discuss apologies, and published guidance disagrees. Choose an order, write down why, and let your readers tell you if it was wrong.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Sharing postmortems with customers; error budget and detail; what to redact; incident report versus shared postmortem timing; about 10% extra work</span><span class="note">Hilton and Stockman, "Fearless shared postmortems", Google Cloud blog, 2017, read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Customer liaison summarises impact; external message reviewed and approved in the postmortem meeting</span><span class="note">PagerDuty, Postmortem guide (Apache 2.0), docs.pagerduty.com, read at source 2026-11-11</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Apology versus explanation in a public note</span><span class="note">Contested practitioner guidance, taught as a disagreement; vendor and comms blogs, reported; the CRE post does not discuss apologies</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Pellmoor PM-11 team version, marking and public note</span><span class="note">Constructed Pellmoor example; linter result for s4 from the bench's rule engine, which checks shape, not truth</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Every fact on this page, and its verification tier, is recorded in the course's source map.</p>
+  </section>
+
+  <section class="cheat" id="cheatsheet">
+    <h3>Leader session 3 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Three readers</b><span>Team gets everything; executive gets impact, cost, decision; customer gets their terms and a contact.</span></div>
+      <div class="cheat-item"><b>Redact</b><span>People become roles; internal systems and other customers come out; graphs keep time, drop scale.</span></div>
+      <div class="cheat-item"><b>Keep</b><span>The why and where you got lucky, close to as-is. The least background that still explains it.</span></div>
+      <div class="cheat-item"><b>Timing</b><span>Incident report once the cause is clear; shared postmortem after the internal review.</span></div>
+      <div class="cheat-item"><b>Apology order</b><span>Contested. Choose on purpose, write the reason, and route it through comms and legal.</span></div>
+      <div class="cheat-item"><b>Linter</b><span>s4 scores 100 on shape. A public note is judged by its readers, not by a rule engine.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>Your public note promised dates: an outlier check by 25 November, a price-jump alert by 18 November. Leader session 4 is about keeping those promises: actions with one owner, tracked like bugs, chased until they close, and the repeat incident that shows up when they do not.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Leader session 3 of 4 · learn-runbooks-postmortems-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="b2-the-review-people-come-to.html">← Prev: The review that people come to</a> &nbsp;·&nbsp; <a href="b4-actions-that-close.html">Next: Actions that close →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/rbp-sample.js?v=1"></script>
+<script src="../assets/rbp-live.js?v=1"></script>
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

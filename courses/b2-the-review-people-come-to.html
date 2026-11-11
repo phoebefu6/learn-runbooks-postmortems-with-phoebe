@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Leader session 2 of 4. The review that people come to: the document goes out 24 hours ahead, a three-item agenda, a facilitator who speaks little and takes no sides, and a reading club that learns from incidents months or years old.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="The review that people come to - learn runbooks and postmortems with phoebe">
+<meta property="og:description" content="Leader session 2 of 4. Read first, then talk: the review meeting, blameless facilitation, and learning from incidents that are not your own.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/courses/b2-the-review-people-come-to.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The review that people come to - learn runbooks and postmortems with phoebe">
+<meta name="twitter:description" content="Leader session 2 of 4. A review ritual with a deadline, an agenda and decisions recorded, not a meeting people skip.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Leader session 2 · The review that people come to - learn runbooks and postmortems with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-runbooks-postmortems-with-phoebe</a> / Leader session 2 of 4</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Runbooks &amp; Postmortems with Phoebe · Leader session 2 of 4</div>
+    <h1>The review that people come to: <span class="accent">read first, then talk</span></h1>
+    <p class="sub">A postmortem nobody reviews changes nothing. A review people skip is not much better. Tonight you design the review that works: the document goes out a day ahead, the meeting has three agenda items and ends with decisions written down, and the facilitator keeps the room on how the system let it happen, not on who. Then you widen the habit beyond your own incidents, with a reading club built on old, public write-ups. Pellmoor's pricing postmortem is the one you rehearse on.</p>
+    <div class="chip-row">
+      <span class="chip level">🟡 Leader</span>
+      <span class="chip audience">Heads of data or engineering, incident program owners, support and comms leads</span>
+      <span class="chip audience">No code</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-18 · The meeting, the facilitator, the reading club</span>
+      <span class="a3" style="flex:5">18-40 · Build-along: the review rehearsal</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where we start</h2>
+    </div>
+    <p class="lede">Leader session 1 left you with a standard that says which postmortems must exist and by when. Tonight is about what happens after the draft lands: who reads it, in what order, what the meeting decides, and how the team keeps learning in the months when nothing breaks. You will run a review rehearsal on the first draft of Pellmoor's PM-11, the pricing-feed incident, with the same linter the Writer track uses. Pellmoor, a same-day online grocer, is constructed and labelled wherever it appears.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+      <span class="pill">★ Build-along = everyone works it through</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> A written review ritual for your team: who reviews, how soon after the incident, the invite and agenda you send a day ahead, what the meeting records before it ends, the facilitator's three questions, and a reading club cadence. Plus a rehearsal set of facilitator questions you can reuse on any first draft.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers the review ritual</span>
+      <h2>The document goes first, the meeting follows</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Google's SRE book lists leaving no postmortem unreviewed among its best practices, and puts the reason bluntly: "An unreviewed postmortem might as well never have existed." (Google, Site Reliability Engineering, ch. 15, read at source.) The review is where a draft becomes a set of commitments. PagerDuty's published guide shows one way to run it, and the order matters more than the room: the written postmortem comes first, the meeting follows it.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 356" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The review drawn as a pipeline. The document goes out 24 hours before the meeting, even if unfinished. The meeting has three agenda items: the owner summarises causes and timeline; the actions are discussed, asking whether they will stop a repeat and whether leadership will commit; the customer liaison summarises customer impact and the external message is reviewed. The meeting ends with decisions recorded: actions accepted with an owner and a date, and the external message approved. A wrong-way branch in red: if nobody read the document before the room, the meeting is spent reading aloud and decisions slip.">
+        <defs>
+          <filter id="b2aSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="61" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="b2aHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="b2aAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .b2aH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b2aL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b2aS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .b2aW { font: 800 12px Inter, sans-serif; fill: #FFFFFF; }
+          .b2aN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="b2aH" x="30" y="28">THE REVIEW AS A PIPELINE: THE DOCUMENT GOES FIRST</text>
+
+        <g filter="url(#b2aSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="56" width="180" height="76" rx="10" transform="rotate(-0.8 120 94)" fill="#281E51"/>
+          <rect x="260" y="44" width="330" height="176" rx="12" transform="rotate(0.4 425 132)" fill="#FFFFFF"/>
+          <rect x="276" y="76" width="298" height="38" rx="8" transform="rotate(-0.6 425 95)" fill="#EFEDF7"/>
+          <rect x="276" y="122" width="298" height="38" rx="8" transform="rotate(0.5 425 141)" fill="#EFEDF7"/>
+          <rect x="276" y="168" width="298" height="38" rx="8" transform="rotate(-0.4 425 187)" fill="#EFEDF7"/>
+          <rect x="640" y="76" width="210" height="100" rx="10" transform="rotate(0.7 745 126)" fill="#FFE45C"/>
+          <path d="M214 94 L254 94" marker-end="url(#b2aAr)"/>
+          <path d="M594 126 L634 126" marker-end="url(#b2aAr)"/>
+          <path d="M120 136 L120 246" stroke="#991B1B" stroke-dasharray="6 6" marker-end="url(#b2aAr)"/>
+          <rect x="30" y="252" width="330" height="62" rx="10" transform="rotate(-0.5 195 283)" fill="#FEF2F2" stroke="#991B1B"/>
+          <!-- doodle: a clock for the 24 hours -->
+          <circle cx="236" cy="156" r="14" stroke="#281E51"/>
+          <path d="M236 156 L236 147 M236 156 L243 160" stroke="#281E51"/>
+        </g>
+
+        <text class="b2aW" x="46" y="86">Document out</text>
+        <text class="b2aW" x="46" y="104">24 hours ahead,</text>
+        <text class="b2aW" x="46" y="122">even if unfinished</text>
+
+        <text class="b2aH" x="276" y="66">THREE AGENDA ITEMS</text>
+        <text class="b2aL" x="290" y="100">1 · owner: causes and timeline</text>
+        <text class="b2aL" x="290" y="146">2 · actions: stop a repeat? commit?</text>
+        <text class="b2aL" x="290" y="192">3 · customer impact, external message</text>
+
+        <text class="b2aH" x="656" y="104">Decisions recorded</text>
+        <text class="b2aL" x="656" y="128">actions: owner + date</text>
+        <text class="b2aL" x="656" y="150">external message approved</text>
+
+        <text class="b2aS" x="132" y="196">if nobody read it</text>
+        <text class="b2aH" x="46" y="278">Doc unread before the room</text>
+        <text class="b2aS" x="46" y="298">meeting spent reading aloud; decisions slip</text>
+
+        <text class="b2aN" x="30" y="340">Agenda order from PagerDuty's guide; the customer liaison attends for Sev-1 incidents, and is optional.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the meeting is only as good as the reading before it; the highlighted box is what must exist when it ends</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>The 24 hours and the three agenda items<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>In PagerDuty's guide, the owner sends the document to attendees 24 hours before the meeting, finished or not. A meeting that starts with people reading spends its best minutes catching up; a meeting that starts with people who have read can spend them deciding.</p>
+        <p>The agenda then runs in three items. The owner summarises the causes and the timeline. The room discusses the action items: will they reduce the chance of a repeat, and will leadership commit to them? Then, for the incidents that touched customers, the customer liaison summarises the customer impact and the room reviews the external message. The liaison attends for a Sev-1 and is optional otherwise. (PagerDuty, Postmortem guide, read at source.)</p>
+        <p>Before anyone leaves, two things are written down: the actions accepted, each with one owner and a date, and the external message approved or sent back. Leader session 3 is about that message; Leader session 4 is about making the actions close.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Who reads what, before the room<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>"Send it ahead" does not mean everyone reads all of it. Say in the invite which part each reader owns:</p>
+        <ul>
+          <li><strong>The team that responded</strong> reads the whole document and checks the timeline against what they remember and what the logs show.</li>
+          <li><strong>Executives</strong> read the summary and the actions. Their job in the room is the second agenda question: will we commit to these?</li>
+          <li><strong>Support and the customer liaison</strong> read the impact section, because they will be asked about it by customers before anyone else is.</li>
+        </ul>
+        <p>Naming the reading per role is a small courtesy that makes the 24 hours work. A busy executive who knows the two sections to read will read them.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Timeboxing and attendance<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>PagerDuty's guide suggests you can timebox each agenda item, so a long timeline discussion does not eat the action review. It also lists who attends, and keeps its review meetings on a company-wide calendar that anyone may join; completed postmortems go to a shared Incident Reports list. Open meetings and a shared list are what turn one team's review into the organisation's learning.</p>
+        <p>The deadline for holding the review is your standard's business, set in Leader session 1. A useful check for the ritual: the review happens before the postmortem's own deadline, not after, so the actions it accepts are in the document that gets published. (PagerDuty, Postmortem guide, read at source.)</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Late reviews read differently.</strong> The SRE workbook's worked example sets a bad postmortem, published four months after the outage to a limited audience, beside a good one written and circulated less than a week after the incident closed. The review is part of that clock: a draft waiting for a meeting slot is a draft nobody acts on. (Google, The Site Reliability Workbook, ch. 10, read at source.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers blameless facilitation in the room</span>
+      <h2>The facilitator asks how, not who</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">A blameless document can still meet a blameful room. The facilitator is the person who keeps the meeting on the system: in PagerDuty's guide, the facilitator talks as little as they can, takes no sides, and keeps the agenda moving. What a postmortem may conclude, and why blameless is the entry condition, is taught in <a href="https://phoebefu6.github.io/learn-data-reliability-with-phoebe/courses/a4-postmortems.html">Data Reliability, postmortems ↗</a>. Here it is about the three moves a facilitator makes out loud.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 386" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A small decision tree for the facilitator. A sentence is said in the room or found in the draft. If a person's name is the subject of a mistake, the linter rule is blame, and the facilitator reframes it to the role and the condition that allowed it. If it says should have, the rule is counterfactual, and the facilitator asks what the person saw at the time, walking forward from before the incident began. If it is a vague action, the rule is wish, and the facilitator asks who owns it and by when.">
+        <defs>
+          <filter id="b2bSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="67" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="b2bHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="b2bAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .b2bH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b2bL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b2bS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .b2bB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .b2bW { font: 800 12px Inter, sans-serif; fill: #FFFFFF; }
+          .b2bN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="b2bH" x="30" y="28">THE FACILITATOR'S THREE MOVES</text>
+        <text class="b2bS" x="300" y="28">what is heard</text>
+        <text class="b2bS" x="610" y="28">what the facilitator does</text>
+
+        <g filter="url(#b2bSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="160" width="200" height="64" rx="10" transform="rotate(-0.8 130 192)" fill="#281E51"/>
+          <rect x="300" y="52" width="250" height="60" rx="8" transform="rotate(0.6 425 82)" fill="#FFFFFF"/>
+          <rect x="300" y="168" width="250" height="60" rx="8" transform="rotate(-0.5 425 198)" fill="#FFFFFF"/>
+          <rect x="300" y="284" width="250" height="60" rx="8" transform="rotate(0.4 425 314)" fill="#FFFFFF"/>
+          <rect x="610" y="52" width="240" height="60" rx="8" transform="rotate(-0.4 730 82)" fill="#FFE45C"/>
+          <rect x="610" y="168" width="240" height="60" rx="8" transform="rotate(0.5 730 198)" fill="#EFEDF7"/>
+          <rect x="610" y="284" width="240" height="60" rx="8" transform="rotate(-0.6 730 314)" fill="#EFEDF7"/>
+          <path d="M234 184 L294 88" marker-end="url(#b2bAr)"/>
+          <path d="M234 196 L294 198" marker-end="url(#b2bAr)"/>
+          <path d="M234 208 L294 308" marker-end="url(#b2bAr)"/>
+          <path d="M554 82 L604 82" marker-end="url(#b2bAr)"/>
+          <path d="M554 198 L604 198" marker-end="url(#b2bAr)"/>
+          <path d="M554 314 L604 314" marker-end="url(#b2bAr)"/>
+          <!-- doodle: a speech bubble over the root -->
+          <path d="M60 96 Q60 80 80 80 L170 80 Q190 80 190 96 Q190 112 170 112 L104 112 L88 128 L92 112 L80 112 Q60 112 60 96 Z" stroke="#281E51"/>
+        </g>
+
+        <text class="b2bW" x="46" y="188">A sentence in the room</text>
+        <text class="b2bW" x="46" y="206">or in the draft</text>
+
+        <text class="b2bL" x="316" y="78">A name is the subject</text>
+        <text class="b2bS" x="316" y="96">of a mistake · rule: blame</text>
+        <text class="b2bL" x="316" y="194">"Should have" ...</text>
+        <text class="b2bS" x="316" y="212">rule: counterfactual</text>
+        <text class="b2bL" x="316" y="310">A vague action</text>
+        <text class="b2bS" x="316" y="328">no owner, no date · rule: wish</text>
+
+        <text class="b2bH" x="626" y="78">Reframe: role + condition</text>
+        <text class="b2bS" x="626" y="96">the role, then the missing guard</text>
+        <text class="b2bL" x="626" y="194">Ask: what did you see then?</text>
+        <text class="b2bS" x="626" y="212">walk forward from before it began</text>
+        <text class="b2bL" x="626" y="310">Ask: who owns it, by when?</text>
+        <text class="b2bS" x="626" y="328">one owner role and a date</text>
+
+        <text class="b2bN" x="30" y="372">The rule names are the linter's. The facilitator asks; the room supplies the answer.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - three things you will hear, and the question that turns each one back to the system</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Blameless, said out loud<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The SRE book's blameless postmortem focuses on contributing causes and assumes everyone involved had good intentions. In the room that becomes a habit of grammar. When a sentence has a person's name as the subject of a mistake ("the analyst pushed the feed without looking"), the facilitator restates it with the role and the condition: the pricing on-call pushed a feed, and the tooling gave them no diff to look at. The person is still in the story. The question has moved to what the system let happen.</p>
+        <p>PagerDuty's blameless page also points to John Allspaw's essay "The Infinite Hows": ask how something happened, not why someone did it. "Why did you push it?" asks for a defence. "How did the feed get accepted?" asks for a mechanism. (PagerDuty guide, read at source; Allspaw's essay cited there, reported.)</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Hindsight, and the "should have"<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Everyone in the review knows how the incident ended. The people in the timeline did not. PagerDuty's answer to hindsight bias is procedural: start the timeline before the incident and work forward, so the room sees what each person saw at each moment. "Should have" describes a world that did not happen (Dekker, reported); the facilitator's reply is a question about the world that did: what did you see at 09:40, and what did the screen show you?</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>What the facilitator does not do<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The facilitator does not argue the root cause, does not grade the draft, and does not take the side of the team or of leadership. Whether a postmortem should name one root cause or a set of contributing conditions is a live disagreement between practitioners and templates; it is argued in <a href="https://phoebefu6.github.io/learn-data-reliability-with-phoebe/courses/a4-postmortems.html">Data Reliability, postmortems ↗</a>, not here. The facilitator's job is narrower: keep the room on the agenda, on the system, and on decisions that get written down.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>The warning sign at the top.</strong> The SRE workbook's postmortem chapter lists warning signs of a failing postmortem culture, and two of them belong to the review room: incidents that repeat, and leaders using blameful language. A blameless template does not survive a vice president asking "who did this?" in the meeting. That is why the facilitator's reframe matters most when the senior person in the room is the one speaking. (Google, The Site Reliability Workbook, ch. 10, read at source.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers learning beyond your own incidents</span>
+      <h2>A reading club for incidents that are not yours</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Your own incidents arrive at their own pace, and a quiet quarter teaches nothing. The SRE book describes rituals that keep the learning going between them: a postmortem of the month, sent out as a newsletter; reading clubs that discuss incidents months or years old; and the Wheel of Misfortune, where a past postmortem is re-enacted with engineers playing the roles. (Google, Site Reliability Engineering, ch. 15, read at source.) The SRE workbook adds cross-team reviews and weekly outage reports to the same family.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 376" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A month of review rituals drawn as a cycle of four. Review by the deadline, for each incident above the severity line. Postmortem of the month, one write-up sent to everyone. Reading club, one old incident read beforehand, highlighted. Wheel of Misfortune, a past incident re-enacted. The rituals come from the SRE book; the monthly cadence is a constructed Pellmoor choice.">
+        <defs>
+          <filter id="b2cSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="71" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="b2cHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="b2cAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .b2cH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b2cL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b2cS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .b2cN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="b2cH" x="30" y="28">A MONTH OF REVIEW RITUALS, AS A CYCLE</text>
+
+        <g filter="url(#b2cSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="330" y="44" width="220" height="56" rx="10" transform="rotate(-0.7 440 72)" fill="#FFFFFF"/>
+          <rect x="620" y="162" width="230" height="56" rx="10" transform="rotate(0.6 735 190)" fill="#EFEDF7"/>
+          <rect x="330" y="280" width="220" height="56" rx="10" transform="rotate(-0.5 440 308)" fill="#FFE45C"/>
+          <rect x="30" y="162" width="230" height="56" rx="10" transform="rotate(0.5 145 190)" fill="#EFEDF7"/>
+          <path d="M556 72 Q700 80 730 154" marker-end="url(#b2cAr)"/>
+          <path d="M740 224 Q710 300 558 310" marker-end="url(#b2cAr)"/>
+          <path d="M324 310 Q170 300 148 226" marker-end="url(#b2cAr)"/>
+          <path d="M150 156 Q180 80 324 72" marker-end="url(#b2cAr)"/>
+          <!-- doodle: a calendar page in the middle of the cycle -->
+          <rect x="406" y="156" width="68" height="64" rx="6" fill="#FFFFFF"/>
+          <path d="M406 174 L474 174 M422 148 L422 162 M458 148 L458 162 M418 190 L428 190 M436 190 L446 190 M454 190 L464 190 M418 204 L428 204 M436 204 L446 204" stroke="#281E51"/>
+        </g>
+
+        <text class="b2cL" x="346" y="68">Review, by the deadline</text>
+        <text class="b2cS" x="346" y="86">each incident above the line</text>
+        <text class="b2cL" x="636" y="186">Postmortem of the month</text>
+        <text class="b2cS" x="636" y="204">one write-up, sent to all</text>
+        <text class="b2cH" x="346" y="304">Reading club</text>
+        <text class="b2cS" x="346" y="322">one old incident, read first</text>
+        <text class="b2cL" x="46" y="186">Wheel of Misfortune</text>
+        <text class="b2cS" x="46" y="204">a past incident, re-enacted</text>
+
+        <text class="b2cN" x="30" y="362">Rituals from the SRE book; the monthly cadence is a constructed Pellmoor choice.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - your own incidents set the review; the other three rituals keep learning going in a quiet month</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Why old incidents teach well<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A reading club on an incident months or years old has advantages your own review cannot have. Nobody in the room was on call for it, so nobody is defending a decision. The outcome is known, so the discussion can go straight to the conditions. And the question the club asks is about your system, not theirs: could this happen to us, and which of our pages would we open?</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>A reading club built on a public index<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Dan Luu's <a href="https://github.com/danluu/post-mortems">post-mortems index on GitHub ↗</a> collects links to public write-ups and groups them under Config Errors, Hardware/Power Failures, Conflicts, Time, Database and Uncategorized, with other lists and analysis after them. Config errors is the largest named group, at about 60 entries. The grouping is what makes it useful for a club: pick a category that matches a condition your own corpus keeps tagging, pick one entry, and read the original write-up it links to.</p>
+        <p>A simple session shape: one entry per session, chosen by category; everyone reads it the day before, the same courtesy as your own reviews; and the discussion answers two questions. Could this happen to us? Which of our pages would we open, and would they help? The index states no licence, so link to it and to the write-ups; do not copy their summaries into your own materials.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Constructed Pellmoor example: the first reading club<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Constructed Pellmoor example. After the pricing-feed incident, the head of engineering starts a monthly reading club: six people, thirty minutes, the last Thursday of the month. The first session picks from the Config Errors group, because Pellmoor's own corpus already shows a bad input accepted by a check that looked only at the shape of the file. The entry is sent out the day before.</p>
+        <p>The discussion takes the two questions in order. Could this happen to us? The warehouse picking lead says yes, and names the supplier slot file as the same kind of input. Which of our pages would we open? Nobody can name one. That silence becomes the club's only output: an action to write the page, with one owner role and a date, logged in the same tracker as every postmortem action. (Every detail here is constructed.)</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Wheel of Misfortune and the drill<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A Wheel of Misfortune session re-enacts a past postmortem, with one engineer playing the responder and another playing the system. It overlaps with the runbook drill taught in Writer session 3, with a different aim: a drill tests the page, the wheel tests the responder's reasoning. Run one from your own reviewed postmortems once the reading club is steady.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Learning from thousands, not one.</strong> The SRE workbook describes a searchable repository of thousands of postmortems going back to 2009, analysed for trends such as postmortems per month, time to detect and resolve, and blast radius. A reading club is the small, human version of the same idea: the corpus is bigger than your own incidents, and reading it on purpose is how a team gets ahead of the next one. (Google, The Site Reliability Workbook, ch. 10, read at source.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>The review rehearsal</h2>
+      <span class="tag demo">★ 22 min · everyone works it through</span>
+    </div>
+    <p class="lede">The widget is the linter the Writer track uses, loaded with the first draft of Pellmoor's PM-11, the pricing-feed postmortem. You will not rewrite it. You will read its findings as a facilitator would, write the question you would ask in the room for each, then write the invite and the ritual. The rule engine is real and runs on any text you paste; PM-11 is constructed. The linter checks shape, not truth: a draft can score 100 and still name the wrong conditions.</p>
+
+    <div class="rbp-widget" data-mode="linter" data-sample="s3"></div>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 304" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The rehearsal in three panels. Left: the PM-11 first draft with its 11 findings by rule: owner at line 1; time at lines 5, 6 and 7; blame at lines 6 and 13; counterfactual at line 13; wish at lines 16, 17 and 18; impact at line 9. Middle, highlighted: six facilitator questions, one per failing rule, asked in the room. Right: the PM-11 team version, 6 of 6 rules pass, score 100, which shows shape, not truth.">
+        <defs>
+          <filter id="b2dSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="73" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="b2dHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="b2dAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .b2dH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b2dL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .b2dS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .b2dN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <g filter="url(#b2dSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="40" width="300" height="226" rx="12" transform="rotate(-0.4 180 153)" fill="url(#b2dHc)"/>
+          <rect x="390" y="96" width="200" height="110" rx="10" transform="rotate(0.8 490 151)" fill="#FFE45C"/>
+          <rect x="650" y="96" width="200" height="110" rx="10" transform="rotate(-0.7 750 151)" fill="#FFFFFF"/>
+          <path d="M336 152 L384 152" marker-end="url(#b2dAr)"/>
+          <path d="M596 152 L644 152" marker-end="url(#b2dAr)"/>
+          <!-- doodle: a question mark over the questions -->
+          <path d="M478 62 Q478 50 490 50 Q502 50 502 62 Q502 72 490 74 L490 80 M490 86 L490 88" stroke="#281E51"/>
+        </g>
+        <rect x="46" y="54" width="268" height="198" rx="8" fill="#FFFFFF"/>
+
+        <text class="b2dH" x="60" y="76">PM-11 FIRST DRAFT · 11 FINDINGS</text>
+        <text class="b2dL" x="60" y="102">owner · line 1</text>
+        <text class="b2dL" x="60" y="126">time · lines 5, 6, 7</text>
+        <text class="b2dL" x="60" y="150">blame · lines 6, 13</text>
+        <text class="b2dL" x="60" y="174">counterfactual · line 13</text>
+        <text class="b2dL" x="60" y="198">wish · lines 16, 17, 18</text>
+        <text class="b2dL" x="60" y="222">impact · line 9</text>
+
+        <text class="b2dH" x="406" y="128">Six questions</text>
+        <text class="b2dL" x="406" y="152">one per failing rule</text>
+        <text class="b2dS" x="406" y="174">asked in the room</text>
+
+        <text class="b2dH" x="666" y="128">PM-11 team version</text>
+        <text class="b2dL" x="666" y="152">6 of 6 · score 100</text>
+        <text class="b2dS" x="666" y="174">shape, not truth</text>
+
+        <text class="b2dN" x="30" y="290">A score of 100 says the draft is checkable; whether its conditions are the right ones is the room's job.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the linter finds the sentences; the facilitator turns each one into a question the room answers</figcaption>
+    </figure>
+
+    <div class="steps">
+      <div class="step">
+        <p><strong>Step 1 · Lint the first draft.</strong> The widget opens on the PM-11 first draft. Read the summary line and the findings list, rule by rule.</p>
+        <div class="prompt-box good"><span class="label">★ Step 1 · the linter, as it prints</span>Postmortem · 0 of 6 rules pass · score 0 · 11 findings</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 2 · Write the facilitator's question for each failing rule.</strong> One question per rule, phrased for the room, not as an edit to the document. The first two are filled in as a pattern.</p>
+        <div class="prompt-box good"><span class="label">★ Step 2 · one question per rule</span>owner (line 1):            Who owns this postmortem until its actions are done?
+time (lines 5, 6, 7):      Can we put each event in UTC, with the date, from the logs?
+blame (lines 6, 13):       ______________________________________________
+counterfactual (line 13):  ______________________________________________
+wish (lines 16, 17, 18):   ______________________________________________
+impact (line 9):           ______________________________________________</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 3 · Load the team version.</strong> Switch the sample to the PM-11 team version and copy the summary line. Then write one sentence on what that score cannot tell the room.</p>
+        <div class="prompt-box good"><span class="label">★ Step 3 · the linter, as it prints, and its limit</span>Postmortem · 6 of 6 rules pass · score 100 · 0 findings
+
+What the score cannot tell the room: ____________________________
+(hint: the linter checks shape, not truth; it cannot say whether
+ the contributing conditions are the right ones)</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 4 · Write the review invite and agenda for PM-11.</strong> Send it 24 hours ahead, and name what each reader reads.</p>
+        <div class="prompt-box good"><span class="label">★ Step 4 · invite and agenda</span>Subject: PM-11 review, wrong prices shown to customers
+When: ____ (at least 24 hours after this invite; before the postmortem deadline)
+Document: attached, read before the meeting, finished or not
+
+Before the room:
+  Responding team: the whole document; check the timeline against the logs
+  Leadership:      summary and actions
+  Support + customer liaison: the impact section
+
+Agenda (timebox each item):
+  1. Owner: causes and timeline                       ____ min
+  2. Actions: will they stop a repeat? will we commit? ____ min
+  3. Customer liaison: impact; review external message ____ min
+
+We leave with: each action accepted with one owner and a date;
+the external message approved or sent back with changes.
+Facilitator: ____ (speaks little, takes no sides, keeps time)</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 5 · Write Pellmoor's review ritual.</strong> Then copy it and fill it for your own team.</p>
+        <div class="prompt-box good"><span class="label">★ Step 5 · review ritual</span>Who:        owner, responding team, a facilitator who was not on call,
+            leadership for actions, customer liaison for Sev-1
+When:       review held within ____ of the incident closing,
+            and before the postmortem deadline in our docs standard
+Before:     document out 24 hours ahead, reading named per role
+Recorded:   actions with one owner and a date; external message decision;
+            postmortem filed in our shared incident reports list
+Facilitator moves: blame -&gt; role + condition; should have -&gt; what did you see;
+            vague action -&gt; who, by when
+Reading club: every ____ ; one entry from the public index by category;
+            read the day before; any action it produces goes in the tracker</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>Rotate the facilitator.</strong> If the same person facilitates every review, the role becomes a job title and then a bottleneck. Rotate it among people who were not on call for the incident, and give each new facilitator the three moves on a card.</p>
+    </div>
+  </section>
+
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Before Leader session 3</h2>
+      <span class="tag exercise">30 min</span>
+    </div>
+    <ol>
+      <li><strong>Count the unreviewed.</strong> Of your last ten postmortems, how many had a review meeting, and how many days after the incident closed?</li>
+      <li><strong>Send one invite the new way.</strong> For your next review, send the document 24 hours ahead with the reading named per role, and note how many people arrive having read it.</li>
+      <li><strong>Lint your last postmortem</strong> in the widget and write the facilitator's question for each failing rule, as in Step 2.</li>
+      <li><strong>Pick your first reading club entry</strong> from the public index, in the category closest to your own most frequent incident condition, and put a date in the calendar.</li>
+    </ol>
+  </section>
+
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and Leader session 2 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">1 · Why does the postmortem go to attendees 24 hours before the review, even if it is unfinished?</p>
+      <button class="qopt" type="button">A · So the owner can stop working on it</button>
+      <button class="qopt" type="button">B · Because the meeting replaces the written document</button>
+      <button class="qopt" type="button">C · So the meeting can be spent deciding on actions, not reading the document aloud</button>
+      <button class="qopt" type="button">D · So leadership can approve it without attending</button>
+      <p class="qwhy">The written postmortem comes first and the meeting follows it. Time spent catching up in the room is time not spent on the actions and the external message.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">2 · In the room, someone says "the analyst should have checked the outliers." What does the facilitator do?</p>
+      <button class="qopt" type="button">A · Asks what the person saw at the time, walking forward from before the incident</button>
+      <button class="qopt" type="button">B · Agrees, and records it as the root cause</button>
+      <button class="qopt" type="button">C · Defends the analyst against the speaker</button>
+      <button class="qopt" type="button">D · Moves straight on to the next agenda item</button>
+      <p class="qwhy">"Should have" describes a world that did not happen. The facilitator takes no sides and turns the sentence into a question about what the system showed at the time.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="3">
+      <p class="qtext">3 · What does a reading club gain from discussing an incident months or years old, from another organisation?</p>
+      <button class="qopt" type="button">A · A ready-made action list to copy</button>
+      <button class="qopt" type="button">B · Proof that other teams fail more often</button>
+      <button class="qopt" type="button">C · A replacement for reviewing your own incidents</button>
+      <button class="qopt" type="button">D · Nobody in the room is defending a decision, so the talk goes to conditions: could this happen to us?</button>
+      <p class="qwhy">The SRE book's reading clubs work on old incidents. Distance removes the defensiveness; the useful question is about your own system and your own pages.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">No postmortem left unreviewed; postmortem of the month, reading clubs, Wheel of Misfortune; blameless assumes good intentions</span><span class="note">Google, Site Reliability Engineering (2016), ch. 15 "Postmortem Culture", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Document 24 hours ahead; three-item agenda; customer liaison for Sev-1; facilitator; hindsight bias; timeboxing</span><span class="note">PagerDuty, Postmortem guide (Apache 2.0), docs.pagerduty.com, read at source 2026-11-11</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Warning signs including blameful leaders; four months late versus within a week; repository of postmortems; cross-team reviews</span><span class="note">Google, The Site Reliability Workbook (2018), ch. 10 "Postmortem Culture", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Public post-mortem index, grouped by category</span><span class="note">danluu/post-mortems, GitHub index, structure read at source, no licence stated; linked, not quoted</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Ask how, not why</span><span class="note">Allspaw, "The Infinite Hows", cited on the PagerDuty guide (read at source); the essay itself reported</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Counterfactuals and hindsight</span><span class="note">Dekker, The Field Guide to Understanding Human Error, book, reported</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Every fact on this page, and its verification tier, is recorded in the course's source map.</p>
+  </section>
+
+  <section class="cheat" id="cheatsheet">
+    <h3>Leader session 2 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Reviewed or wasted</b><span>Every postmortem gets a review, before its deadline, not after.</span></div>
+      <div class="cheat-item"><b>24 hours ahead</b><span>Send the document a day early, finished or not, with the reading named per role.</span></div>
+      <div class="cheat-item"><b>Three items</b><span>Causes and timeline; actions and commitment; customer impact and the external message.</span></div>
+      <div class="cheat-item"><b>Leave with</b><span>Actions accepted with one owner and a date; external message approved or sent back.</span></div>
+      <div class="cheat-item"><b>Three moves</b><span>Blame to role + condition; "should have" to what you saw; vague action to who, by when.</span></div>
+      <div class="cheat-item"><b>Reading club</b><span>One old public incident a month, by category: could this happen to us, which page would we open?</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>The review approved an external message, or sent it back. Leader session 3 is about writing that message: one incident told three ways, what to redact, when to share, and the open argument over how much to apologise and how much to explain.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Leader session 2 of 4 · learn-runbooks-postmortems-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="b1-which-docs-must-exist.html">← Prev: Which docs must exist</a> &nbsp;·&nbsp; <a href="b3-writing-for-the-customer.html">Next: Writing for the customer →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/rbp-sample.js?v=1"></script>
+<script src="../assets/rbp-live.js?v=1"></script>
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Writer session 5 of 6. Read eleven postmortems as one: tag the conditions, count them across a year, and trace Pellmoor's two repeat incidents back to the actions that were written as wishes and never closed.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Read eleven postmortems as one - learn runbooks and postmortems with phoebe">
+<meta property="og:description" content="Writer session 5 of 6. One postmortem explains one incident. A year of them shows which conditions keep coming back, and which open actions let the repeats through.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/courses/a5-read-eleven-postmortems-as-one.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Read eleven postmortems as one - learn runbooks and postmortems with phoebe">
+<meta name="twitter:description" content="Writer session 5 of 6. Tag the conditions, count them, find the repeats and the wishes behind them.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Writer session 5 · Read eleven postmortems as one - learn runbooks and postmortems with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-runbooks-postmortems-with-phoebe</a> / Writer session 5 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Runbooks &amp; Postmortems with Phoebe · Writer session 5 of 6</div>
+    <h1>Read eleven postmortems as one: <span class="accent">the corpus knows more</span></h1>
+    <p class="sub">Each postmortem you wrote last year was read once, by the people in the room, about one incident. Laid side by side, the same postmortems answer a different question: which conditions keep coming back, and which promised fixes never happened. Tonight you read Pellmoor's year as a dataset, eleven constructed postmortems and 46 actions, tag what caused each one, count the tags, and trace two repeat incidents back to the two actions that were written as wishes.</p>
+    <div class="chip-row">
+      <span class="chip level">🟠 Writer</span>
+      <span class="chip audience">On-call engineers, SREs, data engineers and tech writers</span>
+      <span class="chip audience">Hands-on in the browser</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-18 · Corpus, tags, repeats</span>
+      <span class="a3" style="flex:5">18-40 · Build-along: read Pellmoor's year</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where we start</h2>
+    </div>
+    <p class="lede">Writer session 4 turned one incident record into one team postmortem that passes the linter. That document is the unit. Tonight the unit is the pile: every postmortem Pellmoor wrote in a year, read together, with the conditions behind each one tagged and counted. A single write-up can only tell you what happened once. The pile tells you what keeps happening, and whether the actions you wrote last time were the reason it happened again. Pellmoor's postmortems, tags and actions are constructed and labelled wherever they appear; the corpus table on the bench is computed in your browser.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+      <span class="pill">★ Build-along = everyone builds it</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> A cross-incident read for Pellmoor: the top conditions across eleven postmortems with their counts, the two repeat incidents and the open actions behind them, and one recommendation a leader can act on. It fits on half a page, and it is the document that tells a team where its next incident is most likely to come from.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers the corpus as a dataset</span>
+      <h2>One postmortem explains one incident; a year of them shows a pattern</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">A postmortem is written to close one incident. Read alone, a silent job failure in week 6 looks like bad luck in the finance warehouse. Read beside a silent job failure in week 10 in warehouse picking, and three more later in the year, it stops looking like luck. The corpus is the same documents with one extra field: what conditions made each incident possible, written in words the next reader can count.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 404" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Eleven postmortem cards on a year rail, PM-01 in week 3 to PM-11 in week 47, alternating above and below the rail. Each card carries two condition stickers. The silent job failure sticker appears on PM-02, PM-03, PM-08, PM-09 and PM-10, and a highlighted thread runs through those five cards. Constructed Pellmoor example.">
+        <defs>
+          <filter id="a5aSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="51" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a5aHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a5aAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a5aH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a5aL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a5aS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a5aB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .a5aN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a5aH" x="30" y="28">ELEVEN POSTMORTEMS ON ONE YEAR</text>
+        <text class="a5aS" x="290" y="28">Constructed Pellmoor example: stickers are short forms of the tags</text>
+
+        <g filter="url(#a5aSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- the year rail -->
+          <path d="M40 200 L840 200"/>
+          <path d="M40 194 L40 206 M840 194 L840 206"/>
+          <!-- connectors, cards above -->
+          <path d="M78 136 L78 200 M196 136 L196 200 M333 136 L333 200 M471 136 L471 200 M594 136 L594 200 M764 136 L764 200"/>
+          <!-- connectors, cards below -->
+          <path d="M132 200 L132 264 M256 200 L256 264 M410 200 L410 264 M533 200 L533 264 M671 200 L671 264"/>
+          <!-- the thread through the five silent job failures -->
+          <path d="M132 264 L196 136 L533 264 L594 136 L671 264" stroke="#FFE45C" stroke-width="7"/>
+          <path d="M132 264 L196 136 L533 264 L594 136 L671 264" stroke="#6B5600" stroke-width="1.6" stroke-dasharray="6 5"/>
+          <!-- cards above the rail -->
+          <rect x="26" y="56" width="104" height="80" rx="8" transform="rotate(-1.6 78 96)" fill="#FFFFFF"/>
+          <rect x="144" y="56" width="104" height="80" rx="8" transform="rotate(1.2 196 96)" fill="#FFFFFF"/>
+          <rect x="281" y="56" width="104" height="80" rx="8" transform="rotate(-0.9 333 96)" fill="#FFFFFF"/>
+          <rect x="419" y="56" width="104" height="80" rx="8" transform="rotate(1.5 471 96)" fill="#FFFFFF"/>
+          <rect x="542" y="56" width="104" height="80" rx="8" transform="rotate(-1.3 594 96)" fill="#FFFFFF"/>
+          <rect x="712" y="56" width="104" height="80" rx="8" transform="rotate(1.0 764 96)" fill="#FFFFFF"/>
+          <!-- cards below the rail -->
+          <rect x="80" y="264" width="104" height="80" rx="8" transform="rotate(1.3 132 304)" fill="#FFFFFF"/>
+          <rect x="204" y="264" width="104" height="80" rx="8" transform="rotate(-1.1 256 304)" fill="#FFFFFF"/>
+          <rect x="358" y="264" width="104" height="80" rx="8" transform="rotate(1.6 410 304)" fill="#FFFFFF"/>
+          <rect x="481" y="264" width="104" height="80" rx="8" transform="rotate(-1.4 533 304)" fill="#FFFFFF"/>
+          <rect x="619" y="264" width="104" height="80" rx="8" transform="rotate(0.9 671 304)" fill="#FFFFFF"/>
+          <!-- stickers above: PM-01, 03, 05, 07, 09, 11 -->
+          <rect x="32" y="82" width="92" height="20" rx="4" fill="#EFEDF7" stroke-width="1.4"/>
+          <rect x="32" y="106" width="92" height="20" rx="4" fill="#EFEDF7" stroke-width="1.4"/>
+          <rect x="150" y="82" width="92" height="20" rx="4" fill="#FFE45C" stroke-width="1.4"/>
+          <rect x="150" y="106" width="92" height="20" rx="4" fill="#EFEDF7" stroke-width="1.4"/>
+          <rect x="287" y="82" width="92" height="20" rx="4" fill="#EFEDF7" stroke-width="1.4"/>
+          <rect x="287" y="106" width="92" height="20" rx="4" fill="#EFEDF7" stroke-width="1.4"/>
+          <rect x="425" y="82" width="92" height="20" rx="4" fill="#EFEDF7" stroke-width="1.4"/>
+          <rect x="425" y="106" width="92" height="20" rx="4" fill="#EFEDF7" stroke-width="1.4"/>
+          <rect x="548" y="82" width="92" height="20" rx="4" fill="#FFE45C" stroke-width="1.4"/>
+          <rect x="548" y="106" width="92" height="20" rx="4" fill="#EFEDF7" stroke-width="1.4"/>
+          <rect x="718" y="82" width="92" height="20" rx="4" fill="#EFEDF7" stroke-width="1.4"/>
+          <rect x="718" y="106" width="92" height="20" rx="4" fill="#EFEDF7" stroke-width="1.4"/>
+          <!-- stickers below: PM-02, 04, 06, 08, 10 -->
+          <rect x="86" y="290" width="92" height="20" rx="4" fill="#FFE45C" stroke-width="1.4"/>
+          <rect x="86" y="314" width="92" height="20" rx="4" fill="#EFEDF7" stroke-width="1.4"/>
+          <rect x="210" y="290" width="92" height="20" rx="4" fill="#EFEDF7" stroke-width="1.4"/>
+          <rect x="210" y="314" width="92" height="20" rx="4" fill="#EFEDF7" stroke-width="1.4"/>
+          <rect x="364" y="290" width="92" height="20" rx="4" fill="#EFEDF7" stroke-width="1.4"/>
+          <rect x="364" y="314" width="92" height="20" rx="4" fill="#EFEDF7" stroke-width="1.4"/>
+          <rect x="487" y="290" width="92" height="20" rx="4" fill="#FFE45C" stroke-width="1.4"/>
+          <rect x="487" y="314" width="92" height="20" rx="4" fill="#EFEDF7" stroke-width="1.4"/>
+          <rect x="625" y="290" width="92" height="20" rx="4" fill="#FFE45C" stroke-width="1.4"/>
+          <rect x="625" y="314" width="92" height="20" rx="4" fill="#EFEDF7" stroke-width="1.4"/>
+          <!-- doodle: a magnifier, reading the pile -->
+          <circle cx="848" cy="76" r="11" stroke="#281E51"/>
+          <path d="M856 84 L866 96" stroke="#281E51"/>
+        </g>
+
+        <text class="a5aS" x="40" y="222">wk 1</text>
+        <text class="a5aS" x="840" y="222" text-anchor="end">wk 52</text>
+
+        <text class="a5aH" x="34" y="74">PM-01</text><text class="a5aS" x="122" y="74" text-anchor="end">wk 3</text>
+        <text class="a5aS" x="38" y="96">no rollback</text>
+        <text class="a5aS" x="38" y="120">late alert</text>
+
+        <text class="a5aH" x="152" y="74">PM-03</text><text class="a5aS" x="240" y="74" text-anchor="end">wk 10</text>
+        <text class="a5aL" x="156" y="96">silent job</text>
+        <text class="a5aS" x="156" y="120">stale step</text>
+
+        <text class="a5aH" x="289" y="74">PM-05</text><text class="a5aS" x="377" y="74" text-anchor="end">wk 19</text>
+        <text class="a5aS" x="293" y="96">expiry</text>
+        <text class="a5aS" x="293" y="120">late alert</text>
+
+        <text class="a5aH" x="427" y="74">PM-07</text><text class="a5aS" x="515" y="74" text-anchor="end">wk 28</text>
+        <text class="a5aS" x="431" y="96">untested cfg</text>
+        <text class="a5aS" x="431" y="120">stale step</text>
+
+        <text class="a5aH" x="550" y="74">PM-09</text><text class="a5aS" x="638" y="74" text-anchor="end">wk 36</text>
+        <text class="a5aL" x="554" y="96">silent job</text>
+        <text class="a5aS" x="554" y="120">stale step</text>
+
+        <text class="a5aH" x="720" y="74">PM-11</text><text class="a5aS" x="808" y="74" text-anchor="end">wk 47</text>
+        <text class="a5aS" x="724" y="96">supplier data</text>
+        <text class="a5aS" x="724" y="120">outlier alert</text>
+
+        <text class="a5aH" x="88" y="282">PM-02</text><text class="a5aS" x="176" y="282" text-anchor="end">wk 6</text>
+        <text class="a5aL" x="92" y="304">silent job</text>
+        <text class="a5aS" x="92" y="328">credits</text>
+
+        <text class="a5aH" x="212" y="282">PM-04</text><text class="a5aS" x="300" y="282" text-anchor="end">wk 14</text>
+        <text class="a5aS" x="216" y="304">supplier data</text>
+        <text class="a5aS" x="216" y="328">stale step</text>
+
+        <text class="a5aH" x="366" y="282">PM-06</text><text class="a5aS" x="454" y="282" text-anchor="end">wk 24</text>
+        <text class="a5aS" x="370" y="304">retry</text>
+        <text class="a5aS" x="370" y="328">no rollback</text>
+
+        <text class="a5aH" x="489" y="282">PM-08</text><text class="a5aS" x="577" y="282" text-anchor="end">wk 32</text>
+        <text class="a5aL" x="493" y="304">silent job</text>
+        <text class="a5aS" x="493" y="328">credits</text>
+
+        <text class="a5aH" x="627" y="282">PM-10</text><text class="a5aS" x="715" y="282" text-anchor="end">wk 41</text>
+        <text class="a5aL" x="631" y="304">silent job</text>
+        <text class="a5aS" x="631" y="328">no job alert</text>
+
+        <text class="a5aB" x="30" y="370">Yellow thread: silent job failure, tagged on 5 of 11 (PM-02, PM-03, PM-08, PM-09, PM-10).</text>
+        <text class="a5aN" x="30" y="390">No single postmortem says this. Only the year, read as one, does.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - five postmortems across three systems share one condition no single write-up could see</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>What a corpus answers that one write-up cannot<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Frequency.</strong> Which conditions sit behind most incidents. One postmortem gives you a count of one for everything it names.</p>
+        <p><strong>Repeats.</strong> Whether this incident happened before, and what the earlier write-up promised to do about it. A repeat is invisible from inside the second postmortem unless someone goes looking in the first.</p>
+        <p><strong>Follow-through.</strong> How many of the actions you wrote across the year actually got done, and how old the open ones are. Each postmortem shows its own actions; only the corpus shows the closing rate.</p>
+        <p>None of this needs new writing. It needs the postmortems in one place, a short list of condition tags applied to each, and someone who reads them together on a schedule.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>What this session does not reteach<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Writing the single postmortem is Writer session 4. What a postmortem may conclude, and why blameless is the entry condition, lives in <a href="https://phoebefu6.github.io/learn-data-reliability-with-phoebe/courses/a4-postmortems.html">Data Reliability, postmortems ↗</a>. The package one incident generates (record, timeline, impact) is in <a href="https://phoebefu6.github.io/learn-data-reliability-with-phoebe/courses/b6-incident-package.html">Data Reliability, the incident package ↗</a>. Here, each of those documents is a row in a table, and the table is the thing you read.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>A public corpus, sorted by condition<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The <a href="https://github.com/danluu/post-mortems">danluu/post-mortems index ↗</a> on GitHub is a long public list of incident write-ups. Look at how it is organised before you read any entry: not by company or by date, but by the kind of condition behind the failure, under headings such as Config Errors, Hardware/Power Failures, Conflicts, Time and Database, with an Uncategorized bucket for the rest. Config errors is the largest named group, about 60 entries by a hand count. That choice of grouping is the same move you make tonight: the useful axis for a pile of postmortems is the condition, not the team.</p>
+        <p>The index states no licence, so treat it as a reading list: follow the links, and quote nothing from it into your own documents.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Google treats its postmortems as data.</strong> The SRE workbook's postmortem chapter describes a searchable repository of thousands of postmortems going back to 2009, analysed for trends such as postmortems per month, time to detect and resolve, and blast radius. The same chapter lists repeating incidents among the warning signs of a postmortem culture that is not working. A repository you can query is what turns repeats from an anecdote into a count. (Google, The Site Reliability Workbook (2018), ch. 10 "Postmortem Culture", sre.google, read at source.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers tagging conditions</span>
+      <h2>A short vocabulary, applied to every write-up</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">You cannot count what every author names differently. "The nightly load died quietly", "no alert on the refund job" and "pick-list generation failed without error" are the same condition in three dialects. A controlled vocabulary is a short list of condition tags the whole team uses; each postmortem gets one to three of them, chosen at review; and the count across the year is a sum, not an argument.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 370" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A grid with eleven condition tags as rows and postmortems PM-01 to PM-11 as columns. Filled cells mark a tag on a postmortem. Silent job failure, highlighted, is filled for PM-02, PM-03, PM-08, PM-09 and PM-10, count 5. Stale runbook step: PM-03, PM-04, PM-07, PM-09, count 4. Unvalidated supplier input, deploy without rollback check, queue alert too late and credits not watched: 2 each. Five tags appear once. Constructed Pellmoor example.">
+        <defs>
+          <filter id="a5bSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="53" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a5bHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a5bAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a5bH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a5bL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a5bS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a5bB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .a5bN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a5bH" x="30" y="30">TAGS BY POSTMORTEM, ONE YEAR</text>
+        <text class="a5bS" x="260" y="30">Constructed Pellmoor example, tags as the corpus table prints them</text>
+
+        <g filter="url(#a5bSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- highlight band behind the silent job failure row -->
+          <rect x="30" y="71" width="812" height="24" rx="5" fill="#FFF8D1" stroke="none"/>
+          <!-- row 0 silent job failure: 02 03 08 09 10 -->
+          <rect x="270" y="74" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="318" y="74" width="40" height="18" rx="3" fill="#FFE45C"/>
+          <rect x="366" y="74" width="40" height="18" rx="3" fill="#FFE45C"/>
+          <rect x="414" y="74" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="462" y="74" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="510" y="74" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="558" y="74" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="606" y="74" width="40" height="18" rx="3" fill="#FFE45C"/>
+          <rect x="654" y="74" width="40" height="18" rx="3" fill="#FFE45C"/>
+          <rect x="702" y="74" width="40" height="18" rx="3" fill="#FFE45C"/>
+          <rect x="750" y="74" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <!-- row 1 stale runbook step: 03 04 07 09 -->
+          <rect x="270" y="98" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="318" y="98" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="366" y="98" width="40" height="18" rx="3" fill="url(#a5bHc)"/>
+          <rect x="414" y="98" width="40" height="18" rx="3" fill="url(#a5bHc)"/>
+          <rect x="462" y="98" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="510" y="98" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="558" y="98" width="40" height="18" rx="3" fill="url(#a5bHc)"/>
+          <rect x="606" y="98" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="654" y="98" width="40" height="18" rx="3" fill="url(#a5bHc)"/>
+          <rect x="702" y="98" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="750" y="98" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <!-- row 2 unvalidated supplier input: 04 11 -->
+          <rect x="270" y="122" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="318" y="122" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="366" y="122" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="414" y="122" width="40" height="18" rx="3" fill="url(#a5bHc)"/>
+          <rect x="462" y="122" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="510" y="122" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="558" y="122" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="606" y="122" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="654" y="122" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="702" y="122" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="750" y="122" width="40" height="18" rx="3" fill="url(#a5bHc)"/>
+          <!-- row 3 deploy without rollback check: 01 06 -->
+          <rect x="270" y="146" width="40" height="18" rx="3" fill="url(#a5bHc)"/>
+          <rect x="318" y="146" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="366" y="146" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="414" y="146" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="462" y="146" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="510" y="146" width="40" height="18" rx="3" fill="url(#a5bHc)"/>
+          <rect x="558" y="146" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="606" y="146" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="654" y="146" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="702" y="146" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="750" y="146" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <!-- row 4 queue alert too late: 01 05 -->
+          <rect x="270" y="170" width="40" height="18" rx="3" fill="url(#a5bHc)"/>
+          <rect x="318" y="170" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="366" y="170" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="414" y="170" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="462" y="170" width="40" height="18" rx="3" fill="url(#a5bHc)"/>
+          <rect x="510" y="170" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="558" y="170" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="606" y="170" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="654" y="170" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="702" y="170" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="750" y="170" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <!-- row 5 credits not watched: 02 08 -->
+          <rect x="270" y="194" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="318" y="194" width="40" height="18" rx="3" fill="url(#a5bHc)"/>
+          <rect x="366" y="194" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="414" y="194" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="462" y="194" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="510" y="194" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="558" y="194" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="606" y="194" width="40" height="18" rx="3" fill="url(#a5bHc)"/>
+          <rect x="654" y="194" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="702" y="194" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="750" y="194" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <!-- row 6 expiry not tracked: 05 -->
+          <rect x="270" y="218" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="318" y="218" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="366" y="218" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="414" y="218" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="462" y="218" width="40" height="18" rx="3" fill="url(#a5bHc)"/>
+          <rect x="510" y="218" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="558" y="218" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="606" y="218" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="654" y="218" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="702" y="218" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="750" y="218" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <!-- row 7 retry without idempotency: 06 -->
+          <rect x="270" y="242" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="318" y="242" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="366" y="242" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="414" y="242" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="462" y="242" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="510" y="242" width="40" height="18" rx="3" fill="url(#a5bHc)"/>
+          <rect x="558" y="242" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="606" y="242" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="654" y="242" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="702" y="242" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="750" y="242" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <!-- row 8 config pushed untested: 07 -->
+          <rect x="270" y="266" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="318" y="266" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="366" y="266" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="414" y="266" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="462" y="266" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="510" y="266" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="558" y="266" width="40" height="18" rx="3" fill="url(#a5bHc)"/>
+          <rect x="606" y="266" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="654" y="266" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="702" y="266" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="750" y="266" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <!-- row 9 no alert on silent job: 10 -->
+          <rect x="270" y="290" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="318" y="290" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="366" y="290" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="414" y="290" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="462" y="290" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="510" y="290" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="558" y="290" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="606" y="290" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="654" y="290" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="702" y="290" width="40" height="18" rx="3" fill="url(#a5bHc)"/>
+          <rect x="750" y="290" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <!-- row 10 no alert on price outliers: 11 -->
+          <rect x="270" y="314" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="318" y="314" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="366" y="314" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="414" y="314" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="462" y="314" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="510" y="314" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="558" y="314" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="606" y="314" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="654" y="314" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="702" y="314" width="40" height="18" rx="3" fill="#FFFFFF" stroke="#CBC7DA" stroke-width="1.2"/>
+          <rect x="750" y="314" width="40" height="18" rx="3" fill="url(#a5bHc)"/>
+          <!-- doodle: a tally of five -->
+          <path d="M850 44 L850 60 M856 44 L856 60 M862 44 L862 60 M868 44 L868 60 M846 58 L872 46" stroke="#281E51"/>
+        </g>
+
+        <text class="a5bS" x="290" y="62" text-anchor="middle">PM-01</text>
+        <text class="a5bS" x="338" y="62" text-anchor="middle">PM-02</text>
+        <text class="a5bS" x="386" y="62" text-anchor="middle">PM-03</text>
+        <text class="a5bS" x="434" y="62" text-anchor="middle">PM-04</text>
+        <text class="a5bS" x="482" y="62" text-anchor="middle">PM-05</text>
+        <text class="a5bS" x="530" y="62" text-anchor="middle">PM-06</text>
+        <text class="a5bS" x="578" y="62" text-anchor="middle">PM-07</text>
+        <text class="a5bS" x="626" y="62" text-anchor="middle">PM-08</text>
+        <text class="a5bS" x="674" y="62" text-anchor="middle">PM-09</text>
+        <text class="a5bS" x="722" y="62" text-anchor="middle">PM-10</text>
+        <text class="a5bS" x="770" y="62" text-anchor="middle">PM-11</text>
+        <text class="a5bS" x="820" y="62" text-anchor="middle">count</text>
+
+        <text class="a5bH" x="252" y="87" text-anchor="end">silent job failure</text>
+        <text class="a5bL" x="252" y="111" text-anchor="end">stale runbook step</text>
+        <text class="a5bL" x="252" y="135" text-anchor="end">unvalidated supplier input</text>
+        <text class="a5bL" x="252" y="159" text-anchor="end">deploy without rollback check</text>
+        <text class="a5bL" x="252" y="183" text-anchor="end">queue alert too late</text>
+        <text class="a5bL" x="252" y="207" text-anchor="end">credits not watched</text>
+        <text class="a5bS" x="252" y="231" text-anchor="end">expiry not tracked</text>
+        <text class="a5bS" x="252" y="255" text-anchor="end">retry without idempotency</text>
+        <text class="a5bS" x="252" y="279" text-anchor="end">config pushed untested</text>
+        <text class="a5bS" x="252" y="303" text-anchor="end">no alert on silent job</text>
+        <text class="a5bS" x="252" y="327" text-anchor="end">no alert on price outliers</text>
+
+        <text class="a5bH" x="820" y="87" text-anchor="middle">5</text>
+        <text class="a5bH" x="820" y="111" text-anchor="middle">4</text>
+        <text class="a5bL" x="820" y="135" text-anchor="middle">2</text>
+        <text class="a5bL" x="820" y="159" text-anchor="middle">2</text>
+        <text class="a5bL" x="820" y="183" text-anchor="middle">2</text>
+        <text class="a5bL" x="820" y="207" text-anchor="middle">2</text>
+        <text class="a5bS" x="820" y="231" text-anchor="middle">1</text>
+        <text class="a5bS" x="820" y="255" text-anchor="middle">1</text>
+        <text class="a5bS" x="820" y="279" text-anchor="middle">1</text>
+        <text class="a5bS" x="820" y="303" text-anchor="middle">1</text>
+        <text class="a5bS" x="820" y="327" text-anchor="middle">1</text>
+
+        <text class="a5bN" x="30" y="356">Two tags per postmortem here. Six tags recur; five appear once, and may be noise or an early signal.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - read across a row to see a condition's year; read down a column to see one incident</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Build the vocabulary small, and keep it small<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Start from what you already wrote.</strong> Read last year's contributing-conditions sections and write each condition as a short noun phrase about the system, never about a person: "silent job failure", "stale runbook step", "unvalidated supplier input", "deploy without rollback check", "queue alert too late", "credits not watched". These are Pellmoor's, and they read like conditions an engineer could fix.</p>
+        <p><strong>Tag one to three per postmortem.</strong> More than three and every tag gets diluted; the count stops meaning "this mattered here". Pellmoor's reviewers settled on two each.</p>
+        <p><strong>Tag at the review, not later.</strong> The people who just argued about contributing conditions are the right people to choose the tags. A tag added by someone reading the doc cold six months later is a guess.</p>
+        <p><strong>Prune the vocabulary on a schedule.</strong> A tag used once in a year is either a rare condition or a synonym for one you already have. Merge synonyms; keep genuine rarities; retire tags nobody uses.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Two taggers will disagree, and that is the point of reviewing the list<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Tagging a condition is a judgement, not a measurement. Was PM-10, the refund job that skipped a day, a "silent job failure" or "no alert on silent job"? Pellmoor's reviewers gave it both, which is defensible, and another team would have chosen one. Practitioners disagree about how strict to be: one camp wants a fixed taxonomy so counts compare year on year; another argues a fixed list pushes new kinds of failure into the nearest wrong box. Neither side has a measured answer you can borrow.</p>
+        <p>What you can do is make the disagreement visible. Keep the vocabulary short enough that two people can learn it, write one sentence defining each tag, and when a count drives a decision, have a second person re-tag the postmortems behind it before you act. If they land somewhere else, you have learned the tag is fuzzy, which is worth knowing before you spend a quarter on it.</p>
+        <p>The tags are contributing conditions, not root causes. Whether a postmortem should name a single root cause at all is itself contested; <a href="https://phoebefu6.github.io/learn-data-reliability-with-phoebe/courses/a4-postmortems.html">Data Reliability, postmortems ↗</a> lays out that argument.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>A public index that sorts by condition.</strong> The <a href="https://github.com/danluu/post-mortems">danluu/post-mortems</a> README groups its entries under condition headings (Config Errors, Hardware/Power Failures, Conflicts, Time, Database, Uncategorized) rather than by company or year. Even its Uncategorized bucket is a lesson: some incidents resist a short vocabulary, and a good index admits it instead of forcing them into a box. (danluu/post-mortems, GitHub index, structure read at source, no licence stated.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers the repeat incident</span>
+      <h2>A wish lets the same incident through twice</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Two of Pellmoor's eleven postmortems describe incidents that had already happened. Both trace back to one action in the earlier postmortem, and both of those actions were written as wishes: a direction with no owner or no date, and no way to tell when it is done. A wish feels like progress in the review meeting and closes nothing afterwards. The corpus is where you see it, because the repeat sits in a different document, weeks later, written by someone who may never have read the first.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A year rail from week 1 to week 52. An arc above the rail runs from PM-03 in week 10 through its open action PM-03.2, Look into the pick-list job, to PM-09 in week 36, pick lists missing again. An arc below the rail runs from PM-04 in week 14 through its open action PM-04.1, Make validation better, to PM-11 in week 47, wrong prices shown to customers. Each arc is solid for the week the action was written and dashed for the weeks it sat open. Constructed Pellmoor example.">
+        <defs>
+          <filter id="a5cSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="57" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a5cHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a5cAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a5cH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a5cL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a5cS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a5cB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .a5cN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a5cH" x="30" y="28">TWO REPEATS, TWO ACTIONS THAT NEVER CLOSED</text>
+        <text class="a5cS" x="370" y="28">Constructed Pellmoor example, weeks 1 to 52</text>
+
+        <g filter="url(#a5cSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- year rail -->
+          <path d="M40 220 L840 220"/>
+          <path d="M40 214 L40 226 M840 214 L840 226"/>
+          <!-- arc 1: PM-03 to PM-09 through PM-03.2 -->
+          <path d="M194 220 Q224 193 254 174"/>
+          <path d="M254 174 Q424 67 594 220" stroke-dasharray="7 7" marker-end="url(#a5cAr)"/>
+          <!-- arc 2: PM-04 to PM-11 through PM-04.1 -->
+          <path d="M255 220 Q293 247 331 266"/>
+          <path d="M331 266 Q547 373 763 220" stroke-dasharray="7 7" marker-end="url(#a5cAr)"/>
+          <!-- leaders from action labels to their dots -->
+          <path d="M150 96 L244 166" stroke="#57526E" stroke-width="1.4"/>
+          <path d="M210 344 L322 272" stroke="#57526E" stroke-width="1.4"/>
+          <path d="M252 228 L242 270" stroke="#57526E" stroke-width="1.4"/>
+          <!-- incident nodes -->
+          <circle cx="194" cy="220" r="7" fill="#FFFFFF"/>
+          <circle cx="255" cy="220" r="7" fill="#FFFFFF"/>
+          <circle cx="594" cy="220" r="8" fill="#281E51"/>
+          <circle cx="763" cy="220" r="8" fill="#281E51"/>
+          <!-- the open actions -->
+          <circle cx="254" cy="174" r="9" fill="#FFE45C"/>
+          <circle cx="331" cy="266" r="9" fill="#FFE45C"/>
+          <!-- doodle: an hourglass, weeks passing -->
+          <path d="M828 46 L852 46 L828 76 L852 76 Z" stroke="#281E51"/>
+        </g>
+
+        <text class="a5cL" x="40" y="70">PM-03.2 · Look into the pick-list job</text>
+        <text class="a5cB" x="40" y="88">wish: no owner, no date</text>
+
+        <text class="a5cL" x="186" y="246" text-anchor="end">PM-03 · wk 10</text>
+        <text class="a5cS" x="186" y="262" text-anchor="end">pick lists missing</text>
+
+        <text class="a5cL" x="248" y="288" text-anchor="end">PM-04 · wk 14</text>
+        <text class="a5cS" x="248" y="304" text-anchor="end">feed validation broke</text>
+
+        <text class="a5cL" x="40" y="362">PM-04.1 · Make validation better</text>
+        <text class="a5cB" x="40" y="380">wish: owner named, no date</text>
+
+        <text class="a5cS" x="604" y="188">repeat of PM-03</text>
+        <text class="a5cH" x="604" y="206">PM-09 · wk 36</text>
+
+        <text class="a5cS" x="773" y="188">repeat of PM-04</text>
+        <text class="a5cH" x="773" y="206">PM-11 · wk 47</text>
+
+        <text class="a5cS" x="40" y="242">wk 1</text>
+        <text class="a5cS" x="840" y="242" text-anchor="end">wk 52</text>
+
+        <text class="a5cN" x="30" y="410">Solid: the week the action was written. Dashed: the weeks it sat open. Yellow dot: the open action.</text>
+        <text class="a5cN" x="30" y="428">Both repeats carry the badge "still open" in the corpus table.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the repeat is in a different document from the promise that should have prevented it; only the corpus puts them side by side</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Read the two repeats<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Constructed Pellmoor example.</strong> In week 10, PM-03 records the morning pick lists missing for the warehouse wave: the pick-list job failed and said nothing. Among its actions is PM-03.2, "Look into the pick-list job". No owner, no date, and nothing that says what "looked into" would look like. In week 36, PM-09 is titled "Pick lists missing again". Same system, same two tags: silent job failure, stale runbook step.</p>
+        <p>In week 14, PM-04 records a supplier feed schema change that broke validation. Its first action, PM-04.1, is "Make validation better". It has an owner, but no date, and "better" has no finish line. In week 47, PM-11 records wrong prices shown to customers for 3 hours. The tag it shares with PM-04 is unvalidated supplier input.</p>
+        <p>Neither repeat is a surprise once the two documents sit side by side. Both are invisible if you only ever read the newest one.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Wish or action: the test is whether anyone can say it is done<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>An action has one owner, a date, and a definition of done someone else could check. A wish has a verb like look into, improve, be more careful, think about. The SRE workbook's good postmortem gives every action a type, a priority, one owner and a tracking bug, and notes that changing human behaviour is less reliable than changing automated systems, which is why "be more careful with deploys" belongs in the wish pile. PagerDuty's guide asks for actions that are actionable, specific and bounded in scope. Both say the same thing from different sides: if nobody can tell when it is finished, it will not be.</p>
+        <p>The linter in Writer session 4 flags wish verbs in a postmortem's actions. That is a check of shape, not of truth: a clean action can still be the wrong action, or the right action nobody does.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Why fixing the wording alone does not stop the repeat<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>On the bench, rung R2 rewrites every wish into an action with an owner and a date. The wish count drops to zero. The closing count does not move, and both repeats still happen. That is the model saying out loud what many teams find the hard way: a well-formed action in a document nobody checks is still an open action. In Pellmoor's history, nobody ever came back to PM-03.2 or PM-04.1, so rewriting them changed the words and not the weeks.</p>
+        <p>What closes them is a rung you have not met yet: someone who checks open actions on a cadence. Writer session 6 runs it on the bench, and <a href="b4-actions-that-close.html">Leader session 4, Actions that close</a>, is about running it in a real organisation.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Google's line on unfinished postmortems.</strong> The SRE workbook quotes Ben Treynor Sloss: a postmortem "without subsequent action is indistinguishable from no postmortem". Google files action items as bugs in a central tracker so it can monitor their closure, rewards closing actions and not only writing them, and lists repeating incidents among the warning signs of a failing postmortem culture. The repeat is the visible symptom; the open action is the condition. (Google, The Site Reliability Workbook (2018), ch. 10 "Postmortem Culture", sre.google, read at source.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Read Pellmoor's year on the bench</h2>
+      <span class="tag demo">★ 22 min · everyone builds</span>
+    </div>
+    <p class="lede">The widget holds Pellmoor's eleven postmortems and their 46 actions across one year. The corpus table prints each postmortem's week, its conditions tagged, and its actions as dots with a "done of total" count; repeat incidents carry a badge. Every number is computed in your browser when you click. Pellmoor is constructed, so the lesson is the reading method, not the counts.</p>
+
+    <div class="rbp-widget" data-mode="corpus" data-rung="r0"></div>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two panels. R0 as found: PM-03.2 Look into the pick-list job, with no owner, no date and no stated done; wishes 18 of 46, closed 13 of 46, repeats via an open action 2 of 2. R2 linter-clean rewrites: the same action rewritten with an owner, a date and a stated done; wishes 0 of 46, closed still 13 of 46, repeats still 2 of 2, highlighted on both sides.">
+        <defs>
+          <filter id="a5dSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="59" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a5dHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a5dAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a5dH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a5dL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a5dS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a5dB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .a5dN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <g filter="url(#a5dSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="40" width="380" height="210" rx="12" transform="rotate(-0.4 220 145)" fill="#FFFFFF"/>
+          <rect x="470" y="40" width="380" height="210" rx="12" transform="rotate(0.4 660 145)" fill="#FFFFFF"/>
+          <rect x="46" y="80" width="348" height="54" rx="8" fill="#EFEDF7"/>
+          <rect x="486" y="80" width="348" height="54" rx="8" fill="#EFEDF7"/>
+          <rect x="46" y="196" width="348" height="30" rx="6" fill="#FFE45C"/>
+          <rect x="486" y="196" width="348" height="30" rx="6" fill="#FFE45C"/>
+          <path d="M414 120 L464 120" marker-end="url(#a5dAr)"/>
+          <!-- doodle: a clock nobody looked at -->
+          <circle cx="440" cy="176" r="11" stroke="#281E51"/>
+          <path d="M440 168 L440 176 L446 180" stroke="#281E51"/>
+        </g>
+
+        <text class="a5dH" x="46" y="66">R0 AS FOUND</text>
+        <text class="a5dL" x="58" y="102">PM-03.2 Look into the pick-list job</text>
+        <text class="a5dS" x="58" y="122">owner: none · due: none · done: unstated</text>
+        <text class="a5dS" x="46" y="160">wishes: 18 of 46</text>
+        <text class="a5dS" x="46" y="180">closed: 13 of 46 (28%)</text>
+        <text class="a5dL" x="58" y="216">repeats via an open action: 2 of 2</text>
+
+        <text class="a5dH" x="486" y="66">R2 LINTER-CLEAN REWRITES</text>
+        <text class="a5dL" x="498" y="102">PM-03.2 rewritten to pass the rules</text>
+        <text class="a5dS" x="498" y="122">owner: named · due: dated · done: stated</text>
+        <text class="a5dS" x="486" y="160">wishes: 0 of 46</text>
+        <text class="a5dS" x="486" y="180">closed: 13 of 46 (28%)</text>
+        <text class="a5dL" x="498" y="216">repeats via an open action: 2 of 2</text>
+
+        <text class="a5dN" x="30" y="278">Well-formed is not done: nobody came back to the rewritten action, so it stayed open.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - R2 rewrites all 18 wishes and changes the fate of none of them</figcaption>
+    </figure>
+
+    <div class="steps">
+      <div class="step">
+        <p><strong>Step 1 · Read the corpus at R0.</strong> With R0 selected, copy the four corpus lines from the stats list. This is Pellmoor's year as found.</p>
+        <div class="prompt-box good"><span class="label">★ Step 1 · R0, as the widget prints it</span>Actions still written as wishes (no clear done): 18 of 46
+Actions closed: 13 of 46 (28%) · really done: 13
+Median age of open actions: 24 weeks
+Repeat incidents traceable to an open action: 2 of 2</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 2 · Count the tags.</strong> Read the "Conditions tagged" column down all eleven rows and tally each tag. Write the top three with their counts and the postmortems behind them. Check the third place yourself: four tags tie on two.</p>
+        <div class="prompt-box good"><span class="label">★ Step 2 · tag count, from the table</span>silent job failure            5   PM-02, PM-03, PM-08, PM-09, PM-10
+stale runbook step            4   PM-03, PM-04, PM-07, PM-09
+unvalidated supplier input    2   PM-04, PM-11
+  (also 2 each: deploy without rollback check, queue alert too late,
+   credits not watched; five more tags appear once)</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 3 · Find the repeats and the actions behind them.</strong> Two rows carry a badge. Hover the action dots on PM-03 and PM-04 until you find the two the badges name, and copy what the tooltip says.</p>
+        <div class="prompt-box good"><span class="label">★ Step 3 · badges and the open actions</span>PM-09 (week 36)   repeat: PM-03.2 still open
+PM-11 (week 47)   repeat: PM-04.1 still open
+
+PM-03.2 Look into the pick-list job: open
+PM-04.1 Make validation better: open</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 4 · Click R2, linter-clean rewrites.</strong> Every wish is rewritten as an action with an owner and a date. Copy the corpus lines again and compare them with Step 1, line by line.</p>
+        <div class="prompt-box good"><span class="label">★ Step 4 · R2, as the widget prints it</span>Actions still written as wishes (no clear done): 0 of 46
+Actions closed: 13 of 46 (28%) · really done: 13
+Median age of open actions: 24 weeks
+Repeat incidents traceable to an open action: 2 of 2</div>
+        <p>The wish count fell to zero; nothing else moved. Owners and dates on paper did not close a single action, so both repeats still happen. Note it, and leave the fix for Writer session 6, where one more rung on the bench changes the last line.</p>
+      </div>
+      <div class="step">
+        <p><strong>Step 5 · Write Pellmoor's cross-incident read.</strong> Half a page, for the engineering lead. Fill the blanks from Steps 1 to 4; the recommendation is yours.</p>
+        <div class="prompt-box good"><span class="label">★ Step 5 · cross-incident read (template)</span>Pellmoor cross-incident read, weeks 1-52 (constructed example)
+Corpus: 11 postmortems, 46 actions; closed 13 of 46 (28%); median open age 24 weeks
+
+Top conditions
+  1. silent job failure, 5 of 11: ________________________________
+  2. stale runbook step, 4 of 11: ________________________________
+  3. ____________________, 2 of 11: ______________________________
+
+Repeats and the actions behind them
+  PM-09 (wk 36) repeats PM-03 (wk 10) through PM-03.2, open: ____________
+  PM-11 (wk 47) repeats PM-04 (wk 14) through PM-04.1, open: ____________
+
+What the repeats share: ________________________________________
+One recommendation (owner, date, how we will know it worked):
+  ______________________________________________________________
+Next read: ____________   Read by: ____________</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>Put the tags where the postmortems live.</strong> A tag spreadsheet beside the postmortem folder is a second source of truth and will drift from it. Add a "Conditions" line to the postmortem template, fill it at review, and generate the corpus table from the documents, the same way Writer session 1 generated the runbook inventory from the pages.</p>
+    </div>
+  </section>
+
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Before Writer session 6</h2>
+      <span class="tag exercise">30 min</span>
+    </div>
+    <ol>
+      <li><strong>Gather a year.</strong> Put every postmortem your team wrote in the last twelve months in one list, with its date, severity and title.</li>
+      <li><strong>Draft a vocabulary of six to ten condition tags</strong> from their contributing-conditions sections, one sentence defining each, and tag every postmortem with one to three.</li>
+      <li><strong>Count and look for repeats.</strong> Tally the tags; for any two postmortems on the same system with a shared tag, open the earlier one and find the action that should have prevented the later.</li>
+      <li><strong>Write your cross-incident read</strong> on the Step 5 template, and ask one colleague to re-tag three of the postmortems blind. Note where you disagreed.</li>
+    </ol>
+  </section>
+
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and Writer session 5 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · What can a year of postmortems read together show that no single postmortem can?</p>
+      <button class="qopt" type="button">A · The exact timeline of the worst incident</button>
+      <button class="qopt" type="button">B · Which conditions keep recurring, and which incidents repeat an earlier one</button>
+      <button class="qopt" type="button">C · Who was on call for each incident</button>
+      <button class="qopt" type="button">D · Whether each write-up passes the linter</button>
+      <p class="qwhy">A timeline, a responder and a linter score all live inside one document. Frequency and repeats only exist across documents, so only the corpus can show them.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="3">
+      <p class="qtext">2 · PM-03.2 read "Look into the pick-list job". Why did that let PM-09 through?</p>
+      <button class="qopt" type="button">A · The pick-list job cannot be fixed</button>
+      <button class="qopt" type="button">B · PM-03 was tagged with the wrong conditions</button>
+      <button class="qopt" type="button">C · The postmortem was published too late</button>
+      <button class="qopt" type="button">D · With no owner, no date and no clear done, nobody could tell it was unfinished, so it stayed open until the job failed again</button>
+      <p class="qwhy">A wish has no finish line, so it never shows up as late. The incident it was meant to prevent arrives first.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">3 · On the bench, R2 turns every wish into an action with an owner and a date. Why are repeats still 2 of 2?</p>
+      <button class="qopt" type="button">A · R2 makes the wishes worse</button>
+      <button class="qopt" type="button">B · The repeats were caused by runbooks, not actions</button>
+      <button class="qopt" type="button">C · A well-formed action still closes only if someone does it, and nobody came back to these two</button>
+      <button class="qopt" type="button">D · R2 only changes the library, not the corpus</button>
+      <p class="qwhy">R2 does change the corpus: wishes fall from 18 of 46 to 0. But closed stays at 13 of 46. Wording is necessary, not sufficient; something has to check the open actions.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">A searchable postmortem repository analysed for trends; repeating incidents as a warning sign</span><span class="note">Google, The Site Reliability Workbook (2018), ch. 10 "Postmortem Culture", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">A postmortem without action is no postmortem; actions tracked as bugs to closure</span><span class="note">Google, The Site Reliability Workbook (2018), ch. 10 "Postmortem Culture", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Actions actionable, specific and bounded in scope</span><span class="note">PagerDuty, Postmortem guide (Apache 2.0), docs.pagerduty.com, read at source 2026-11-11</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">A public postmortem index grouped by condition type</span><span class="note">danluu/post-mortems, GitHub index, structure read at source, no licence stated; linked only, nothing quoted</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Tagging conditions is a judgement; two taggers disagree</span><span class="note">Taught as a practitioner disagreement; no measured agreement rate is cited</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Pellmoor's 11 postmortems, 46 actions, tags, repeats and every bench number</span><span class="note">Constructed and labelled; computed by the widget on this page</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Every fact on this page, and its verification tier, is recorded in the course's source map.</p>
+  </section>
+
+  <section class="cheat" id="cheatsheet">
+    <h3>Writer session 5 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>The corpus is the unit</b><span>One postmortem explains one incident. A year of them shows what keeps coming back.</span></div>
+      <div class="cheat-item"><b>Tag conditions, not people</b><span>A short vocabulary of system conditions; one to three per postmortem, chosen at review.</span></div>
+      <div class="cheat-item"><b>Count, then check the count</b><span>Pellmoor: silent job failure 5 of 11, stale runbook step 4 of 11. Re-tag before you act.</span></div>
+      <div class="cheat-item"><b>Repeats point backwards</b><span>Open the earlier postmortem and find the action that should have prevented the later one.</span></div>
+      <div class="cheat-item"><b>A wish has no finish line</b><span>Look into, improve, be more careful: no owner, date or done, so it never shows as late.</span></div>
+      <div class="cheat-item"><b>Wording is not closing</b><span>R2: wishes 0 of 46, closed still 13 of 46, repeats still 2 of 2.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>You can read the library and the corpus. Writer session 6 puts the whole docs kit on the bench: the full ladder from R0, the two traps a team is tempted by, the drift slider, and the one rung that finally changes the repeats line.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Writer session 5 of 6 · learn-runbooks-postmortems-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="a4-from-record-to-write-up.html">← Prev: From record to write-up</a> &nbsp;·&nbsp; <a href="a6-the-docs-kit-on-the-bench.html">Next: The docs kit on the bench →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/rbp-sample.js?v=1"></script>
+<script src="../assets/rbp-live.js?v=1"></script>
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Writer session 4 of 6. From record to write-up: turn the incident close-out record into a team postmortem with a UTC timeline, impact in numbers, contributing conditions and actions with an owner and a date. Build-along on Pellmoor's PM-11 with the linter.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="From record to write-up - learn runbooks and postmortems with phoebe">
+<meta property="og:description" content="Writer session 4 of 6. When a postmortem is owed, how fast, and the five sections that make it worth reading: timeline, impact, conditions, luck, actions.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/courses/a4-from-record-to-write-up.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="From record to write-up - learn runbooks and postmortems with phoebe">
+<meta name="twitter:description" content="Writer session 4 of 6. A timeline anyone can replay, an impact anyone can count, and actions someone owns.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-runbooks-postmortems-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Writer session 4 · From record to write-up - learn runbooks and postmortems with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-runbooks-postmortems-with-phoebe</a> / Writer session 4 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Runbooks &amp; Postmortems with Phoebe · Writer session 4 of 6</div>
+    <h1>From record to write-up: <span class="accent">the team postmortem</span></h1>
+    <p class="sub">The incident is closed and the close-out record is on your desk: what happened and when, what was decided, what evidence was kept. Tonight you turn that record into the document the team will learn from. A timeline anyone can replay a month from now, an impact anyone can count, the conditions that made the incident possible, and actions that somebody owns by a date. You practise on PM-11, the first draft of Pellmoor's pricing-feed postmortem, and the linter shows you every line where a draft quietly stops being useful.</p>
+    <div class="chip-row">
+      <span class="chip level">🟠 Writer</span>
+      <span class="chip audience">On-call engineers, SREs, data engineers and tech writers</span>
+      <span class="chip audience">Hands-on in the browser</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-18 · When it is owed, timeline and impact, conditions and actions</span>
+      <span class="a3" style="flex:5">18-40 · Build-along: PM-11, draft to team version</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where we start</h2>
+    </div>
+    <p class="lede">Writer session 3 ended with a drill log: a newcomer, a timer and every step they could not finish. Tonight the subject changes from the page to the incident. The live response, and how it closes, belong to the incident-response track: its last session ends with a <a href="https://phoebefu6.github.io/learn-data-incident-response-with-phoebe/courses/b7-close-with-evidence.html">close-out record ↗</a> that holds the logged timeline, the decisions and the evidence. That record is your raw material. Nothing about running the incident is retaught here; the work starts the morning after, when someone has to write it up so the team learns from it. Pellmoor and PM-11 are constructed; the linter is real and runs on any text you paste.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+      <span class="pill">★ Build-along = everyone builds it</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> A team postmortem for Pellmoor's PM-11: an owner line, a timeline in UTC with absolute dates, impact counted in products and orders, contributing conditions with no person as the subject, a note on what went well and where the team got lucky, and actions each carrying one owner and one due date. You also leave with the skeleton, ready for your own next incident.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers what a postmortem is and when it is owed</span>
+      <h2>What a postmortem is, and when one is owed</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Google's SRE book defines a postmortem as a written record of an incident: its impact, the actions taken to mitigate or resolve it, its causes, and the follow-up actions that stop it coming back. The close-out record already holds most of the "what happened". The write-up adds the parts nobody logs during an incident: why it was possible, and what will change.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 388" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constructed Pellmoor example, PM-11. On the left, the close-out record from incident response with three boxes: timeline events, evidence and decisions. Arrows carry timeline events into section 1, timeline in UTC; evidence into section 2, impact in numbers; and decisions into section 4, what went well and where we got lucky. Section 3, contributing conditions, and section 5, actions with owner and date, highlighted, have no source in the record: the team writes them.">
+        <defs>
+          <filter id="a4aSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="41" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a4aHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a4aAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a4aH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a4aL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a4aS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a4aB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .a4aN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a4aH" x="30" y="28">THE RECORD IN, THE WRITE-UP OUT</text>
+        <text class="a4aS" x="300" y="28">Constructed Pellmoor example: PM-11, wrong prices for 3 hours</text>
+
+        <g filter="url(#a4aSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="50" width="270" height="300" rx="12" transform="rotate(-0.5 165 200)" fill="#EFEDF7"/>
+          <!-- doodle: the clip of a clipboard on the record -->
+          <path d="M142 52 L142 40 L188 40 L188 52" stroke="#281E51"/>
+          <rect x="48" y="110" width="234" height="60" rx="8" transform="rotate(-1.2 165 140)" fill="#FFFFFF"/>
+          <rect x="48" y="190" width="234" height="60" rx="8" transform="rotate(0.9 165 220)" fill="#FFFFFF"/>
+          <rect x="48" y="270" width="234" height="60" rx="8" transform="rotate(-0.8 165 300)" fill="#FFFFFF"/>
+          <rect x="520" y="50" width="330" height="52" rx="8" transform="rotate(0.4 685 76)" fill="#FFFFFF"/>
+          <rect x="520" y="112" width="330" height="52" rx="8" transform="rotate(-0.4 685 138)" fill="#FFFFFF"/>
+          <rect x="520" y="174" width="330" height="52" rx="8" transform="rotate(0.3 685 200)" fill="#EFEDF7" stroke-dasharray="6 5"/>
+          <rect x="520" y="236" width="330" height="52" rx="8" transform="rotate(-0.3 685 262)" fill="#FFFFFF"/>
+          <rect x="520" y="298" width="330" height="52" rx="8" transform="rotate(0.4 685 324)" fill="#FFE45C"/>
+          <path d="M286 140 L514 78" marker-end="url(#a4aAr)"/>
+          <path d="M286 220 L514 140" marker-end="url(#a4aAr)"/>
+          <path d="M286 300 L514 264" marker-end="url(#a4aAr)"/>
+        </g>
+
+        <text class="a4aH" x="48" y="82">CLOSE-OUT RECORD</text>
+        <text class="a4aS" x="48" y="98">handed over by incident response</text>
+
+        <text class="a4aL" x="64" y="136">Timeline events</text>
+        <text class="a4aS" x="64" y="156">what happened, as logged</text>
+        <text class="a4aL" x="64" y="216">Evidence</text>
+        <text class="a4aS" x="64" y="236">graphs, counts, queries kept</text>
+        <text class="a4aL" x="64" y="296">Decisions</text>
+        <text class="a4aS" x="64" y="316">what was decided, and when</text>
+
+        <text class="a4aL" x="536" y="74">1 · Timeline (UTC)</text>
+        <text class="a4aS" x="536" y="92">absolute dates, starts before the incident</text>
+        <text class="a4aL" x="536" y="136">2 · Impact, in numbers</text>
+        <text class="a4aS" x="536" y="154">customers, orders, products, minutes, money</text>
+        <text class="a4aL" x="536" y="198">3 · Contributing conditions</text>
+        <text class="a4aS" x="536" y="216">several, and none of them a person</text>
+        <text class="a4aL" x="536" y="260">4 · What went well, where we got lucky</text>
+        <text class="a4aS" x="536" y="278">kept honest, not trimmed</text>
+        <text class="a4aH" x="536" y="322">5 · Actions (owner + date)</text>
+        <text class="a4aL" x="536" y="340">each one bounded, each one tracked</text>
+
+        <text class="a4aN" x="30" y="374">Conditions and actions have no source box: the record says what happened; the team writes why, and what changes.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - three sections are copied and tidied from the record; the two that change anything are written by the team</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>When a postmortem is owed<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Agree the triggers before the incident, not during the argument after it.</strong> The SRE book lists the usual ones, here in paraphrase: users saw downtime or degradation beyond an agreed threshold; any data was lost; on-call had to step in, with a rollback or a reroute; resolution took longer than an agreed threshold; or monitoring failed, which usually means a human found the incident first. A team may also ask for one on any incident it wants to learn from.</p>
+        <p><strong>Then set a clock and one name.</strong> PagerDuty's public guide asks for a postmortem on every major incident, Sev-1 and Sev-2, and states its own internal deadlines: three calendar days for a Sev-1, five business days for a Sev-2. The incident commander picks one owner, so the write-up does not wait while everyone assumes someone else has it. One owner does not mean one author: the writing is collaborative, and the owner's job is to get it finished.</p>
+        <p>Pellmoor's PM-11 meets two triggers at once: customers saw wrong prices for 3 hours, and on-call intervened to restore the last accepted feed. That is a postmortem owed, whatever its severity label says.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>What a postmortem may conclude, and the entry condition<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Two things are taught properly elsewhere and only named here. What a postmortem is allowed to conclude, and why blamelessness is the condition for honest accounts rather than a courtesy, are covered in <a href="https://phoebefu6.github.io/learn-data-reliability-with-phoebe/courses/a4-postmortems.html">Data Reliability, postmortems ↗</a>. A package generated from the incident's own data, so the timeline is pulled rather than remembered, is in <a href="https://phoebefu6.github.io/learn-data-reliability-with-phoebe/courses/b6-incident-package.html">Data Reliability, the incident package ↗</a>. Here, the unit is the write-up itself: its sections, its sentences and its actions.</p>
+        <p>One more reader is coming. PM-11 put wrong prices in front of customers, so it also needs a public version with names and internal systems removed. That is a different document for a different reader, and Leader session 3 builds it from the team version you write tonight.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Same outage, two write-ups, months apart.</strong> The SRE workbook's postmortem chapter prints a bad and a good postmortem of the same 2014 outage. The bad one has missing context, vague actions, finger-pointing, many owners and a small audience, and it was published four months late. The good one was written and circulated less than a week after the incident closed. Four months on, the logs have rotated and the people have moved to other work; a week on, both are still within reach. (Google, The Site Reliability Workbook (2018), ch. 10 "Postmortem Culture", read at source.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers timeline and impact</span>
+      <h2>A timeline anyone can replay, an impact anyone can count</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">A timeline is read by people who were not there, often weeks later, sometimes in another time zone. So every entry carries an absolute date and a UTC time, says what the system did, and starts before anything looked wrong. Impact is read by people deciding what to fix first, so it is counted, not described.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constructed Pellmoor example, PM-11 before and after. Left, the s3 first draft timeline, highlighted as failing: This morning around 9am the supplier file arrived; 09:40 Priya pushed the feed; 12:40 Prices were fixed. Flagged for relative time, no zone and a named person. Its impact: Some customers saw wrong prices for a while, flagged for having no number. Right, the s4 team version: 2026-10-28 08:55 UTC supplier file arrives with prices in cents, not pounds; 09:40 UTC feed accepted, the validator checks the schema, not the values; 12:40 UTC prices restored from the last accepted feed. Its impact: 3 hours of wrong prices on 1,140 products; 2,310 orders placed; 412 orders refunded the difference.">
+        <defs>
+          <filter id="a4bSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="43" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a4bHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a4bAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a4bH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a4bL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a4bS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a4bB { font: 800 11px Inter, sans-serif; fill: #6B5600; }
+          .a4bN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a4bH" x="30" y="28">PM-11 TIMELINE AND IMPACT, BEFORE AND AFTER</text>
+        <text class="a4bS" x="400" y="28">Constructed Pellmoor example, linter samples s3 and s4</text>
+
+        <text class="a4bH" x="30" y="58">S3 FIRST DRAFT</text>
+        <text class="a4bH" x="460" y="58">S4 TEAM VERSION</text>
+
+        <g filter="url(#a4bSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- doodle: a clock face -->
+          <circle cx="836" cy="26" r="12" stroke="#281E51"/>
+          <path d="M836 26 L836 18 M836 26 L842 30" stroke="#281E51"/>
+          <rect x="30" y="70" width="390" height="116" rx="8" transform="rotate(-0.5 225 128)" fill="#FFE45C"/>
+          <rect x="460" y="70" width="390" height="116" rx="8" transform="rotate(0.4 655 128)" fill="#FFFFFF"/>
+          <rect x="30" y="222" width="390" height="54" rx="8" transform="rotate(0.4 225 249)" fill="#FEF2F2" stroke="#991B1B"/>
+          <rect x="460" y="222" width="390" height="54" rx="8" transform="rotate(-0.4 655 249)" fill="#FFFFFF"/>
+          <path d="M426 128 L454 128" marker-end="url(#a4bAr)"/>
+          <path d="M426 249 L454 249" marker-end="url(#a4bAr)"/>
+        </g>
+
+        <text class="a4bL" x="46" y="98">This morning around 9am the supplier file arrived.</text>
+        <text class="a4bL" x="46" y="128">09:40 Priya pushed the feed ...</text>
+        <text class="a4bL" x="46" y="158">12:40 Prices were fixed.</text>
+
+        <text class="a4bL" x="476" y="92">2026-10-28 08:55 UTC supplier file arrives</text>
+        <text class="a4bS" x="476" y="106">with prices in cents, not pounds.</text>
+        <text class="a4bL" x="476" y="128">2026-10-28 09:40 UTC feed accepted; the validator</text>
+        <text class="a4bS" x="476" y="142">checks the schema, not the values.</text>
+        <text class="a4bL" x="476" y="164">2026-10-28 12:40 UTC prices restored from the</text>
+        <text class="a4bS" x="476" y="178">last accepted feed.</text>
+
+        <text class="a4bB" x="30" y="206">flagged: relative time, no zone, a named person</text>
+        <text class="a4bS" x="460" y="206">absolute date, UTC, starts before customers saw it</text>
+
+        <text class="a4bL" x="46" y="254">Some customers saw wrong prices for a while.</text>
+        <text class="a4bL" x="476" y="244">3 hours of wrong prices on 1,140 products;</text>
+        <text class="a4bS" x="476" y="262">2,310 orders placed; 412 orders refunded the difference.</text>
+
+        <text class="a4bS" x="30" y="296">flagged: impact with no number</text>
+        <text class="a4bS" x="460" y="296">counted; constructed Pellmoor figures</text>
+
+        <text class="a4bN" x="30" y="324">The linter checks shape, not truth: 1,140 is checkable, and could still be the wrong count.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the after column names the system, not a person, and every line still means the same thing next month</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Three rules for a timeline<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Absolute dates.</strong> "This morning" is true for one day. The postmortem is read at the review, again at the monthly reading, and again in a year when the same feed fails. Write the date every time; it costs ten characters.</p>
+        <p><strong>UTC, labelled.</strong> "09:40" means one thing to the warehouse team and another to a supplier in a different zone, and logs from different systems are compared minute by minute. Pick UTC, say so in the heading, and write the zone on every line so a pasted line keeps its meaning.</p>
+        <p><strong>Start before the incident and work forward.</strong> PagerDuty's blameless guidance names hindsight bias: once you know the outcome, every earlier moment looks like an obvious warning. Writing from before anything looked wrong, in the order people lived it, shows what they actually saw. In the s4 version the first line is the file arriving, not the first customer complaint.</p>
+        <p>And the subject of each line is the system or a role, never a name. "09:40 Priya pushed the feed" makes the timeline about a person; "09:40 UTC feed accepted; the validator checks the schema, not the values" makes it about the condition that let the bad file through.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Impact as numbers, even rough ones<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Count what the reader will use to rank this incident against the others: customers affected, orders, products, minutes, money. The SRE workbook asks for impact to be quantified, and its answer to "we do not have the exact number" is that "a well-informed estimate is better than no data at all" (Google, The Site Reliability Workbook, ch. 10). Say it is an estimate and say how you made it.</p>
+        <p>Pellmoor's team version reads: 3 hours of wrong prices on 1,140 products; 2,310 orders placed; 412 orders refunded the difference. All three figures are constructed. Notice what each one does: the hours give the duration, the products the blast radius, and the refunds the money and the customer cost, which is what the public version in Leader session 3 will have to explain.</p>
+        <p>Also say what the incident was not. If checkout stayed up, write that; calling a pricing error an outage makes the next real outage harder to rank.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Work forward to beat hindsight.</strong> PagerDuty's public postmortem guide, on its blameless page, draws on Dekker's old view and new view of human error, where error is a symptom of a problem in the system, and gives a practical counter to hindsight bias: begin the timeline before the incident and move forward through it, rather than back from the outcome. (PagerDuty, Postmortem guide, docs.pagerduty.com, read at source 2026-11-11.)</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers conditions and actions</span>
+      <h2>Conditions you can change, actions someone owns</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">The "why" section names the conditions that made the incident possible, usually several, rather than one root cause and one person. The actions section turns each condition into a change: one owner, one date, specific enough that everyone agrees when it is done. A line with no owner and no date is a wish, and wishes do not get done.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 316" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constructed Pellmoor example, PM-11 actions. Left, the three s3 wishes, highlighted: Make validation better, no owner, no date; Be more careful with supplier files, no owner, asks a person to change; Add an outlier check, owner pricing lead, no date. Right, the s4 actions: Add an outlier check against the last accepted feed, owner pricing lead, due 2026-11-25, prevent; Page on more than 50 price changes above 30 percent in one file, owner pricing on-call, due 2026-11-18, detect; Drill RB-11 with a newcomer, owner pricing lead, due 2026-12-09, from a condition. The first and third wishes both lead to the outlier check.">
+        <defs>
+          <filter id="a4cSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="47" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a4cHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a4cAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a4cH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a4cL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a4cS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a4cN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <text class="a4cH" x="30" y="28">THREE WISHES, THREE ACTIONS</text>
+        <text class="a4cS" x="260" y="28">Constructed Pellmoor example: PM-11 actions, s3 and s4</text>
+
+        <text class="a4cH" x="30" y="52">S3: WISHES</text>
+        <text class="a4cH" x="420" y="52">S4: OWNER, DATE, BOUNDED</text>
+
+        <g filter="url(#a4cSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- doodle: a small calendar page -->
+          <rect x="826" y="34" width="24" height="22" rx="3" stroke="#281E51"/>
+          <path d="M826 41 L850 41 M832 30 L832 37 M844 30 L844 37" stroke="#281E51"/>
+          <rect x="30" y="64" width="300" height="58" rx="8" transform="rotate(-1.4 180 93)" fill="#FFE45C"/>
+          <rect x="30" y="138" width="300" height="58" rx="8" transform="rotate(1.1 180 167)" fill="#FFE45C"/>
+          <rect x="30" y="212" width="300" height="58" rx="8" transform="rotate(-0.9 180 241)" fill="#FFE45C"/>
+          <rect x="420" y="64" width="430" height="58" rx="8" transform="rotate(0.4 635 93)" fill="#FFFFFF"/>
+          <rect x="420" y="138" width="430" height="58" rx="8" transform="rotate(-0.4 635 167)" fill="#FFFFFF"/>
+          <rect x="420" y="212" width="430" height="58" rx="8" transform="rotate(0.3 635 241)" fill="#EFEDF7"/>
+          <path d="M336 93 L414 90" marker-end="url(#a4cAr)"/>
+          <path d="M336 167 L414 167" marker-end="url(#a4cAr)"/>
+          <path d="M336 241 L414 106" stroke-dasharray="5 6" marker-end="url(#a4cAr)"/>
+        </g>
+
+        <text class="a4cL" x="46" y="90">Make validation better</text>
+        <text class="a4cL" x="46" y="110">no owner, no date</text>
+        <text class="a4cL" x="46" y="164">Be more careful with supplier files</text>
+        <text class="a4cL" x="46" y="184">no owner; asks a person to change</text>
+        <text class="a4cL" x="46" y="236">Add an outlier check.</text>
+        <text class="a4cL" x="46" y="256">Owner: pricing lead. No date.</text>
+
+        <text class="a4cL" x="436" y="88">Add an outlier check against the last accepted feed.</text>
+        <text class="a4cS" x="436" y="108">Owner: pricing lead · Due: 2026-11-25 · prevent</text>
+        <text class="a4cL" x="436" y="162">Page on more than 50 price changes above 30% in one file.</text>
+        <text class="a4cS" x="436" y="182">Owner: pricing on-call · Due: 2026-11-18 · detect</text>
+        <text class="a4cL" x="436" y="236">Drill RB-11 with a newcomer.</text>
+        <text class="a4cS" x="436" y="256">Owner: pricing lead · Due: 2026-12-09 · from a condition</text>
+
+        <text class="a4cN" x="30" y="298">Types (prevent, detect) follow the workbook's list; they are assigned here, constructed.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - "be more careful" became an alert: a change to the system, not a request to a person</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Conditions, and the root cause field<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Write conditions, plural.</strong> PM-11's team version names three: the validator compared columns and never values; no alert watched for a price jump against the last feed; the runbook for feed rejection had no step for a feed that passes. Each one is a thing the team can change. None of them is "Priya", and none of them is "should have".</p>
+        <p><strong>Why "should have" is flagged.</strong> Dekker's field guide (reported) argues that counterfactuals describe a world that did not happen. "The validator should have caught it" tells you nothing about why it did not; "the validator checks the schema, not the values" does. Write what people saw and why their action made sense at the time.</p>
+        <p><strong>The disagreement.</strong> PagerDuty and Dekker favour contributing conditions over a single root cause, and many templates still carry a root-cause field; the SRE book's own definition names root causes. Both are in use. If your template has the field, fill it with the condition you would fix first and list the others beside it, so the field cannot become a person. What a postmortem may conclude is argued in full in <a href="https://phoebefu6.github.io/learn-data-reliability-with-phoebe/courses/a4-postmortems.html">Data Reliability, postmortems ↗</a>.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>What turns a wish into an action<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>One owner.</strong> The SRE workbook's good postmortem gives every action a single owner with collaborators, a priority, a tracking bug and a type: investigate, prevent, mitigate, repair or detect. Many owners is one of the faults it lists in the bad version.</p>
+        <p><strong>A date.</strong> Without a due date there is nothing to chase and nothing to be late against. Writer session 5 shows what open actions with no date did to Pellmoor's year.</p>
+        <p><strong>Specific and bounded.</strong> PagerDuty asks for actions that someone can act on, that say exactly what changes, and whose scope has an end. "Make validation better" has no end; "add an outlier check against the last accepted feed" does.</p>
+        <p><strong>Change the system before the person.</strong> The workbook notes that changing human behaviour is less reliable than changing automated systems. "Be more careful with supplier files" relies on the most tired person on the rota noticing a cents-for-pounds file. A page on more than 50 large price changes in one file does not get tired.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Look for the condition, not the culprit.</strong> PagerDuty's guide on effective postmortems observes that the mistake is very rarely rooted in a person; it sits in the system, the tooling or the process that let a reasonable action do harm. Its blameless page builds on Dekker and on Allspaw's advice to ask how something happened rather than why someone did it. (PagerDuty, Postmortem guide, docs.pagerduty.com, read at source 2026-11-11; Dekker and Allspaw, reported.)</p>
+    </div>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Constructed Pellmoor example: PM-11 is a repeat.</strong> In Pellmoor's corpus, "unvalidated supplier input" is tagged on two postmortems, PM-04 and PM-11, and the bench traces PM-11 back to PM-04's action PM-04.1, still open when the cents-for-pounds file arrived. Writer session 5 reads the eleven postmortems together to find it. Tonight's point is smaller: an action that is not finished is a condition for the next incident.</p>
+    </div>
+  </section>
+
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Lint PM-11, then write it properly</h2>
+      <span class="tag demo">★ 22 min · everyone builds</span>
+    </div>
+    <p class="lede">The widget is the linter, loaded with the first draft of PM-11. You lint it, fix the timeline and the actions yourself in the text box, compare with Pellmoor's team version, then write your own skeleton. Copy what the widget prints. PM-11 is constructed; the rule engine is real. It checks shape, not truth: a draft can score 100 and still name the wrong conditions.</p>
+
+    <div class="rbp-widget" data-mode="linter" data-sample="s3"></div>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The build-along path. Sample s3, PM-11 first draft: 0 of 6 rules pass, score 0, 11 findings. Then your own edits, timeline first, then actions, with a score that will differ. Then sample s4, PM-11 team version, highlighted: 6 of 6 rules pass, score 100, 0 findings, which checks shape, not truth. Then your PM-11 skeleton. Below, the 11 findings by rule: owner line 1; time lines 5, 6 and 7; blame lines 6 and 13; should have line 13; wish lines 16, 17 and 18; impact line 9.">
+        <defs>
+          <filter id="a4dSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="53" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="a4dHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#281E51" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="a4dAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#1E1A2E" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .a4dH { font: 800 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a4dL { font: 600 12px Inter, sans-serif; fill: #1E1A2E; }
+          .a4dS { font: 400 11px Inter, sans-serif; fill: #57526E; }
+          .a4dW { font: 800 12px Inter, sans-serif; fill: #FFFFFF; }
+          .a4dN { font: 400 12px Inter, sans-serif; fill: #57526E; }
+        </style>
+
+        <g filter="url(#a4dSk)" fill="none" stroke="#1E1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="50" width="180" height="110" rx="10" transform="rotate(-0.8 120 105)" fill="#EFEDF7"/>
+          <rect x="240" y="50" width="180" height="110" rx="10" transform="rotate(0.6 330 105)" fill="#FFFFFF"/>
+          <rect x="450" y="50" width="180" height="110" rx="10" transform="rotate(-0.6 540 105)" fill="#FFE45C"/>
+          <rect x="660" y="50" width="190" height="110" rx="10" transform="rotate(0.7 755 105)" fill="#281E51"/>
+          <path d="M214 105 L236 105" marker-end="url(#a4dAr)"/>
+          <path d="M424 105 L446 105" marker-end="url(#a4dAr)"/>
+          <path d="M634 105 L656 105" marker-end="url(#a4dAr)"/>
+          <!-- doodle: a pencil beside your edits -->
+          <path d="M392 30 L414 18 L418 24 L396 36 Z M392 30 L388 40 L396 36" stroke="#281E51"/>
+          <rect x="30" y="216" width="124" height="50" rx="6" transform="rotate(-1 92 241)" fill="#FFFFFF"/>
+          <rect x="170" y="216" width="124" height="50" rx="6" transform="rotate(0.8 232 241)" fill="#FFFFFF"/>
+          <rect x="310" y="216" width="124" height="50" rx="6" transform="rotate(-0.7 372 241)" fill="#FFFFFF"/>
+          <rect x="450" y="216" width="124" height="50" rx="6" transform="rotate(1 512 241)" fill="#FFFFFF"/>
+          <rect x="590" y="216" width="124" height="50" rx="6" transform="rotate(-0.9 652 241)" fill="#FFFFFF"/>
+          <rect x="730" y="216" width="124" height="50" rx="6" transform="rotate(0.6 792 241)" fill="#FFFFFF"/>
+        </g>
+
+        <text class="a4dH" x="30" y="30">FROM FIRST DRAFT TO TEAM POSTMORTEM</text>
+
+        <text class="a4dH" x="46" y="78">STEP 1 · S3</text>
+        <text class="a4dS" x="46" y="100">PM-11 first draft</text>
+        <text class="a4dL" x="46" y="122">0 of 6 rules pass</text>
+        <text class="a4dS" x="46" y="142">score 0 · 11 findings</text>
+
+        <text class="a4dH" x="256" y="78">STEPS 2-3 · YOU</text>
+        <text class="a4dS" x="256" y="100">timeline first, then actions</text>
+        <text class="a4dL" x="256" y="122">edit in the text box</text>
+        <text class="a4dS" x="256" y="142">your score will differ</text>
+
+        <text class="a4dH" x="466" y="78">STEP 4 · S4</text>
+        <text class="a4dL" x="466" y="100">PM-11 team version</text>
+        <text class="a4dL" x="466" y="122">6 of 6 rules pass</text>
+        <text class="a4dL" x="466" y="142">score 100 · 0 findings</text>
+
+        <text class="a4dW" x="676" y="78">STEP 5 · YOURS</text>
+        <text class="a4dW" x="676" y="104">PM-11 skeleton</text>
+        <text class="a4dW" x="676" y="126">the team postmortem</text>
+
+        <text class="a4dS" x="456" y="180">checks shape, not truth</text>
+
+        <text class="a4dH" x="30" y="204">S3'S 11 FINDINGS, RULE BY RULE</text>
+        <text class="a4dH" x="42" y="238">owner</text>
+        <text class="a4dS" x="42" y="256">line 1</text>
+        <text class="a4dH" x="182" y="238">time</text>
+        <text class="a4dS" x="182" y="256">lines 5, 6, 7</text>
+        <text class="a4dH" x="322" y="238">blame</text>
+        <text class="a4dS" x="322" y="256">lines 6, 13</text>
+        <text class="a4dH" x="462" y="238">should have</text>
+        <text class="a4dS" x="462" y="256">line 13</text>
+        <text class="a4dH" x="602" y="238">wish</text>
+        <text class="a4dS" x="602" y="256">lines 16, 17, 18</text>
+        <text class="a4dH" x="742" y="238">impact</text>
+        <text class="a4dS" x="742" y="256">line 9</text>
+
+        <text class="a4dN" x="30" y="292">Line 9 is the Impact heading: the rule flags a section that carries no number at all.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - eleven findings across six rules; the score reaches 100 on shape, and the room still has to check the substance</figcaption>
+    </figure>
+
+    <div class="steps">
+      <div class="step">
+        <p><strong>Step 1 · Lint the first draft.</strong> The widget opens on the PM-11 first draft. Copy the summary line, then list the failing lines under each rule. Notice that line 6 fails two rules at once: a clock time with no zone, and a person's name as the subject of a mistake.</p>
+        <div class="prompt-box good"><span class="label">★ Step 1 · s3, as the linter prints it</span>Postmortem · 0 of 6 rules pass · score 0 · 11 findings
+
+No owner or last-verified line      line 1
+Relative or non-UTC timestamp       lines 5, 6, 7
+Blame language or a named person    lines 6, 13
+Counterfactual ("should have")      line 13
+Action without owner and date       lines 16, 17, 18
+Impact with no number               line 9  (the Impact heading: no number in the section)</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 2 · Fix the timeline yourself.</strong> In the text box, add an owner and last-updated line under the title, retitle the section "Timeline (UTC)", and rewrite lines 5 to 7 with an absolute date, a UTC time and the system as the subject. Start from the file arriving. Watch the rule list after each line. Your score will differ as you type; nothing here promises a number.</p>
+        <div class="prompt-box good"><span class="label">★ Step 2 · your timeline (template)</span>Owner: ______________          (a role, e.g. pricing lead)
+Last updated: YYYY-MM-DD
+
+## Timeline (UTC)
+YYYY-MM-DD HH:MM UTC  ____________________  (what arrived, before anything looked wrong)
+YYYY-MM-DD HH:MM UTC  ____________________  (what the system did, not who)
+YYYY-MM-DD HH:MM UTC  ____________________  (how it was restored)
+
+rules passing after this step: __ of 6   (your text, your number)</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 3 · Fix the conditions and the actions.</strong> Rewrite line 13 without a name or "should have": say what the validator checked and what it did not. Then give the impact section a number, and turn each wish into one line with an owner and a due date. Ask of each action: is it a change to a system, or a request to a person?</p>
+        <div class="prompt-box good"><span class="label">★ Step 3 · conditions and actions (template)</span>## Impact
+____ hours of wrong prices on ____ products; ____ orders placed; ____ refunded
+
+## Contributing conditions
+The validator checked ____________, never ____________.
+No alert watched for ______________________________.
+
+## Actions
+- ______________________ (verb + object + bound). Owner: ________. Due: YYYY-MM-DD
+- ______________________ (verb + object + bound). Owner: ________. Due: YYYY-MM-DD
+- ______________________ (verb + object + bound). Owner: ________. Due: YYYY-MM-DD</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 4 · Load the team version.</strong> Switch the sample to the PM-11 team version and copy the summary line. Then write one sentence on what that score cannot tell you. The linter reads shape: a date, a zone, a number, an owner. It cannot tell whether the conditions are the real ones, whether 1,140 is the right count, or whether the outlier check will catch the next bad file.</p>
+        <div class="prompt-box good"><span class="label">★ Step 4 · s4, as the linter prints it</span>Postmortem · 6 of 6 rules pass · score 100 · 0 findings
+
+What this score cannot tell me: ____________________________________
+Who in the review would know: ______________________________________</div>
+      </div>
+      <div class="step">
+        <p><strong>Step 5 · Write Pellmoor's team postmortem skeleton for PM-11.</strong> Fill it from your edits and the team version, adding the one section the linter does not check: what went well, and where the team got lucky. Keep the luck honest; it is often the most useful paragraph in the document.</p>
+        <div class="prompt-box good"><span class="label">★ Step 5 · team postmortem, PM-11 (template)</span># PM-11 Wrong prices shown to customers
+Owner: ______________          Last updated: YYYY-MM-DD
+Severity: ____                 Postmortem due: YYYY-MM-DD (per your severity policy)
+
+## Summary
+One paragraph: what customers saw, for how long, and how it ended.
+
+## Timeline (UTC)
+YYYY-MM-DD HH:MM UTC  ...     (start before anything looked wrong)
+
+## Impact
+Counted: products, orders, refunds, minutes. Estimates marked as estimates.
+
+## Contributing conditions
+Several, each one changeable. A role or a system as subject, never a name.
+
+## What went well / where we got lucky
+Went well: ________________________________
+Got lucky: ________________________________
+
+## Actions
+- ____________. Owner: ____. Due: YYYY-MM-DD. Type: prevent | detect | mitigate | repair | investigate
+- ____________. Owner: ____. Due: YYYY-MM-DD. Type: ____</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>Lint before the review, not in it.</strong> Run the draft through the rules before it goes to the room, so the meeting spends its time on whether the conditions are the real ones rather than on missing time zones. How that meeting runs is Leader session 2; the public version of PM-11, for customers, is Leader session 3.</p>
+    </div>
+  </section>
+
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Before Writer session 5</h2>
+      <span class="tag exercise">30 min</span>
+    </div>
+    <ol>
+      <li><strong>Write your team's triggers.</strong> In five lines or fewer, list which incidents owe a postmortem and by when, using the SRE book's triggers as the starting list.</li>
+      <li><strong>Lint one of your own postmortems.</strong> Paste it into the linter, record the summary line, and note which rules fail most.</li>
+      <li><strong>Rewrite its timeline</strong> with absolute dates and UTC, starting before anything looked wrong, with no person as the subject of a line.</li>
+      <li><strong>Audit its actions.</strong> For each one, mark owner, date, and whether it changes a system or asks a person to change. Count the wishes.</li>
+    </ol>
+  </section>
+
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and Writer session 4 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · Why does a postmortem timeline use UTC and absolute dates rather than "this morning around 9am"?</p>
+      <button class="qopt" type="button">A · The linter cannot parse words like "morning"</button>
+      <button class="qopt" type="button">B · It is read later, by people in other places, against logs from other systems; relative time and a bare clock lose their meaning</button>
+      <button class="qopt" type="button">C · Absolute dates make the document look more formal for leaders</button>
+      <button class="qopt" type="button">D · Incident tools refuse to store local times</button>
+      <p class="qwhy">"This morning" is true for one day and "09:40" for one zone. The postmortem is read at the review, in the monthly reading and when the same feed fails next year.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="3">
+      <p class="qtext">2 · The draft says "The validator should have caught it." Why does the linter flag "should have"?</p>
+      <button class="qopt" type="button">A · It is too informal for a written record</button>
+      <button class="qopt" type="button">B · It names a person</button>
+      <button class="qopt" type="button">C · It admits fault, which legal review forbids</button>
+      <button class="qopt" type="button">D · It describes a world that did not happen, and hides what the validator actually checked</button>
+      <p class="qwhy">A counterfactual tells you what you wish had happened. "The validator checks the schema, not the values" tells you what to change.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · Which change turns "Be more careful with supplier files" from a wish into an action?</p>
+      <button class="qopt" type="button">A · A specific system change with one owner and a due date: page on more than 50 large price changes in one file, owner pricing on-call, due 2026-11-18</button>
+      <button class="qopt" type="button">B · Adding "Owner: pricing team" to the same line</button>
+      <button class="qopt" type="button">C · Moving it to the top of the actions list</button>
+      <button class="qopt" type="button">D · Rewording it as "Be much more careful with supplier files"</button>
+      <p class="qwhy">An action has one owner, one date and a bounded scope, and changing an automated system beats asking a tired person to notice.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">What a postmortem is, and the triggers that make one owed</span><span class="note">Google, Site Reliability Engineering (2016), ch. 15 "Postmortem Culture", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Bad vs good postmortem of one outage; single owner; action types; quantified impact; automation over behaviour</span><span class="note">Google, The Site Reliability Workbook (2018), ch. 10 "Postmortem Culture", sre.google, read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Sev-1 and Sev-2, 3 calendar days and 5 business days, one owner, hindsight bias, bounded actions</span><span class="note">PagerDuty, Postmortem guide (Apache 2.0), docs.pagerduty.com, read at source 2026-11-11</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Counterfactuals describe a world that did not happen; old view vs new view</span><span class="note">Dekker, The Field Guide to Understanding Human Error, book, reported</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">The linter, the PM-11 samples s3 and s4, and every Pellmoor figure</span><span class="note">Constructed Pellmoor example; the linter's summary lines are computed in the browser by the widget on this page</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Every fact on this page, and its verification tier, is recorded in the course's source map.</p>
+  </section>
+
+  <section class="cheat" id="cheatsheet">
+    <h3>Writer session 4 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Owed, fast, owned</b><span>Agree triggers ahead. One owner, picked by the incident commander. Circulated within days, not months.</span></div>
+      <div class="cheat-item"><b>Five sections</b><span>Timeline (UTC), impact (numbers), contributing conditions, what went well and where we got lucky, actions.</span></div>
+      <div class="cheat-item"><b>Timeline</b><span>Absolute date and UTC on every line. Start before anything looked wrong. A system or role as the subject.</span></div>
+      <div class="cheat-item"><b>Impact</b><span>Customers, orders, products, minutes, money. A marked estimate beats no number.</span></div>
+      <div class="cheat-item"><b>Conditions</b><span>Several, each changeable. No names, no "should have". If the template has a root-cause field, list the others beside it.</span></div>
+      <div class="cheat-item"><b>Actions</b><span>One owner, one date, bounded. Change the system before asking a person to be careful. A score of 100 is shape, not truth.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>One postmortem tells you about one incident. Writer session 5 reads eleven as one: Pellmoor's year of postmortems tagged by condition, the actions that stayed wishes, and the two repeat incidents, PM-11 among them, that an open action let through.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Writer session 4 of 6 · learn-runbooks-postmortems-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="a3-a-drill-is-the-only-test.html">← Prev: A drill is the only test</a> &nbsp;·&nbsp; <a href="a5-read-eleven-postmortems-as-one.html">Next: Read eleven postmortems as one →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/rbp-sample.js?v=1"></script>
+<script src="../assets/rbp-live.js?v=1"></script>
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>
